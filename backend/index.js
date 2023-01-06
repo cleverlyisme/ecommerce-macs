@@ -7,6 +7,8 @@ const { PORT, MONGO_ATLAS_URI } = environments;
 
 const mongoose = require("mongoose");
 
+mongoose.set("strictQuery", false);
+
 mongoose.connect(MONGO_ATLAS_URI, {
   autoIndex: true,
   autoCreate: true,
@@ -21,9 +23,19 @@ connection.once("open", () => {
 const main = () => {
   const app = express();
 
+  const authRoute = require("./routes/auth.route");
+  const userRoute = require("./routes/user.route");
+  const categoryRoute = require("./routes/category.route");
+  const productRoute = require("./routes/product.route");
+
   app.use(cors());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+
+  app.use(authRoute);
+  app.use(userRoute);
+  app.use(categoryRoute);
+  app.use(productRoute);
 
   app.get("/", (req, res) => {
     res.send("OK");

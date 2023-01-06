@@ -3,4 +3,10 @@ const UserRoles = {
   User: "User",
 };
 
-module.exports = { UserRoles };
+const OrderStatus = {
+  Pending: "Pending",
+  Completed: "Completed",
+  Canceled: "Canceled",
+};
+
+module.exports = { UserRoles, OrderStatus };

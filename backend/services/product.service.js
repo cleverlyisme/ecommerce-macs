@@ -4,21 +4,15 @@ const Category = require("../models/category.model");
 const getProducts = async (query) => {
   const { page, limit, categoryId } = query;
 
-  const products = categoryId
-    ? await Product.find({ categoryId })
-        .limit(Number(limit))
-        .skip(Number(limit) * Number(page))
-        .sort({
-          name: "asc",
-        })
-        .lean()
-    : await Product.find({})
-        .limit(Number(limit))
-        .skip(Number(limit) * Number(page))
-        .sort({
-          name: "asc",
-        })
-        .lean();
+  const products = await Product.find({
+    categoryId: categoryId || { $regex: "" },
+  })
+    .limit(Number(limit))
+    .skip(Number(limit) * Number(page))
+    .sort({
+      name: "asc",
+    })
+    .lean();
 
   return products || [];
 };

@@ -27,6 +27,7 @@ const main = () => {
   const userRoute = require("./routes/user.route");
   const categoryRoute = require("./routes/category.route");
   const productRoute = require("./routes/product.route");
+  const orderRoute = require("./routes/order.route");
 
   app.use(cors());
   app.use(express.json());
@@ -36,6 +37,7 @@ const main = () => {
   app.use(userRoute);
   app.use(categoryRoute);
   app.use(productRoute);
+  app.use(orderRoute);
 
   app.get("/", (req, res) => {
     res.send("OK");

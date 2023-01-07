@@ -18,7 +18,7 @@ const createCategory = async (data) => {
   const categoryExist = await Category.findOne({ name }).lean();
   if (categoryExist) throw new Error("Category existed");
 
-  if (!name.trim() || name.includes(" ")) throw new Error("Invalid category");
+  if (!name.trim()) throw new Error("Invalid category");
 
   const newCategory = new Category({ name });
 

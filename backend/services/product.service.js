@@ -1,5 +1,6 @@
 const Product = require("../models/product.model");
 const Category = require("../models/category.model");
+const _ = require("lodash");
 
 const getProducts = async (query) => {
   const { page, limit, categoryId } = query;
@@ -33,9 +34,6 @@ const createProduct = async (data) => {
   if (!name.trim() || !description.trim())
     throw new Error("Invalid name or description");
 
-  const productExist = await Product.findOne({ name }).lean();
-  if (productExist) throw new Error("Product existed");
-
   const category = await Category.findOne({ _id: categoryId }).lean();
   if (!category) throw new Error("Invalid category ID");
 
@@ -44,7 +42,7 @@ const createProduct = async (data) => {
     description,
     images: images || [],
     price: Number(price),
-    quantity: Number(quantity),
+    quantity: Number(_.random(0, 30)),
     categoryId,
   });
 

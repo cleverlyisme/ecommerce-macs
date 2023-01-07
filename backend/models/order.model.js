@@ -13,6 +13,7 @@ const schema = new Schema({
   status: { type: String, required: true, enum: Object.values(OrderStatus) },
   products: [
     {
+      _id: false,
       productId: { type: String, required: true },
       quantity: { type: Number, required: true },
     },

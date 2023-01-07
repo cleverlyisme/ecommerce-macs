@@ -7,11 +7,11 @@ const getProducts = async (query) => {
   const products = await Product.find({
     categoryId: categoryId || { $regex: "" },
   })
-    .limit(Number(limit))
-    .skip(Number(limit) * Number(page))
     .sort({
       name: "asc",
     })
+    .limit(Number(limit))
+    .skip(Number(limit) * (Number(page) - 1))
     .lean();
 
   return products || [];

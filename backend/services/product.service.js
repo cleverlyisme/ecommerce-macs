@@ -14,7 +14,11 @@ const getProducts = async (query) => {
     .skip(Number(limit) * (Number(page) - 1))
     .lean();
 
-  return products || [];
+  const totalPages =
+    (await Product.find({ categoryId: categoryId || { $regex: "" } }).lean())
+      .length / limit;
+
+  return { items: products || [], totalPages: Math.ceil(totalPages) || 1 };
 };
 
 const getById = async (_id) => {

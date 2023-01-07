@@ -6,11 +6,7 @@ const { UserRoles } = require("../utils/constants");
 
 const categoryRoute = express.Router();
 
-categoryRoute.get(
-  "/categories",
-  auth([UserRoles.Admin]),
-  categoryController.getCategories
-);
+categoryRoute.get("/categories", categoryController.getCategories);
 categoryRoute.get(
   "/categories/:id",
   auth([UserRoles.Admin]),

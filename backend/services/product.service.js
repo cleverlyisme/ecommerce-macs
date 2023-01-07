@@ -74,7 +74,7 @@ const deleteProduct = async (_id) => {
 
   if (!product) throw new Error("Product not found");
 
-  await Product.remove();
+  await product.remove();
 };
 
 module.exports = {

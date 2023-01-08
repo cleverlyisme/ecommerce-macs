@@ -8,12 +8,22 @@ import {
   CardText,
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
 
 import Currency from "../../../utils/formatCurrency";
+import useAppContext from "../../../hooks/useAppContext";
 
 const ProductDetail = ({ product }) => {
   const navigate = useNavigate();
+
   const { images, price, name, _id } = product;
+  const {
+    cartState: { updateProduct },
+  } = useAppContext();
+
   return (
     <Card className="p-0" style={{ overflow: "hidden" }}>
       <img
@@ -27,6 +37,7 @@ const ProductDetail = ({ product }) => {
           cursor: "pointer",
         }}
       />
+      ;
       <CardBody className="p-2">
         <CardTitle
           style={{ fontWeight: 600, cursor: "pointer" }}
@@ -46,6 +57,10 @@ const ProductDetail = ({ product }) => {
           color="success"
           size="sm"
           style={{ fontSize: 8, borderRadius: "30px" }}
+          onClick={() => {
+            updateProduct({ _id, quantity: 1, name, price });
+            NotificationManager.success("Add to cart successfully");
+          }}
         >
           Add to cart
         </Button>

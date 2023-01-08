@@ -7,6 +7,7 @@ import Paginations from "../Paginations";
 import { getProducts } from "../../services/products.service";
 import { getCategories } from "../../services/category.service";
 import Header from "../../components/Header";
+import Layout from "../../components/Layout";
 
 const limit = 24;
 
@@ -53,56 +54,61 @@ const Home = () => {
   }, [page, categoryId]);
 
   return (
-    <Container className="d-flex flex-column" style={{ gap: 10 }}>
-      <Header />
-      <div className="w-100 d-flex align-items-center">
-        <img
-          src="/banner.png"
-          style={{
-            width: "100%",
-            height: 200,
-            objectFit: "cover",
-            borderRadius: 8,
-          }}
-        />
-      </div>
-      <div className="d-flex align-items-center" style={{ gap: 10 }}>
-        <div>Category</div>
-        <div style={{ width: 200 }}>
-          <Select
-            className="basic-single"
-            classNamePrefix="select"
-            defaultValue={getNameCategory[0]}
-            isClearable={true}
-            placeholder="Category"
-            name="category"
-            options={getNameCategory}
-            onChange={(selectedOption) =>
-              selectedOption !== null
-                ? setCategoryId(selectedOption.value)
-                : setCategoryId("")
-            }
+    <Layout>
+      <div className="d-flex flex-column" style={{ gap: 10 }}>
+        <div className="w-100 d-flex align-items-center">
+          <img
+            src="/banner.png"
+            style={{
+              width: "100%",
+              height: 200,
+              objectFit: "cover",
+              borderRadius: 8,
+            }}
           />
         </div>
-      </div>
+        <div className="d-flex align-items-center" style={{ gap: 10 }}>
+          <div>Category</div>
+          <div style={{ width: 200 }}>
+            <Select
+              className="basic-single"
+              classNamePrefix="select"
+              defaultValue={getNameCategory[0]}
+              isClearable={true}
+              placeholder="Category"
+              name="category"
+              options={getNameCategory}
+              onChange={(selectedOption) =>
+                selectedOption !== null
+                  ? setCategoryId(selectedOption.value)
+                  : setCategoryId("")
+              }
+            />
+          </div>
+        </div>
 
-      <h5 className="mb-0">Macbook for you!</h5>
-      <Row>
-        {products.map((product) => {
-          return (
-            <Col xs={6} sm={4} md={3} lg={2} xl={2} className="p-2">
-              <ProductDetail product={product} />
-            </Col>
-          );
-        })}
-      </Row>
-      <div className="d-flex py-3 align-items-center" style={{ gap: 10 }}>
-        <div>Page</div>
-        <div style={{ width: 80 }}>
-          <Paginations setPage={setPage} page={page} totalPages={totalPages} />
+        <h5 className="mb-0">Macbook for you!</h5>
+        <Row>
+          {products.map((product) => {
+            return (
+              <Col xs={6} sm={4} md={3} lg={2} xl={2} className="p-2">
+                <ProductDetail product={product} />
+              </Col>
+            );
+          })}
+        </Row>
+        <div className="d-flex py-3 align-items-center" style={{ gap: 10 }}>
+          <div>Page</div>
+          <div style={{ width: 80 }}>
+            <Paginations
+              setPage={setPage}
+              page={page}
+              totalPages={totalPages}
+            />
+          </div>
         </div>
       </div>
-    </Container>
+    </Layout>
   );
 };
 

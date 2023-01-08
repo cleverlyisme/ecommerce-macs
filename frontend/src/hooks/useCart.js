@@ -1,24 +1,9 @@
-import { useState, useEffect } from 'react';
-
-const mockData = [
-  {
-    _id: 1,
-    name: 'Macbook pro 2020',
-    price: 19000000,
-    quantity: 2,
-  },
-  {
-    _id: 2,
-    name: 'Macbook pro 2019',
-    price: 19000000,
-    quantity: 2,
-  },
-];
+import { useState, useEffect } from "react";
 
 const getCartFromLocalStorage = () => {
-  const cart = localStorage.getItem('cart');
+  const cart = localStorage.getItem("cart");
 
-  return cart ? JSON.parse(cart) : [...mockData];
+  return cart ? JSON.parse(cart) : [];
 };
 
 const useCart = () => {
@@ -52,7 +37,7 @@ const useCart = () => {
   );
 
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
   return { cart, amount, updateProduct, removeProduct };

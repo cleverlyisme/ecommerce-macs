@@ -1,5 +1,5 @@
-const currency = (price) => {
+const Currency = (price) => {
   return price.toLocaleString("vi", { style: "currency", currency: "VND" });
 };
 
-export default currency;
+export default Currency;

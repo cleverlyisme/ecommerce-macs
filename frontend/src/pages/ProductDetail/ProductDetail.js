@@ -9,12 +9,12 @@ import {
 } from "reactstrap";
 
 const ProductDetail = ({ product }) => {
-  const { image, price, name } = product;
+  const { images, price, name } = product;
   return (
     <Card className="p-0" style={{ overflow: "hidden" }}>
       <img
         alt="Sample"
-        src={image}
+        src={images[0]}
         style={{
           maxHeight: 120,
           aspectRatio: "3 / 2",
@@ -29,7 +29,7 @@ const ProductDetail = ({ product }) => {
             className="text-secondary"
             style={{ fontWeight: 600, fontSize: 12 }}
           >
-            ${price}
+            {price.toLocaleString("vi", { style: "currency", currency: "VND" })}
           </div>
         </CardText>
         <Button

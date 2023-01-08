@@ -1,6 +1,9 @@
 const Product = require("../models/product.model");
 const Category = require("../models/category.model");
 const _ = require("lodash");
+const environments = require("../utils/environments");
+
+const { BACKEND_URL } = environments;
 
 const getProducts = async (query) => {
   const { page, limit, categoryId } = query;
@@ -19,7 +22,14 @@ const getProducts = async (query) => {
     (await Product.find({ categoryId: categoryId || { $regex: "" } }).lean())
       .length / limit;
 
-  return { items: products || [], totalPages: Math.ceil(totalPages) || 1 };
+  return {
+    items:
+      products.map((product) => ({
+        ...product,
+        images: product.images.map((img) => `${BACKEND_URL}/images/${img}`),
+      })) || [],
+    totalPages: Math.ceil(totalPages) || 1,
+  };
 };
 
 const getById = async (_id) => {

@@ -1,41 +1,24 @@
 import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
+import Select from "react-select";
 const Paginations = ({ page, setPage, totalPages }) => {
+  let getPage = [];
+  for (let i = 1; i <= totalPages; i++) {
+    getPage[i - 1] = { value: i, label: i };
+  }
+  console.log(getPage);
   return (
-    <Pagination aria-label="Page navigation example">
-      <PaginationItem disabled={page === 1}>
-        <PaginationLink previous href="#" onClick={() => setPage(page - 1)} />
-      </PaginationItem>
-      <PaginationItem>
-        <PaginationLink
-          href="#"
-          onClick={() => setPage(1)}
-          style={{ backgroundColor: page === 1 ? "#ced4da" : "white" }}
-        >
-          1
-        </PaginationLink>
-      </PaginationItem>
-      <PaginationItem disabled={totalPages < 2}>
-        <PaginationLink
-          href="#"
-          onClick={() => setPage(2)}
-          style={{ backgroundColor: page === 2 ? "#ced4da" : "white" }}
-        >
-          2
-        </PaginationLink>
-      </PaginationItem>
-      <PaginationItem disabled={totalPages < 3}>
-        <PaginationLink
-          href="#"
-          onClick={() => setPage(3)}
-          style={{ backgroundColor: page === 3 ? "#ced4da" : "white" }}
-        >
-          3
-        </PaginationLink>
-      </PaginationItem>
-      <PaginationItem disabled={page === totalPages}>
-        <PaginationLink next href="#" onClick={() => setPage(page + 1)} />
-      </PaginationItem>
-    </Pagination>
+    <Select
+      className="basic-single "
+      style={{ width: 80 }}
+      classNamePrefix="select"
+      value={{ value: page, label: page }}
+      name="category"
+      menuPlacement="top"
+      options={getPage}
+      onChange={(selectedOption) => {
+        selectedOption !== null ? setPage(selectedOption.value) : setPage(page);
+      }}
+    />
   );
 };
 

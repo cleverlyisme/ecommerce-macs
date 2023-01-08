@@ -7,7 +7,7 @@ import Paginations from "../Paginations";
 import { getProducts } from "../../services/products.service";
 import { getCategories } from "../../services/category.service";
 
-const limit = 2;
+const limit = 24;
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -42,6 +42,10 @@ const Home = () => {
   useEffect(() => {
     getListCategory();
   }, []);
+
+  useEffect(() => {
+    setPage(1);
+  }, [categoryId]);
 
   useEffect(() => {
     getListProducts();
@@ -80,39 +84,25 @@ const Home = () => {
           }}
         />
       </div>
-      {/* <div className="d-flex" style={{ gap: 15 }}>
-        {categories.map((category) => {
-          return (
-            <Button
-              key={category._id}
-              color="success"
-              style={{
-                borderRadius: "30px",
-                backgroundColor:
-                  categoryId === category._id ? "#198754" : "transparent",
-                color: categoryId === category._id ? "white" : "black",
-              }}
-              size="sm"
-              onClick={() => setCategoryId(category._id)}
-            >
-              {category.name}
-            </Button>
-          );
-        })}
-      </div> */}
-      <Select
-        className="basic-single w-50"
-        classNamePrefix="select"
-        defaultValue={getNameCategory[0]}
-        isClearable={true}
-        name="category"
-        options={getNameCategory}
-        onChange={(selectedOption) =>
-          selectedOption !== null
-            ? setCategoryId(selectedOption.value)
-            : setCategoryId("")
-        }
-      />
+      <div className="d-flex align-items-center" style={{ gap: 10 }}>
+        <div>Category</div>
+        <div style={{ width: 200 }}>
+          <Select
+            className="basic-single"
+            classNamePrefix="select"
+            defaultValue={getNameCategory[0]}
+            isClearable={true}
+            placeholder="Category"
+            name="category"
+            options={getNameCategory}
+            onChange={(selectedOption) =>
+              selectedOption !== null
+                ? setCategoryId(selectedOption.value)
+                : setCategoryId("")
+            }
+          />
+        </div>
+      </div>
 
       <h5 className="mb-0">Macbook for you!</h5>
       <Row>
@@ -124,7 +114,12 @@ const Home = () => {
           );
         })}
       </Row>
-      <Paginations setPage={setPage} page={page} totalPages={totalPages} />
+      <div className="d-flex py-3 align-items-center" style={{ gap: 10 }}>
+        <div>Page</div>
+        <div style={{ width: 80 }}>
+          <Paginations setPage={setPage} page={page} totalPages={totalPages} />
+        </div>
+      </div>
     </Container>
   );
 };

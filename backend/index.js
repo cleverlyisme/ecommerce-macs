@@ -29,6 +29,7 @@ const main = () => {
   const productRoute = require("./routes/product.route");
   const orderRoute = require("./routes/order.route");
 
+  app.use(express.static("public"));
   app.use(cors());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));

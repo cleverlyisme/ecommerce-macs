@@ -23,11 +23,7 @@ const getProducts = async (query) => {
       .length / limit;
 
   return {
-    items:
-      products.map((product) => ({
-        ...product,
-        images: product.images.map((img) => `${BACKEND_URL}/images/${img}`),
-      })) || [],
+    items: products || [],
     totalPages: Math.ceil(totalPages) || 1,
   };
 };
@@ -35,12 +31,7 @@ const getProducts = async (query) => {
 const getById = async (_id) => {
   const product = await Product.findOne({ _id }).lean();
 
-  return (
-    {
-      ...product,
-      images: product.images.map((img) => `${BACKEND_URL}/images/${img}`),
-    } || {}
-  );
+  return product || {};
 };
 
 const createProduct = async (data) => {

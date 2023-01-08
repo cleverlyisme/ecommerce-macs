@@ -1,11 +1,12 @@
-import { Container, Row, Col, Button, FormGroup, Input } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 import { useState, useEffect } from "react";
 import Select from "react-select";
 
-import ProductDetail from "../ProductDetail/ProductDetail";
+import ProductDetail from "./components/ProductDetail";
 import Paginations from "../Paginations";
 import { getProducts } from "../../services/products.service";
 import { getCategories } from "../../services/category.service";
+import Header from "../../components/Header";
 
 const limit = 24;
 
@@ -53,26 +54,7 @@ const Home = () => {
 
   return (
     <Container className="d-flex flex-column" style={{ gap: 10 }}>
-      <Row className="d-flex py-2">
-        <Col xs={6}>
-          <div style={{ fontWeight: 600, color: "#013b28" }}>ShopMac</div>
-        </Col>
-        <Col xs={6} className="d-flex justify-content-end" style={{ gap: 25 }}>
-          <div className="d-flex align-items-center " style={{ gap: 10 }}>
-            <img src="/account.png" />
-            <div style={{ fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
-              Account
-            </div>
-          </div>
-
-          <div className="d-flex align-items-center" style={{ gap: 5 }}>
-            <img src="/cart.png" />
-            <div style={{ fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
-              Cart
-            </div>
-          </div>
-        </Col>
-      </Row>
+      <Header />
       <div className="w-100 d-flex align-items-center">
         <img
           src="/banner.png"

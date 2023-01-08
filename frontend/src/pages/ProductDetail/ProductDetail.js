@@ -1,46 +1,41 @@
-import {
-  Row,
-  Col,
-  Card,
-  Button,
-  CardBody,
-  CardTitle,
-  CardText,
-} from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 
-const ProductDetail = ({ product }) => {
-  const { images, price, name } = product;
+import Header from "../../components/Header";
+import { getProductById } from "../../services/products.service";
+
+const ProductDetail = () => {
+  const { id } = useParams();
+
+  const [product, setProduct] = useState(null);
+
+  const getProduct = async () => {
+    try {
+      const res = await getProductById(id);
+      setProduct(res.data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  useEffect(() => {
+    getProduct();
+  }, [id]);
+  // console.log(product);
+  const { _id, name, images, description, price, quantity } = product || {};
+  console.log({ _id, name, images, description, price, quantity });
+  if (!product) return null;
   return (
-    <Card className="p-0" style={{ overflow: "hidden" }}>
-      <img
-        alt="Sample"
-        src={images[0]}
-        style={{
-          maxHeight: 120,
-          aspectRatio: "3 / 2",
-          objectFit: "cover",
-          objectPosition: "center",
-        }}
-      />
-      <CardBody className="p-2">
-        <CardTitle style={{ fontWeight: 600 }}>{name}</CardTitle>
-        <CardText className="d-flex align-items-center mb-2" style={{ gap: 2 }}>
-          <div
-            className="text-secondary"
-            style={{ fontWeight: 600, fontSize: 12 }}
-          >
-            {price.toLocaleString("vi", { style: "currency", currency: "VND" })}
-          </div>
-        </CardText>
-        <Button
-          color="success"
-          size="sm"
-          style={{ fontSize: 8, borderRadius: "30px" }}
-        >
-          Add to cart
-        </Button>
-      </CardBody>
-    </Card>
+    <Container>
+      <Header />
+      <Row className="d-flex">
+        <Col xs={12} sm={12} md={6}>
+          <img src={images[0]} style={{ maxWidth: "100%" }} />
+        </Col>
+        <Col xs={6}>info</Col>
+      </Row>
+    </Container>
   );
 };
 

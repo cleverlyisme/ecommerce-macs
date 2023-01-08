@@ -35,7 +35,12 @@ const getProducts = async (query) => {
 const getById = async (_id) => {
   const product = await Product.findOne({ _id }).lean();
 
-  return product || {};
+  return (
+    {
+      ...product,
+      images: product.images.map((img) => `${BACKEND_URL}/images/${img}`),
+    } || {}
+  );
 };
 
 const createProduct = async (data) => {

@@ -24,7 +24,10 @@ const register = async (req, res) => {
   }
 };
 
+const checkAuth = (req, res) => res.sendStatus(200);
+
 module.exports = {
   login,
   register,
+  checkAuth,
 };

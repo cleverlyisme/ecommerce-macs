@@ -12,8 +12,8 @@ const getUsers = async (req, res) => {
 
 const getById = async (req, res) => {
   try {
-    const { id } = req.params;
-    const user = await service.getById(id);
+    const userId = req.params.id;
+    const user = await service.getById(userId);
 
     res.status(200).send(user);
   } catch (err) {
@@ -23,9 +23,9 @@ const getById = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    const { username, password, role } = req.body;
+    const { username, password } = req.body;
 
-    await service.createUser({ username, password, role });
+    await service.createUser({ username, password });
 
     res.sendStatus(201);
   } catch (err) {
@@ -36,9 +36,9 @@ const createUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const userId = req.params.id;
-    const { username, password, role, cart } = req.body;
+    const { username, password } = req.body;
 
-    await service.updateUser(userId, { username, password, role, cart });
+    await service.updateUser(userId, { username, password });
 
     res.status(200).send("Updated successfully");
   } catch (err) {

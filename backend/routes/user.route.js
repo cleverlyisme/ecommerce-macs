@@ -2,18 +2,13 @@ const express = require("express");
 
 const auth = require("../middlewares/auth.middleware");
 const userController = require("../controllers/user.controller");
-const { UserRoles } = require("../utils/constants");
 
 const userRoute = express.Router();
 
-userRoute.get("/users", auth([UserRoles.Admin]), userController.getUsers);
-userRoute.get("/users/:id", auth([UserRoles.Admin]), userController.getById);
-userRoute.post("/users", userController.createUser);
-userRoute.put("/users/:id", auth([UserRoles.Admin]), userController.updateUser);
-userRoute.delete(
-  "/users/:id",
-  auth([UserRoles.Admin]),
-  userController.deleteUser
-);
+userRoute.get("/users", auth(), userController.getUsers);
+userRoute.get("/users/:id", auth(), userController.getById);
+userRoute.post("/users", auth(), userController.createUser);
+userRoute.put("/users/:id", auth(), userController.updateUser);
+userRoute.delete("/users/:id", auth(), userController.deleteUser);
 
 module.exports = userRoute;

@@ -7,8 +7,9 @@ import {
   CardTitle,
   CardText,
 } from "reactstrap";
-
 import { useNavigate } from "react-router-dom";
+
+import Currency from "../../../utils/formatCurrency";
 
 const ProductDetail = ({ product }) => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const ProductDetail = ({ product }) => {
             className="text-secondary"
             style={{ fontWeight: 600, fontSize: 12 }}
           >
-            {price.toLocaleString("vi", { style: "currency", currency: "VND" })}
+            {Currency(price)}
           </div>
         </CardText>
         <Button

@@ -27,13 +27,19 @@ const ProductDetail = () => {
   console.log({ _id, name, images, description, price, quantity });
   if (!product) return null;
   return (
-    <Container>
+    <Container className="d-flex flex-column" style={{ gap: 20 }}>
       <Header />
       <Row className="d-flex">
         <Col xs={12} sm={12} md={6}>
           <img src={images[0]} style={{ maxWidth: "100%" }} />
         </Col>
-        <Col xs={6}>info</Col>
+        <Col xs={6} className="d-flex flex-column" style={{ gap: 20 }}>
+          <div className="d-flex flex-column" style={{ gap: 5 }}>
+            <div style={{ fontSize: 20, fontWeight: 600 }}>{name}</div>
+            <div style={{ fontSize: 10, opacity: 0.7 }}>{description}</div>
+          </div>
+          <div style={{ fontSize: 18, fontWeight: 600 }}>{price}</div>
+        </Col>
       </Row>
     </Container>
   );

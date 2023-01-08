@@ -1,11 +1,11 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const { OrderStatus } = require("../utils/constants");
+const { OrderStatus } = require('../utils/constants');
 
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-  userId: { type: String, required: true },
+  note: { type: String },
   address: { type: String, required: true },
   phoneNumber: { type: String, required: true },
   createdAt: { type: Number, required: true, default: () => Date.now() },
@@ -21,6 +21,6 @@ const schema = new Schema({
   amount: { type: Number, required: true },
 });
 
-const Order = mongoose.model("Order", schema);
+const Order = mongoose.model('Order', schema);
 
 module.exports = Order;

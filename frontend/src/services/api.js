@@ -1,15 +1,19 @@
-import axios from "axios";
+import axios from 'axios';
+
+import environments from '../utils/environments';
+
+const { BACKEND_URL } = environments;
 
 const api = axios.create({
-  baseURL: "http://localhost:3001",
+  baseURL: BACKEND_URL,
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 });
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("accessToken");
+    const token = localStorage.getItem('accessToken');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

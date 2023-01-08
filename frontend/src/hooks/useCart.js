@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 const getCartFromLocalStorage = () => {
-  const cart = localStorage.getItem("cart");
+  const cart = localStorage.getItem('cart');
 
   return cart ? JSON.parse(cart) : [];
 };
@@ -31,16 +31,18 @@ const useCart = () => {
     setCart(cart.filter((item) => item._id !== _id));
   };
 
+  const cleanCart = () => setCart([]);
+
   const amount = cart.reduce(
     (total, item) => total + item.quantity * item.price,
     0
   );
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
-  return { cart, amount, updateProduct, removeProduct };
+  return { cart, amount, updateProduct, removeProduct, cleanCart };
 };
 
 export default useCart;

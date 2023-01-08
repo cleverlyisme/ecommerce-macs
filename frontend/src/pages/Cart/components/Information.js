@@ -1,15 +1,14 @@
-import { useState } from "react";
-import { Row, Col, Input, Label, FormGroup, Button } from "reactstrap";
-import { NotificationManager } from "react-notifications";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { Row, Col, Input, Label, FormGroup, Button } from 'reactstrap';
+import { useNavigate } from 'react-router-dom';
 
 const Information = ({ cart, onConfirm }) => {
   const navigate = useNavigate();
   const [data, setData] = useState({
-    name: "",
-    phoneNumber: "",
-    address: "",
-    note: "",
+    name: '',
+    phoneNumber: '',
+    address: '',
+    note: '',
   });
 
   const changeData = (field, value) => {
@@ -23,10 +22,10 @@ const Information = ({ cart, onConfirm }) => {
 
   const submit = async () => {
     try {
-      if (!name || !name.trim()) throw new Error("Name is empty");
+      if (!name || !name.trim()) throw new Error('Name is empty');
       if (!phoneNumber || !phoneNumber.trim())
-        throw new Error("Phone number is empty");
-      if (!address || !address.trim()) throw new Error("Address is empty");
+        throw new Error('Phone number is empty');
+      if (!address || !address.trim()) throw new Error('Address is empty');
 
       await onConfirm({
         note,
@@ -39,7 +38,6 @@ const Information = ({ cart, onConfirm }) => {
           price: item.price,
         })),
       });
-      NotificationManager("Order succesfully");
     } catch (err) {
       alert(err.message);
     }
@@ -56,7 +54,7 @@ const Information = ({ cart, onConfirm }) => {
             <Input
               placeholder="Name"
               value={name}
-              onChange={(e) => changeData("name", e.target.value)}
+              onChange={(e) => changeData('name', e.target.value)}
             />
           </FormGroup>
           <FormGroup>
@@ -65,7 +63,7 @@ const Information = ({ cart, onConfirm }) => {
               placeholder="Phone number"
               type="number"
               value={phoneNumber}
-              onChange={(e) => changeData("phoneNumber", e.target.value)}
+              onChange={(e) => changeData('phoneNumber', e.target.value)}
             />
           </FormGroup>
           <FormGroup>
@@ -73,7 +71,7 @@ const Information = ({ cart, onConfirm }) => {
             <Input
               placeholder="Address"
               value={address}
-              onChange={(e) => changeData("address", e.target.value)}
+              onChange={(e) => changeData('address', e.target.value)}
             />
           </FormGroup>
         </Col>
@@ -85,12 +83,17 @@ const Information = ({ cart, onConfirm }) => {
               rows={5}
               placeholder="Note"
               value={note}
-              onChange={(e) => changeData("note", e.target.value)}
+              onChange={(e) => changeData('note', e.target.value)}
             />
           </FormGroup>
         </Col>
         <Col xs={6}>
-          <Button color="success" className="w-100" onClick={submit}>
+          <Button
+            color="success"
+            className="w-100"
+            disabled={!cart.length}
+            onClick={submit}
+          >
             Confirm
           </Button>
         </Col>

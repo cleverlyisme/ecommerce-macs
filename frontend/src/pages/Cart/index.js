@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Table } from 'reactstrap';
+import { NotificationManager } from 'react-notifications';
 
 import Layout from '../../components/Layout';
 import Information from './components/Information';
@@ -8,8 +9,10 @@ import formatCurrency from '../../utils/formatCurrency';
 import { create } from '../../services/order.service';
 
 const Cart = () => {
+  const navigate = useNavigate();
+
   const {
-    cartState: { cart, amount, updateProduct, removeProduct },
+    cartState: { cart, amount, updateProduct, removeProduct, cleanCart },
   } = useAppContext();
 
   const reduce = (_id, quantity) => {
@@ -25,9 +28,14 @@ const Cart = () => {
   const onConfirm = async (data) => {
     try {
       await create(data);
-      console.log({ data });
+      cleanCart();
+      NotificationManager.success('Order succesfully');
+      navigate('/order-success');
     } catch (err) {
       console.error(err);
+      NotificationManager.error(
+        (err.response && err.response.data) || err.message
+      );
     }
   };
 

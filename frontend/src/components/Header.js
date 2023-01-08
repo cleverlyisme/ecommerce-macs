@@ -18,7 +18,7 @@ const Header = () => {
               }}
               onClick={() => navigate('/')}
             >
-              ShopMac
+              ShopMacs
             </div>
           </Col>
           <Col

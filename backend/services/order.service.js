@@ -17,7 +17,9 @@ const getById = async (_id) => {
 };
 
 const createOrder = async (data) => {
-  const { address, phoneNumber, products } = data;
+  const { name, address, phoneNumber, products } = data;
+
+  console.log({ data });
 
   if (!address.trim()) throw new Error('Invalid address');
 
@@ -46,6 +48,7 @@ const createOrder = async (data) => {
   }
 
   const newOrder = new Order({
+    name,
     address,
     phoneNumber,
     status: OrderStatus.Pending,

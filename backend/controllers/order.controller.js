@@ -1,4 +1,4 @@
-const service = require('../services/order.service');
+const service = require("../services/order.service");
 
 const getOrders = async (req, res) => {
   try {
@@ -41,9 +41,15 @@ const createOrder = async (req, res) => {
 
 const updateOrder = async (req, res) => {
   try {
-    res.status(200).send('Updated');
+    const orderId = req.params.id;
+
+    const { status } = req.body;
+
+    await service.updateOrder(orderId, { status });
+
+    res.status(200).send("Updated");
   } catch (err) {
-    err.message === 'Order not found'
+    err.message === "Order not found"
       ? res.status(404).send(err.message)
       : res.status(400).send(err.message);
   }
@@ -55,7 +61,7 @@ const deleteOrder = async (req, res) => {
 
     await service.deleteOrder(id);
 
-    res.status(200).send('Deleted');
+    res.status(200).send("Deleted");
   } catch (err) {
     res.status(404).send(err.message);
   }

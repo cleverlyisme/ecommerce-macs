@@ -48,7 +48,7 @@ const createProduct = async (data) => {
     description,
     images: images || [],
     price: Number(price),
-    quantity: Number(_.random(0, 30)),
+    quantity: Number(quantity),
     categoryId,
   });
 

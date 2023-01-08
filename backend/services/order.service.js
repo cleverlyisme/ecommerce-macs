@@ -1,8 +1,8 @@
-const Order = require('../models/order.model');
-const User = require('../models/user.model');
-const Product = require('../models/product.model');
+const Order = require("../models/order.model");
+const User = require("../models/user.model");
+const Product = require("../models/product.model");
 
-const { OrderStatus } = require('../utils/constants');
+const { OrderStatus } = require("../utils/constants");
 
 const getOrders = async () => {
   const order = await Order.find({}).lean();
@@ -21,9 +21,9 @@ const createOrder = async (data) => {
 
   console.log({ data });
 
-  if (!address.trim()) throw new Error('Invalid address');
+  if (!address.trim()) throw new Error("Invalid address");
 
-  if (phoneNumber.length < 10) throw new Error('Invalid phone number');
+  if (phoneNumber.length < 10) throw new Error("Invalid phone number");
 
   let amount = 0;
 
@@ -32,11 +32,11 @@ const createOrder = async (data) => {
       _id: p.productId,
     });
 
-    if (!product) throw new Error('Invalid product ID');
+    if (!product) throw new Error("Invalid product ID");
 
     if (p.quantity > product.quantity || product.quantity < 1)
       throw new Error(
-        `Not enough product ${product.name + ' ' + product.description}`
+        `Not enough product ${product.name + " " + product.description}`
       );
 
     amount += product.price * p.quantity;
@@ -59,12 +59,37 @@ const createOrder = async (data) => {
   await newOrder.save();
 };
 
-const updateOrder = async (_id, data) => {};
+const updateOrder = async (_id, data) => {
+  const order = await Order.findOne({ _id });
+
+  if (!order) throw new Error("Order not found");
+
+  const { status } = data;
+
+  if (!Object.values(OrderStatus).includes(status))
+    throw new Error("Invalid order status");
+
+  order.status = status;
+
+  if (status === "Canceled") {
+    for (const p of order.products) {
+      const product = await Product.findOne({
+        _id: p.productId,
+      });
+
+      product.quantity += p.quantity;
+
+      await product.save();
+    }
+  }
+
+  await order.save();
+};
 
 const deleteOrder = async (_id) => {
   const order = await Order.findOne({ _id });
 
-  if (!order) throw new Error('Order not found');
+  if (!order) throw new Error("Order not found");
 
   await order.remove();
 };

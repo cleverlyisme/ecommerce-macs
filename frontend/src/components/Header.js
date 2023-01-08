@@ -12,10 +12,11 @@ const Header = () => {
             <div
               style={{
                 fontWeight: 600,
-                color: '#013b28',
                 fontSize: 32,
                 color: 'white',
+                cursor: 'pointer',
               }}
+              onClick={() => navigate('/')}
             >
               ShopMac
             </div>

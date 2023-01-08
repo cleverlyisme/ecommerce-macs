@@ -32,7 +32,7 @@ const useCart = () => {
           if (item._id !== _id) return item;
           return {
             ...item,
-            quantity,
+            quantity: item.quantity + quantity,
             ...rest,
           };
         })

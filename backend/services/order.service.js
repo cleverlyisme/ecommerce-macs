@@ -1,8 +1,8 @@
-const Order = require("../models/order.model");
-const User = require("../models/user.model");
-const Product = require("../models/product.model");
+const Order = require('../models/order.model');
+const User = require('../models/user.model');
+const Product = require('../models/product.model');
 
-const { OrderStatus } = require("../utils/constants");
+const { OrderStatus } = require('../utils/constants');
 
 const getOrders = async () => {
   const order = await Order.find({}).lean();
@@ -17,45 +17,38 @@ const getById = async (_id) => {
 };
 
 const createOrder = async (data) => {
-  const { userId, address, phoneNumber, status, products } = data;
+  const { address, phoneNumber, products } = data;
 
-  const userExist = await User.findOne({ _id: userId }).lean();
-  if (!userExist) throw new Error("Invalid user ID");
+  if (!address.trim()) throw new Error('Invalid address');
 
-  if (!address.trim()) throw new Error("Invalid address");
-
-  if (phoneNumber.length < 10 || !Number(phoneNumber))
-    throw new Error("Invalid phone number");
-
-  if (!Object.values(OrderStatus).includes(status))
-    throw new Error("Invalid order status");
+  if (phoneNumber.length < 10) throw new Error('Invalid phone number');
 
   let amount = 0;
 
-  for (index in products) {
+  for (const p of products) {
     const product = await Product.findOne({
-      _id: products[index].productId,
+      _id: p.productId,
     });
 
-    if (!product) throw new Error("Invalid product ID");
+    if (!product) throw new Error('Invalid product ID');
 
-    if (products[index].quantity > product.quantity || product.quantity < 1)
+    if (p.quantity > product.quantity || product.quantity < 1)
       throw new Error(
-        `Not enough product ${product.name + " " + product.description}`
+        `Not enough product ${product.name + ' ' + product.description}`
       );
 
-    amount += product.price * products[index].quantity;
+    amount += product.price * p.quantity;
 
-    product.quantity = product.quantity - products[index].quantity;
+    product.quantity = product.quantity - p.quantity;
+    product.sold = (product.sold || 0) + 1;
 
     await product.save();
   }
 
   const newOrder = new Order({
-    userId,
     address,
     phoneNumber,
-    status,
+    status: OrderStatus.Pending,
     products,
     amount: Number(amount),
   });
@@ -68,7 +61,7 @@ const updateOrder = async (_id, data) => {};
 const deleteOrder = async (_id) => {
   const order = await Order.findOne({ _id });
 
-  if (!order) throw new Error("Order not found");
+  if (!order) throw new Error('Order not found');
 
   await order.remove();
 };

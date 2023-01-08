@@ -2,8 +2,10 @@ import { Link } from 'react-router-dom';
 import { Table } from 'reactstrap';
 
 import Layout from '../../components/Layout';
+import Information from './components/Information';
 import useAppContext from '../../hooks/useAppContext';
 import formatCurrency from '../../utils/formatCurrency';
+import { create } from '../../services/order.service';
 
 const Cart = () => {
   const {
@@ -12,12 +14,21 @@ const Cart = () => {
 
   const reduce = (_id, quantity) => {
     if (quantity > 1) {
-      updateProduct({ _id, quantity: quantity - 1 });
+      updateProduct({ _id, quantity: -1 });
     }
   };
 
-  const add = (_id, quantity) => {
-    updateProduct({ _id, quantity: quantity + 1 });
+  const add = (_id) => {
+    updateProduct({ _id, quantity: 1 });
+  };
+
+  const onConfirm = async (data) => {
+    try {
+      await create(data);
+      console.log({ data });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -70,7 +81,7 @@ const Cart = () => {
                   width="20px"
                   height="20px"
                   style={{ cursor: 'pointer' }}
-                  onClick={() => add(item._id, item.quantity)}
+                  onClick={() => add(item._id)}
                 />
               </td>
               <td className="text-center">{formatCurrency(item.price)}</td>
@@ -105,6 +116,7 @@ const Cart = () => {
           </tr>
         </tbody>
       </Table>
+      <Information cart={cart} onConfirm={onConfirm} />
     </Layout>
   );
 };

@@ -1,14 +1,14 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-import Cart from '../pages/Cart';
+import Admin from '../pages/Admin';
 
-const CartRoute = () => {
+const AdminRoute = () => {
   return (
     <Routes>
-      <Route path="/" element={<Cart />} />
+      <Route path="/" element={<Admin />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 };
 
-export default CartRoute;
+export default AdminRoute;

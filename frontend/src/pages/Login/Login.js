@@ -1,9 +1,17 @@
 import { Container, Row, Col, Input, Button } from "reactstrap";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { login } from "../../services/auth.service";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const signIn = async () => {
+    const res = await login({ username, password });
+    localStorage.setItem("accessToken", res.data.token);
+  };
 
   return (
     <Container
@@ -27,12 +35,12 @@ const Login = () => {
 
         <div className="d-flex flex-column" style={{ gap: 10 }}>
           <div className="d-flex flex-column w-100" style={{ gap: 5 }}>
-            <div style={{ fontSize: 14 }}>Email</div>
+            <div style={{ fontSize: 14 }}>Username</div>
             <Input
               className="w-100"
-              placeholder="Enter your email..."
+              placeholder="Enter your username..."
               style={{ height: "80%", opacity: 0.7, fontSize: 12 }}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
             ></Input>
           </div>
 
@@ -48,15 +56,9 @@ const Login = () => {
         </div>
 
         <div className="d-flex flex-column" style={{ gap: 5 }}>
-          <Button className="w-100" color="primary" size="sm">
+          <Button className="w-100" color="primary" size="sm" onClick={signIn}>
             Sign In
           </Button>
-          <div className="d-flex justify-content-center" style={{ gap: 5 }}>
-            <div style={{ fontSize: 12 }}>Don't have an account?</div>
-            <div style={{ cursor: "pointer", fontSize: 12, color: "#598dd8" }}>
-              Sign up
-            </div>
-          </div>
         </div>
       </div>
     </Container>

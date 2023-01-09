@@ -1,13 +1,16 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
-import Admin from "../pages/Admin/index";
-import Order from "../pages/Admin/components/Order";
 import { checkAuth } from "../services/auth.service";
 import LoginRoute from "./LoginRoute";
 
 import useAppContext from "../hooks/useAppContext";
 import { useEffect, useState } from "react";
-import Login from "../pages/Login/Login";
+import ProductList from "../pages/Admin/ProductList";
+import ProductDetail from "../pages/Admin/ProductDetail";
+import UserList from "../pages/Admin/UserList";
+import UserDetail from "../pages/Admin/UserDetail";
+import OrderList from "../pages/Admin/OrderList";
+import OrderDetail from "../pages/Admin/OrderDetail";
 
 const AdminRoute = () => {
   const { isInitialized, setIsInitialized } = useAppContext();
@@ -35,9 +38,16 @@ const AdminRoute = () => {
 
   return (
     <Routes>
-      <Route path="/order" element={<Order />} />
-      <Route path="/" element={<Admin />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="/products" element={<ProductList />} />
+      <Route path="/products/create" element={<ProductDetail />} />
+      <Route path="/products/:id" element={<ProductDetail />} />
+      <Route path="/users/" element={<UserList />} />
+      <Route path="/users/create" element={<UserDetail />} />
+      <Route path="/users/:id" element={<UserDetail />} />
+      <Route path="/orders" element={<OrderList />} />
+      <Route path="/orders/create" element={<OrderDetail />} />
+      <Route path="/orders/:id" element={<OrderDetail />} />
+      <Route path="*" element={<Navigate to="/admin/users" replace />} />
     </Routes>
   );
 };

@@ -3,14 +3,22 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { login } from "../../services/auth.service";
+import useAdminContext from "../../hooks/useAdminContext";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const { setUser } = useAdminContext();
+
   const signIn = async () => {
-    const res = await login({ username, password });
-    localStorage.setItem("accessToken", res.data.token);
+    try {
+      const res = await login({ username, password });
+      localStorage.setItem("accessToken", res.data.token);
+      setUser("OK");
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   return (

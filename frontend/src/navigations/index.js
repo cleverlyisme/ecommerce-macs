@@ -15,7 +15,6 @@ const Navigation = () => {
       <Route path="/admin/*" element={<AdminRoute />} />
       <Route path="/cart/*" element={<CartRoute />} />
       <Route path="/order-success" element={<OrderSuccess />} />
-      <Route path="/login" element={<LoginRoute />} />
       <Route path="*" element={<HomeRoute />} />
     </Routes>
   );

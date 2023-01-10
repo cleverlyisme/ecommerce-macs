@@ -6,6 +6,7 @@ const environments = require("../utils/environments");
 const { BACKEND_URL } = environments;
 
 const getProducts = async (query) => {
+  const categories = await Category.find({}).lean();
   const { page, limit, categoryId } = query;
 
   const products = await Product.find({
@@ -23,7 +24,10 @@ const getProducts = async (query) => {
       .length / limit;
 
   return {
-    items: products || [],
+    items: products.map((item) => ({
+      ...item,
+      categoryName: categories.find((cat) => cat._id === item.categoryId)?.name,
+    })),
     totalPages: Math.ceil(totalPages) || 1,
   };
 };

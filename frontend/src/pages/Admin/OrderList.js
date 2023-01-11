@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Table } from "reactstrap";
+import { Table, Button } from "reactstrap";
 import { NotificationManager } from "react-notifications";
 import moment from "moment";
 
@@ -30,6 +30,7 @@ const OrderList = () => {
 
   const updateData = async (id, status, data) => {
     try {
+      if (status === "Canceled") throw new Error(`Order canceled`);
       if (status === data.status) throw new Error(`Order already ${status}`);
 
       await updateOrder(id, data);
@@ -134,6 +135,7 @@ const OrderList = () => {
                     <td
                       scope="row"
                       style={{
+                        padding: "10px 0",
                         display: "flex",
                         flexDirection: "column",
                         justifyContent: "center",
@@ -141,42 +143,33 @@ const OrderList = () => {
                         gap: "10px",
                       }}
                     >
-                      <div
-                        style={{
-                          cursor: "pointer",
-                        }}
+                      <Button
+                        color="success"
                         onClick={() =>
                           updateData(order._id, order.status, {
                             status: "Completed",
                           })
                         }
                       >
-                        <img src="/confirm.png" alt="Edit" />
-                      </div>
-                      <div
-                        style={{
-                          cursor: "pointer",
-                        }}
+                        Confirm
+                      </Button>
+
+                      <Button
+                        color="warning"
                         onClick={() =>
                           updateData(order._id, order.status, {
                             status: "Canceled",
                           })
                         }
                       >
-                        <img src="/cancel.png" alt="Edit" />
-                      </div>
-                      <div
-                        style={{
-                          cursor: "pointer",
-                        }}
+                        Cancel
+                      </Button>
+                      <Button
+                        color="danger"
                         onClick={() => deleteData(order._id)}
                       >
-                        <img
-                          src="/remove.png"
-                          alt="Remove"
-                          style={{ height: "20px" }}
-                        />
-                      </div>
+                        Delete
+                      </Button>
                     </td>
                   </tr>
                 ))}

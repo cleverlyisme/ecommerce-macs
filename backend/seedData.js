@@ -39,7 +39,6 @@ const generateUserData = async () => {
       username: u.username,
       password: passwordHash.generate(u.password),
     });
-
     await user.save();
   }
 };
@@ -50,7 +49,6 @@ const generateCategoryData = async () => {
     const category = new Category({
       name: c.name,
     });
-
     await category.save();
   }
 };
@@ -64,9 +62,7 @@ const generateProductData = async () => {
     const product = new Product({
       name: p.name,
       description: p.description,
-      images: [
-        "https://macone.vn/wp-content/uploads/2022/06/macbook-air-midnight-gallery2-20220606_GEO_US-1024x786.jpeg",
-      ],
+      images: ["63be6bd0c2f8b9c129e2b786"],
       price: p.price,
       quantity: Number(_.random(0, 30)),
       categoryId: category._id.toString(),

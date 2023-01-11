@@ -11,6 +11,7 @@ const getProducts = async (query) => {
   })
     .sort({
       name: 'asc',
+      createdAt: 'desc',
     })
     .limit(Number(limit))
     .skip(Number(limit) * (Number(page) - 1))
@@ -20,13 +21,17 @@ const getProducts = async (query) => {
     (await Product.find({ categoryId: categoryId || { $regex: '' } }).lean())
       .length / limit;
 
-  return {
+  const data = {
     items: products.map((item) => ({
       ...item,
-      categoryName: categories.find((cat) => cat._id === item.categoryId)?.name,
+      categoryName: categories.find(
+        (cat) => cat._id.toString() === item.categoryId
+      )?.name,
     })),
     totalPages: Math.ceil(totalPages) || 1,
   };
+
+  return data;
 };
 
 const getById = async (_id) => {

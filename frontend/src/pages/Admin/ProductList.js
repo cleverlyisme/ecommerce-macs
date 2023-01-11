@@ -1,11 +1,9 @@
-import { Container, Table } from "reactstrap";
-import { getProducts } from "../../services/products.service";
+import { Container, Table } from 'reactstrap';
+import { getProducts } from '../../services/products.service';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
-import Layout from "../../components/Layout";
-
-import Navs from "./components/Navs";
+import AdminLayout from './components/AdminLayout';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -18,9 +16,7 @@ const ProductList = () => {
   };
 
   return (
-    <Layout>
-      {" "}
-      <Navs />
+    <AdminLayout>
       <div className="p-2">
         <h5>Product List</h5>
         <Table striped bordered hover responsive size="sm">
@@ -57,7 +53,7 @@ const ProductList = () => {
           </tbody>
         </Table>
       </div>
-    </Layout>
+    </AdminLayout>
   );
 };
 

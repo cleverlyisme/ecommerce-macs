@@ -1,13 +1,9 @@
-import Layout from "../../components/Layout";
+import Layout from '../../components/Layout';
 
-import Navs from "./components/Navs";
+import AdminLayout from './components/AdminLayout';
 
 const OrderDetail = () => {
-  return (
-    <Layout>
-      <Navs />
-    </Layout>
-  );
+  return <AdminLayout>order detail</AdminLayout>;
 };
 
 export default OrderDetail;

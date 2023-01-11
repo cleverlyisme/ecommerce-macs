@@ -1,13 +1,10 @@
-import Layout from "../../components/Layout";
-
-import Navs from "./components/Navs";
+import AdminLayout from './components/AdminLayout';
 
 const ProductDetail = () => {
   return (
-    <Layout>
-      {" "}
-      <Navs />
-    </Layout>
+    <AdminLayout>
+      <div>Product detail</div>
+    </AdminLayout>
   );
 };
 

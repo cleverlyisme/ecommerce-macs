@@ -1,14 +1,7 @@
-import Layout from "../../components/Layout";
-
-import Navs from "./components/Navs";
+import AdminLayout from './components/AdminLayout';
 
 const OrderList = () => {
-  return (
-    <Layout>
-      {" "}
-      <Navs />
-    </Layout>
-  );
+  return <AdminLayout>Order list</AdminLayout>;
 };
 
 export default OrderList;

@@ -2,6 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 const navs = [
   { name: "Product list", url: "/admin/products" },
+  { name: "Category list", url: "/admin/categories" },
   { name: "Order list", url: "/admin/orders" },
 ];
 

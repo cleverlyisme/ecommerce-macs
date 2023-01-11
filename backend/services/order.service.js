@@ -14,7 +14,7 @@ const getOrders = async () => {
     for (const product of order.products) {
       const p = await Product.findOne({ _id: product.productId }).lean();
 
-      newProducts.push({ ...product, name: p.name });
+      if (p) newProducts.push({ ...product, name: p.name });
     }
 
     newOrders.push({ ...order, products: newProducts });

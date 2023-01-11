@@ -1,27 +1,27 @@
-import { useState, useEffect } from 'react';
-import { Table, Button } from 'reactstrap';
-import { NotificationManager } from 'react-notifications';
-import moment from 'moment';
+import { useState, useEffect } from "react";
+import { Table, Button } from "reactstrap";
+import { NotificationManager } from "react-notifications";
+import moment from "moment";
 
-import AdminLayout from './components/AdminLayout';
-import formatCurrency from '../../utils/formatCurrency';
+import AdminLayout from "./components/AdminLayout";
+import formatCurrency from "../../utils/formatCurrency";
 
 import {
   getOrders,
   updateOrder,
   deleteOrder,
-} from '../../services/order.service';
+} from "../../services/order.service";
 
 const OrderList = () => {
   const [orders, setOrders] = useState([]);
 
   const deleteData = async (id) => {
     try {
-      if (window.confirm('Are you sure you wish to delete this order?')) {
+      if (window.confirm("Are you sure you wish to delete this order?")) {
         await deleteOrder(id);
         await getData();
 
-        NotificationManager.success('Deleted order successfully');
+        NotificationManager.success("Deleted order successfully");
       }
     } catch (err) {
       NotificationManager.error(err.message);
@@ -30,13 +30,10 @@ const OrderList = () => {
 
   const updateData = async (id, status, data) => {
     try {
-      if (status === 'Canceled') throw new Error(`Order canceled`);
-      if (status === data.status) throw new Error(`Order already ${status}`);
-
       await updateOrder(id, data);
       await getData();
 
-      NotificationManager.success('Updated order successfully');
+      NotificationManager.success("Updated order successfully");
     } catch (err) {
       NotificationManager.error(err.message);
     }
@@ -63,8 +60,8 @@ const OrderList = () => {
           <h5>Order List</h5>
           <div
             style={{
-              maxHeight: '500px',
-              overflow: 'scroll',
+              maxHeight: "500px",
+              overflow: "scroll",
             }}
           >
             <Table bordered>
@@ -85,20 +82,20 @@ const OrderList = () => {
                   <tr key={order._id}>
                     <th
                       scope="column"
-                      style={{ maxWidth: '70px', overflowX: 'scroll' }}
+                      style={{ maxWidth: "70px", overflowX: "scroll" }}
                     >
                       {moment(new Date(order.createdAt)).format(
-                        'DD/MM/YYYY HH:mm:ss'
+                        "DD/MM/YYYY HH:mm:ss"
                       )}
                     </th>
-                    <td scope="column" style={{ maxWidth: '100px' }}>
+                    <td scope="column" style={{ maxWidth: "100px" }}>
                       {order.name}
                     </td>
                     <td
                       scope="column"
                       style={{
-                        maxWidth: '120px',
-                        maxHeight: '50px',
+                        maxWidth: "120px",
+                        maxHeight: "50px",
                       }}
                     >
                       {order.address}
@@ -106,7 +103,7 @@ const OrderList = () => {
                     <td>{order.phoneNumber}</td>
                     <td
                       scope="row"
-                      style={{ maxWidth: '150px', overflow: 'scroll' }}
+                      style={{ maxWidth: "150px", overflow: "scroll" }}
                     >
                       <div className="d-flex flex-column" style={{ gap: 16 }}>
                         {order.products.map((product) => (
@@ -115,10 +112,10 @@ const OrderList = () => {
                             className="d-flex flex-column"
                           >
                             <span className="fw-bold">{product.name}</span>
-                            <span style={{ fontStyle: 'italic' }}>
+                            <span style={{ fontStyle: "italic" }}>
                               Quantity: {product.quantity}
                             </span>
-                            <span style={{ fontStyle: 'italic' }}>
+                            <span style={{ fontStyle: "italic" }}>
                               {formatCurrency(product.price)}
                             </span>
                           </div>
@@ -134,8 +131,8 @@ const OrderList = () => {
                     </td>
                     <td
                       style={{
-                        maxWidth: '50px',
-                        overflow: 'scroll',
+                        maxWidth: "50px",
+                        overflow: "scroll",
                       }}
                     >
                       {order.status}
@@ -143,22 +140,22 @@ const OrderList = () => {
                     <td
                       scope="row"
                       style={{
-                        padding: '10px 0',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        gap: '10px',
+                        padding: "10px 0",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: "10px",
                       }}
                     >
-                      {order.status === 'Pending' && (
+                      {order.status === "Pending" && (
                         <>
                           <Button
                             size="sm"
                             color="success"
                             onClick={() =>
                               updateData(order._id, order.status, {
-                                status: 'Completed',
+                                status: "Completed",
                               })
                             }
                           >
@@ -170,7 +167,7 @@ const OrderList = () => {
                             color="warning"
                             onClick={() =>
                               updateData(order._id, order.status, {
-                                status: 'Canceled',
+                                status: "Canceled",
                               })
                             }
                           >

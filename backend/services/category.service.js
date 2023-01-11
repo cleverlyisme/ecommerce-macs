@@ -36,7 +36,7 @@ const updateCategory = async (_id, data) => {
   if (name !== category.name && categoryExist)
     throw new Error("Category existed");
 
-  if (!name.trim() || name.includes(" ")) throw new Error("Invalid category");
+  if (!name.trim()) throw new Error("Invalid category");
 
   category.name = name;
 

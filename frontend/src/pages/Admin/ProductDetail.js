@@ -6,7 +6,11 @@ import { NotificationManager } from 'react-notifications';
 
 import AdminLayout from './components/AdminLayout';
 import Images from './components/Image';
-import { getProductById, update } from '../../services/products.service';
+import {
+  getProductById,
+  update,
+  uploadPhoto,
+} from '../../services/products.service';
 import { getCategories } from '../../services/category.service';
 
 const ProductDetail = () => {
@@ -54,6 +58,14 @@ const ProductDetail = () => {
         throw new Error('Please fill in all field');
 
       if (files.length) {
+        const formData = new FormData();
+
+        for (const file of files) {
+          formData.append('files', file.file);
+        }
+
+        const res = await uploadPhoto(formData);
+        data.images.push(...res.data);
       }
 
       await update(data._id, data);

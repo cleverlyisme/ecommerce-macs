@@ -1,6 +1,8 @@
 import { useRef, useId } from 'react';
 import { Button } from 'reactstrap';
 
+import formatFileUrl from '../../../utils/formatFileUrl';
+
 const ImageItem = ({ image, onRemove }) => (
   <div
     key={image}
@@ -9,7 +11,7 @@ const ImageItem = ({ image, onRemove }) => (
   >
     <div style={{ width: 100 }}>
       <img
-        src={image.id ? URL.createObjectURL(image.file) : image}
+        src={image.id ? URL.createObjectURL(image.file) : formatFileUrl(image)}
         alt="product"
         style={{ width: 100, width: 100, borderRadius: 8, objectFit: 'cover' }}
       />

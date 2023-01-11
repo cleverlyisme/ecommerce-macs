@@ -1,9 +1,6 @@
 const Product = require('../models/product.model');
 const Category = require('../models/category.model');
 const _ = require('lodash');
-const environments = require('../utils/environments');
-
-const { BACKEND_URL } = environments;
 
 const getProducts = async (query) => {
   const categories = await Category.find({}).lean();

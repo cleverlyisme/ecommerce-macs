@@ -6,15 +6,16 @@ import {
   CardBody,
   CardTitle,
   CardText,
-} from "reactstrap";
-import { useNavigate } from "react-router-dom";
+} from 'reactstrap';
+import { useNavigate } from 'react-router-dom';
 import {
   NotificationContainer,
   NotificationManager,
-} from "react-notifications";
+} from 'react-notifications';
 
-import Currency from "../../../utils/formatCurrency";
-import useAppContext from "../../../hooks/useAppContext";
+import Currency from '../../../utils/formatCurrency';
+import useAppContext from '../../../hooks/useAppContext';
+import formatFileUrl from '../../../utils/formatFileUrl';
 
 const ProductDetail = ({ product }) => {
   const navigate = useNavigate();
@@ -25,23 +26,23 @@ const ProductDetail = ({ product }) => {
   } = useAppContext();
 
   return (
-    <Card className="p-0" style={{ overflow: "hidden" }}>
+    <Card className="p-0" style={{ overflow: 'hidden' }}>
       <img
         alt="Sample"
-        src={images[0]}
+        src={formatFileUrl(images[0])}
         style={{
           maxHeight: 120,
-          aspectRatio: "3 / 2",
-          objectFit: "cover",
-          objectPosition: "center",
-          cursor: "pointer",
+          aspectRatio: '3 / 2',
+          objectFit: 'cover',
+          objectPosition: 'center',
+          cursor: 'pointer',
         }}
       />
       ;
       <CardBody className="p-2">
         <CardTitle
-          style={{ fontWeight: 600, cursor: "pointer" }}
-          onClick={() => navigate("/products/" + _id)}
+          style={{ fontWeight: 600, cursor: 'pointer' }}
+          onClick={() => navigate('/products/' + _id)}
         >
           {name}
         </CardTitle>
@@ -56,10 +57,10 @@ const ProductDetail = ({ product }) => {
         <Button
           color="success"
           size="sm"
-          style={{ fontSize: 8, borderRadius: "30px" }}
+          style={{ fontSize: 8, borderRadius: '30px' }}
           onClick={() => {
             updateProduct({ _id, quantity: 1, name, price });
-            NotificationManager.success("Add to cart successfully");
+            NotificationManager.success('Add to cart successfully');
           }}
         >
           Add to cart

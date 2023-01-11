@@ -5,7 +5,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   return (
-    <div style={{ backgroundColor: '#1d1d1f' }}>
+    <div style={{ backgroundColor: '#ffd500' }}>
       <Container>
         <Row className="d-flex py-2">
           <Col xs={6}>
@@ -18,7 +18,11 @@ const Header = () => {
               }}
               onClick={() => navigate('/')}
             >
-              ShopMacs
+              <img
+                src="/shopmacs.png"
+                alt="logo"
+                style={{ width: 50, height: 50 }}
+              />
             </div>
           </Col>
           <Col

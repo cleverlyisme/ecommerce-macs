@@ -43,20 +43,8 @@ const OrderList = () => {
     <AdminLayout>
       <div style={{ padding: "20px 0" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-          <div
-            style={{
-              padding: "0 30px",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
+          <div style={{ padding: "0 20px" }}>
             <h5>Order List</h5>
-            <div
-              onClick={() => navigate("/admin/orders/create")}
-              style={{ cursor: "pointer" }}
-            >
-              <img src="/add.png" alt="Add" style={{ height: "30px" }} />
-            </div>
           </div>
           <Table
             bordered

@@ -48,7 +48,6 @@ const AdminRoute = () => {
       <Route path="/products/create" element={<ProductDetail />} />
       <Route path="/products/:id" element={<ProductDetail />} />
       <Route path="/orders" element={<OrderList />} />
-      <Route path="/orders/create" element={<OrderDetail />} />
       <Route path="/orders/:id" element={<OrderDetail />} />
       <Route path="*" element={<Navigate to="/admin/products" replace />} />
     </Routes>

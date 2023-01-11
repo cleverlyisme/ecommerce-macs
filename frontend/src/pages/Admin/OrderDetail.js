@@ -1,6 +1,4 @@
-import Layout from '../../components/Layout';
-
-import AdminLayout from './components/AdminLayout';
+import AdminLayout from "./components/AdminLayout";
 
 const OrderDetail = () => {
   return <AdminLayout>order detail</AdminLayout>;

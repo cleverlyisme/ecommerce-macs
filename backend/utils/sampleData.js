@@ -114,4 +114,6 @@ const sampleProducts = [
 
 const sampleUsers = [{ username: "admin", password: "admin" }];
 
-module.exports = { sampleUsers, sampleProducts };
+const sampleCategories = [{ name: "Máy mới" }, { name: "Máy cũ" }];
+
+module.exports = { sampleUsers, sampleProducts, sampleCategories };

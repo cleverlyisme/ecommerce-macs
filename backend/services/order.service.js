@@ -1,13 +1,26 @@
 const Order = require("../models/order.model");
-const User = require("../models/user.model");
 const Product = require("../models/product.model");
 
 const { OrderStatus } = require("../utils/constants");
 
 const getOrders = async () => {
-  const order = await Order.find({}).lean();
+  const orders = await Order.find({}).lean();
 
-  return order || [];
+  let newOrders = [];
+
+  for (const order of orders) {
+    const newProducts = [];
+
+    for (const product of order.products) {
+      const p = await Product.findOne({ _id: product.productId }).lean();
+
+      newProducts.push({ ...product, name: p.name });
+    }
+
+    newOrders.push({ ...order, products: newProducts });
+  }
+
+  return newOrders || [];
 };
 
 const getById = async (_id) => {
@@ -73,9 +86,7 @@ const updateOrder = async (_id, data) => {
 
   if (status === "Canceled") {
     for (const p of order.products) {
-      const product = await Product.findOne({
-        _id: p.productId,
-      });
+      const product = await Product.findOne({ _id: p.productId });
 
       product.quantity += p.quantity;
 

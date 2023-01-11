@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { Table } from "reactstrap";
 import { NotificationManager } from "react-notifications";
 import moment from "moment";
 
 import AdminLayout from "./components/AdminLayout";
+import formatCurrency from "../../utils/formatCurrency";
 
-import { getOrders, deleteOrder } from "../../services/order.service";
+import {
+  getOrders,
+  updateOrder,
+  deleteOrder,
+} from "../../services/order.service";
 
 const OrderList = () => {
-  const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
 
   const deleteData = async (id) => {
@@ -20,6 +23,19 @@ const OrderList = () => {
 
         NotificationManager.success("Deleted order successfully");
       }
+    } catch (err) {
+      NotificationManager.error(err.message);
+    }
+  };
+
+  const updateData = async (id, status, data) => {
+    try {
+      if (status === data.status) throw new Error(`Order already ${status}`);
+
+      await updateOrder(id, data);
+      await getData();
+
+      NotificationManager.success("Updated order successfully");
     } catch (err) {
       NotificationManager.error(err.message);
     }
@@ -46,86 +62,127 @@ const OrderList = () => {
           <div style={{ padding: "0 20px" }}>
             <h5>Order List</h5>
           </div>
-          <Table
-            bordered
-            hover
-            responsive
+          <div
             style={{
-              borderRadius: "5px",
-              overflow: "hidden",
-              maxHeight: "400px",
+              maxHeight: "500px",
+              overflow: "scroll",
             }}
           >
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Phone</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order) => (
-                <tr key={order._id}>
-                  <th
-                    scope="row"
-                    style={{ maxWidth: "100px", overflowX: "scroll" }}
-                  >
-                    {order._id}
-                  </th>
-                  <td
-                    scope="row"
-                    style={{ maxWidth: "150px", overflowX: "scroll" }}
-                  >
-                    {order.name}
-                  </td>
-                  <td
-                    scope="row"
-                    style={{ maxWidth: "200px", overflowX: "scroll" }}
-                  >
-                    {order.address}
-                  </td>
-                  <td>{order.phoneNumber}</td>
-                  <td>
-                    {moment(new Date(order.createdAt)).format("DD/MM/YYYY")}
-                  </td>
-                  <td>{order.status}</td>
-                  <td
-                    style={{
-                      minHeight: "60px",
-                      display: "flex",
-                      justifyContent: "space-evenly",
-                      alignItems: "center",
-                    }}
-                  >
-                    <div
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      onClick={() => navigate(`/admin/orders/${order._id}`)}
-                    >
-                      <img src="/edit.png" alt="Edit" />
-                    </div>
-                    <div
-                      style={{
-                        cursor: "pointer",
-                      }}
-                      onClick={() => deleteData(order._id)}
-                    >
-                      <img
-                        src="/remove.png"
-                        alt="Remove"
-                        style={{ height: "20px" }}
-                      />
-                    </div>
-                  </td>
+            <Table bordered>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Name</th>
+                  <th>Address</th>
+                  <th>Phone</th>
+                  <th>Products</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </Table>
+              </thead>
+              <tbody>
+                {orders.map((order) => (
+                  <tr key={order._id}>
+                    <th
+                      scope="column"
+                      style={{ maxWidth: "70px", overflowX: "scroll" }}
+                    >
+                      {moment(new Date(order.createdAt)).format(
+                        "DD/MM/YYYY HH:mm:ss"
+                      )}
+                    </th>
+                    <td scope="column" style={{ maxWidth: "100px" }}>
+                      {order.name}
+                    </td>
+                    <td
+                      scope="column"
+                      style={{
+                        maxWidth: "120px",
+                        maxHeight: "50px",
+                      }}
+                    >
+                      {order.address}
+                    </td>
+                    <td>{order.phoneNumber}</td>
+                    <td
+                      scope="row"
+                      style={{ maxWidth: "150px", overflow: "scroll" }}
+                    >
+                      {order.products.map((product) => (
+                        <div key={product.productId}>
+                          Name: {product.name}, quantity: {product.quantity},
+                          price: {formatCurrency(product.price)}
+                        </div>
+                      ))}
+                    </td>
+                    <td>
+                      {formatCurrency(
+                        order.products.reduce((iniValue, product) => {
+                          return iniValue + product.quantity * product.price;
+                        }, 0)
+                      )}
+                    </td>
+                    <td
+                      style={{
+                        maxWidth: "50px",
+                        overflow: "scroll",
+                      }}
+                    >
+                      {order.status}
+                    </td>
+                    <td
+                      scope="row"
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: "10px",
+                      }}
+                    >
+                      <div
+                        style={{
+                          cursor: "pointer",
+                        }}
+                        onClick={() =>
+                          updateData(order._id, order.status, {
+                            status: "Completed",
+                          })
+                        }
+                      >
+                        <img src="/confirm.png" alt="Edit" />
+                      </div>
+                      <div
+                        style={{
+                          cursor: "pointer",
+                        }}
+                        onClick={() =>
+                          updateData(order._id, order.status, {
+                            status: "Canceled",
+                          })
+                        }
+                      >
+                        <img src="/cancel.png" alt="Edit" />
+                      </div>
+                      <div
+                        style={{
+                          cursor: "pointer",
+                        }}
+                        onClick={() => deleteData(order._id)}
+                      >
+                        <img
+                          src="/remove.png"
+                          alt="Remove"
+                          style={{ height: "20px" }}
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
         </div>
       </div>
     </AdminLayout>

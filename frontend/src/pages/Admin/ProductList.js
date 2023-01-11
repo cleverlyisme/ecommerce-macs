@@ -1,13 +1,13 @@
-import { Container, Table, Button } from 'reactstrap';
-import { getProducts } from '../../services/products.service';
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Container, Table, Button } from "reactstrap";
+import { getProducts } from "../../services/products.service";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-import AdminLayout from './components/AdminLayout';
-import formatFileUrl from '../../utils/formatFileUrl';
-import Currency from '../../utils/formatCurrency';
-import Paginations from '../Paginations';
-import { deleteProduct } from '../../services/products.service';
+import AdminLayout from "./components/AdminLayout";
+import formatFileUrl from "../../utils/formatFileUrl";
+import Currency from "../../utils/formatCurrency";
+import Paginations from "../Paginations";
+import { deleteProduct } from "../../services/products.service";
 
 const limit = 10;
 
@@ -17,12 +17,11 @@ const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [page, setPage] = useState(1);
-  const [categoryId, setCategoryId] = useState('');
+  const [categoryId, setCategoryId] = useState("");
 
   const getListProducts = async () => {
     try {
       const res = await getProducts({ page, limit, categoryId });
-      console.log(res.data);
       setProducts(res.data.items);
       setTotalPages(res.data.totalPages);
     } catch (err) {
@@ -32,7 +31,7 @@ const ProductList = () => {
 
   const removeProduct = async (id) => {
     // eslint-disable-next-line
-    if (!confirm('Do you want to remove this products?')) return;
+    if (!confirm("Do you want to remove this products?")) return;
     try {
       await deleteProduct(id);
       getListProducts();
@@ -45,12 +44,19 @@ const ProductList = () => {
     getListProducts();
   }, [page]);
 
-  console.log(products);
-
   return (
     <AdminLayout>
       <div className="p-2">
-        <h5>Product List</h5>
+        <div className="d-flex p-2 justify-content-between">
+          <h5>Product List</h5>
+          <Button
+            color="primary"
+            size="sm"
+            onClick={() => navigate("/admin/products/create")}
+          >
+            Create
+          </Button>
+        </div>
         <Table striped bordered hover responsive size="sm">
           <thead>
             <tr>
@@ -73,7 +79,7 @@ const ProductList = () => {
                   <td>
                     <img
                       src={formatFileUrl(product.images[0])}
-                      style={{ width: 70, height: 70, objectFit: 'cover' }}
+                      style={{ width: 70, height: 70, objectFit: "cover" }}
                     />
                   </td>
                   <td>{product.name}</td>
@@ -88,7 +94,7 @@ const ProductList = () => {
                         color="success"
                         size="sm"
                         onClick={() =>
-                          navigate('/admin/products/' + product._id)
+                          navigate("/admin/products/" + product._id)
                         }
                       >
                         Update
@@ -110,7 +116,7 @@ const ProductList = () => {
       </div>
       <div
         className="d-flex justify-content-end mb-2"
-        style={{ width: '100%' }}
+        style={{ width: "100%" }}
       >
         <Paginations
           setPage={setPage}

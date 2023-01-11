@@ -1,17 +1,18 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Row, Col, Label, Input, Button } from 'reactstrap';
-import Select from 'react-select';
-import { NotificationManager } from 'react-notifications';
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Row, Col, Label, Input, Button } from "reactstrap";
+import Select from "react-select";
+import { NotificationManager } from "react-notifications";
+import { createProduct } from "../../services/products.service";
 
-import AdminLayout from './components/AdminLayout';
-import Images from './components/Image';
+import AdminLayout from "./components/AdminLayout";
+import Images from "./components/Image";
 import {
   getProductById,
   update,
   uploadPhoto,
-} from '../../services/products.service';
-import { getCategories } from '../../services/category.service';
+} from "../../services/products.service";
+import { getCategories } from "../../services/category.service";
 
 const ProductDetail = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const ProductDetail = () => {
   const [categories, setCategories] = useState([]);
   const [data, setData] = useState(null);
   const [files, setFiles] = useState([]);
+  const [check, setCheck] = useState(null);
 
   const getAllCategories = async () => {
     try {
@@ -35,6 +37,7 @@ const ProductDetail = () => {
     try {
       const res = await getProductById(id);
       setData(res.data);
+      setCheck(res.data);
     } catch (err) {
       console.error(err);
     }
@@ -55,13 +58,13 @@ const ProductDetail = () => {
     try {
       const { name, description, categoryId } = data;
       if ([name, description, categoryId].some((item) => !item || !item.trim()))
-        throw new Error('Please fill in all field');
+        throw new Error("Please fill in all field");
 
       if (files.length) {
         const formData = new FormData();
 
         for (const file of files) {
-          formData.append('files', file.file);
+          formData.append("files", file.file);
         }
 
         const res = await uploadPhoto(formData);
@@ -69,14 +72,39 @@ const ProductDetail = () => {
       }
 
       await update(data._id, data);
-      NotificationManager.success('Update product successfully');
-      navigate('/admin/products');
+      NotificationManager.success("Update product successfully");
+      navigate("/admin/products");
     } catch (err) {
       NotificationManager.error(err.message);
     }
   };
 
-  if (!data) return null;
+  const createNewProduct = async () => {
+    try {
+      const { name, description, categoryId } = data;
+      if ([name, description, categoryId].some((item) => !item || !item.trim()))
+        throw new Error("Please fill in all field");
+
+      if (files.length) {
+        const formData = new FormData();
+
+        for (const file of files) {
+          formData.append("files", file.file);
+        }
+        data.images = [];
+        const res = await uploadPhoto(formData);
+        data.images.push(...res.data);
+      }
+
+      await createProduct(data);
+      NotificationManager.success("Create product successfully");
+      navigate("/admin/products");
+    } catch (err) {
+      NotificationManager.error(err.message);
+    }
+  };
+
+  // if (!data) return null;
 
   return (
     <AdminLayout>
@@ -87,7 +115,7 @@ const ProductDetail = () => {
               files={files}
               setFiles={setFiles}
               images={data?.images || []}
-              setImages={changeData('images')}
+              setImages={changeData("images")}
             />
           </Col>
           <Col xs={12} md={9}>
@@ -95,8 +123,8 @@ const ProductDetail = () => {
               <div>
                 <Label>Name</Label>
                 <Input
-                  value={data.name}
-                  onChange={(e) => changeData('name')(e.target.value)}
+                  value={data?.name}
+                  onChange={(e) => changeData("name")(e.target.value)}
                   placeholder="Name"
                 />
               </div>
@@ -105,21 +133,21 @@ const ProductDetail = () => {
                   className="basic-single"
                   classNamePrefix="select"
                   value={categories.find(
-                    (item) => item._id === data?.categoryId
+                    (item) => item?._id === data?.categoryId
                   )}
                   placeholder="Category"
                   name="category"
                   options={categories}
                   onChange={(selectedOption) =>
-                    changeData('categoryId')(selectedOption.value)
+                    changeData("categoryId")(selectedOption.value)
                   }
                 />
               </div>
               <div>
                 <Label>Description</Label>
                 <Input
-                  value={data.description}
-                  onChange={(e) => changeData('description')(e.target.value)}
+                  value={data?.description}
+                  onChange={(e) => changeData("description")(e.target.value)}
                   placeholder="Description"
                 />
               </div>
@@ -128,8 +156,8 @@ const ProductDetail = () => {
                 <Input
                   type="number"
                   min={0}
-                  value={data.price}
-                  onChange={(e) => changeData('price')(Number(e.target.value))}
+                  value={data?.price}
+                  onChange={(e) => changeData("price")(Number(e.target.value))}
                   placeholder="Price"
                 />
               </div>
@@ -138,9 +166,9 @@ const ProductDetail = () => {
                 <Input
                   type="number"
                   min={0}
-                  value={data.quantity}
+                  value={data?.quantity}
                   onChange={(e) =>
-                    changeData('quantity')(Number(e.target.value))
+                    changeData("quantity")(Number(e.target.value))
                   }
                   placeholder="Quantity"
                 />
@@ -150,13 +178,16 @@ const ProductDetail = () => {
                 <Input
                   type="number"
                   min={0}
-                  value={data.sold}
-                  onChange={(e) => changeData('sold')(Number(e.target.value))}
+                  value={data?.sold}
+                  onChange={(e) => changeData("sold")(Number(e.target.value))}
                   placeholder="Sold"
                 />
               </div>
-              <Button color="primary" onClick={submit}>
-                Update
+              <Button
+                color="primary"
+                onClick={!check ? createNewProduct : submit}
+              >
+                {!check ? "Create" : "Update"}
               </Button>
             </div>
           </Col>

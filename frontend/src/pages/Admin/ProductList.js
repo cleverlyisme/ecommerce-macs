@@ -1,19 +1,49 @@
-import { Container, Table } from 'reactstrap';
-import { getProducts } from '../../services/products.service';
+import { Container, Table, Button } from "reactstrap";
+import { getProducts } from "../../services/products.service";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { useState, useEffect } from 'react';
+import AdminLayout from "./components/AdminLayout";
+import formatFileUrl from "../../utils/formatFileUrl";
+import Currency from "../../utils/formatCurrency";
+import Paginations from "../Paginations";
+import { deleteProduct } from "../../services/products.service";
 
-import AdminLayout from './components/AdminLayout';
+const limit = 10;
 
 const ProductList = () => {
-  const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
 
-  const getListProduct = async () => {
+  const [products, setProducts] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
+  const [page, setPage] = useState(1);
+  const [categoryId, setCategoryId] = useState("");
+
+  const getListProducts = async () => {
     try {
+      const res = await getProducts({ page, limit, categoryId });
+      console.log(res.data);
+      setProducts(res.data.items);
+      setTotalPages(res.data.totalPages);
     } catch (err) {
       console.log(err.message);
     }
   };
+
+  const removeProduct = async (id) => {
+    try {
+      await deleteProduct(id);
+      getListProducts();
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  useEffect(() => {
+    getListProducts();
+  }, [page]);
+
+  console.log(products);
 
   return (
     <AdminLayout>
@@ -28,30 +58,61 @@ const ProductList = () => {
               <th>Description</th>
               <th>Price</th>
               <th>Quantity</th>
+              <th>Sold</th>
               <th>Category</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td colSpan={2}>Larry the Bird</td>
-              <td>@twitter</td>
-            </tr>
+            {products.map((product, index) => {
+              return (
+                <tr>
+                  <td>{index + 1 + (page - 1) * 10}</td>
+                  <td>
+                    <img
+                      src={formatFileUrl(product.images[0])}
+                      style={{ width: 70, height: 70, objectFit: "cover" }}
+                    />
+                  </td>
+                  <td>{product.name}</td>
+                  <td>{product.description}</td>
+                  <td>{Currency(product.price)}</td>
+                  <td>{product.quantity}</td>
+                  <td>{product.sold}</td>
+                  <td>{product.categoryName}</td>
+                  <td>
+                    <div className="d-flex" style={{ gap: 5 }}>
+                      <Button
+                        color="danger"
+                        size="sm"
+                        onClick={() => removeProduct(product._id)}
+                      >
+                        delete
+                      </Button>
+                      <Button
+                        color="success"
+                        size="sm"
+                        onClick={() =>
+                          navigate("/admin/products/" + product._id)
+                        }
+                      >
+                        update
+                      </Button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </Table>
+      </div>
+      <div className="d-flex justify-content-end" style={{ width: "100%" }}>
+        <Paginations
+          setPage={setPage}
+          page={page}
+          totalPages={totalPages}
+          style={{ width: 80 }}
+        />
       </div>
     </AdminLayout>
   );

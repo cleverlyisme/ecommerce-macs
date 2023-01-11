@@ -85,20 +85,20 @@ const ProductList = () => {
                   <td>
                     <div className="d-flex" style={{ gap: 5 }}>
                       <Button
-                        color="danger"
-                        size="sm"
-                        onClick={() => removeProduct(product._id)}
-                      >
-                        delete
-                      </Button>
-                      <Button
                         color="success"
                         size="sm"
                         onClick={() =>
                           navigate('/admin/products/' + product._id)
                         }
                       >
-                        update
+                        Update
+                      </Button>
+                      <Button
+                        color="danger"
+                        size="sm"
+                        onClick={() => removeProduct(product._id)}
+                      >
+                        Delete
                       </Button>
                     </div>
                   </td>

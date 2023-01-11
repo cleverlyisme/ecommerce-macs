@@ -10,11 +10,5 @@ export const uploadFile = file => {
   await uploadBytes(fileRef, file, metadata);
 
   const url = await getDownloadURL(fileRef);
-  return {
-    url,
-    type: file.type,
-    name: file.name,
-    size: file.size,
-    storageRef,
-  };
+  return url
 }

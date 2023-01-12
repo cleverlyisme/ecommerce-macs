@@ -30,15 +30,15 @@ const getById = async (_id) => {
 };
 
 const createOrder = async (data) => {
-  const { name, address, phoneNumber, products } = data;
-
-  console.log({ data });
+  const { name, address, phoneNumber, products, note } = data;
 
   if (!address.trim()) throw new Error("Invalid address");
 
   if (phoneNumber.length < 10) throw new Error("Invalid phone number");
 
   let amount = 0;
+
+  console.log(products);
 
   for (const p of products) {
     const product = await Product.findOne({
@@ -66,6 +66,7 @@ const createOrder = async (data) => {
     phoneNumber,
     status: OrderStatus.Pending,
     products,
+    note: note || "",
     amount: Number(amount),
   });
 

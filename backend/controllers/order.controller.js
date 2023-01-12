@@ -24,13 +24,14 @@ const getById = async (req, res) => {
 
 const createOrder = async (req, res) => {
   try {
-    const { name, address, phoneNumber, products } = req.body;
+    const { name, address, phoneNumber, products, note } = req.body;
 
     await service.createOrder({
       name,
       address,
       phoneNumber,
       products,
+      note,
     });
 
     res.sendStatus(201);

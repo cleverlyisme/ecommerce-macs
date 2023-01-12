@@ -121,11 +121,11 @@ const ProductDetail = () => {
           <Col xs={12} md={9}>
             <div className="d-flex flex-column" style={{ gap: 16 }}>
               <div>
-                <Label>Name</Label>
+                <Label>Tên sản phẩm</Label>
                 <Input
                   value={data?.name}
                   onChange={(e) => changeData("name")(e.target.value)}
-                  placeholder="Name"
+                  placeholder="Tên sản phẩm"
                 />
               </div>
               <div>
@@ -135,7 +135,7 @@ const ProductDetail = () => {
                   value={categories.find(
                     (item) => item?._id === data?.categoryId
                   )}
-                  placeholder="Category"
+                  placeholder="Phân loại"
                   name="category"
                   options={categories}
                   onChange={(selectedOption) =>
@@ -144,25 +144,25 @@ const ProductDetail = () => {
                 />
               </div>
               <div>
-                <Label>Description</Label>
+                <Label>Mô tả sản phẩm</Label>
                 <Input
                   value={data?.description}
                   onChange={(e) => changeData("description")(e.target.value)}
-                  placeholder="Description"
+                  placeholder="Mô tả sản phẩm"
                 />
               </div>
               <div>
-                <Label>Price</Label>
+                <Label>Giá</Label>
                 <Input
                   type="number"
                   min={0}
                   value={data?.price}
                   onChange={(e) => changeData("price")(Number(e.target.value))}
-                  placeholder="Price"
+                  placeholder="Giá "
                 />
               </div>
               <div>
-                <Label>Quantity</Label>
+                <Label>Số lượng</Label>
                 <Input
                   type="number"
                   min={0}
@@ -170,24 +170,24 @@ const ProductDetail = () => {
                   onChange={(e) =>
                     changeData("quantity")(Number(e.target.value))
                   }
-                  placeholder="Quantity"
+                  placeholder="Số lượng"
                 />
               </div>
               <div>
-                <Label>Sold</Label>
+                <Label>Đã bán</Label>
                 <Input
                   type="number"
                   min={0}
                   value={data?.sold}
                   onChange={(e) => changeData("sold")(Number(e.target.value))}
-                  placeholder="Sold"
+                  placeholder="Đã bán"
                 />
               </div>
               <Button
                 color="primary"
                 onClick={!check ? createNewProduct : submit}
               >
-                {!check ? "Create" : "Update"}
+                {!check ? "Tạo" : "Cập nhật"}
               </Button>
             </div>
           </Col>

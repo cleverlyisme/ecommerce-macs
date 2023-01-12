@@ -57,7 +57,7 @@ const OrderList = () => {
     <AdminLayout>
       <div className="p-2">
         <div>
-          <h5>Order List</h5>
+          <h5>Danh sách đặt hàng</h5>
           <div
             style={{
               maxHeight: "500px",
@@ -67,14 +67,14 @@ const OrderList = () => {
             <Table bordered>
               <thead>
                 <tr>
-                  <th>Date</th>
-                  <th>Name</th>
-                  <th>Address</th>
-                  <th>Phone</th>
-                  <th>Products</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                  <th>Action</th>
+                  <th>Thời gian</th>
+                  <th>Tên</th>
+                  <th>Địa chỉ</th>
+                  <th>Số điện thoại</th>
+                  <th>Sản phẩm</th>
+                  <th>Giá tiền</th>
+                  <th>Trạng thái</th>
+                  <th>Hành động</th>
                 </tr>
               </thead>
               <tbody>

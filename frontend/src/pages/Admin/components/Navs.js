@@ -1,9 +1,9 @@
 import { useNavigate, useLocation } from "react-router-dom";
 
 const navs = [
-  { name: "Product list", url: "/admin/products" },
-  { name: "Category list", url: "/admin/categories" },
-  { name: "Order list", url: "/admin/orders" },
+  { name: "Danh sách sản phẩm", url: "/admin/products" },
+  { name: "Danh sách phân loại", url: "/admin/categories" },
+  { name: "Danh sách đặt hàng", url: "/admin/orders" },
 ];
 
 const Navs = () => {

@@ -68,14 +68,14 @@ const Home = () => {
           />
         </div>
         <div className="d-flex align-items-center" style={{ gap: 10 }}>
-          <div>Category</div>
+          <div>Phân loại</div>
           <div style={{ width: 200 }}>
             <Select
               className="basic-single"
               classNamePrefix="select"
               defaultValue={getNameCategory[0]}
               isClearable={true}
-              placeholder="Category"
+              placeholder="Phân loại"
               name="category"
               options={getNameCategory}
               onChange={(selectedOption) =>
@@ -87,7 +87,7 @@ const Home = () => {
           </div>
         </div>
 
-        <h5 className="mb-0">Macbook for you!</h5>
+        <h5 className="mb-0">Danh sách sản phẩm</h5>
         <Row>
           {products.map((product) => {
             return (
@@ -98,7 +98,7 @@ const Home = () => {
           })}
         </Row>
         <div className="d-flex py-3 align-items-center" style={{ gap: 10 }}>
-          <div>Page</div>
+          <div>Trang</div>
           <div style={{ width: 80 }}>
             <Paginations
               setPage={setPage}

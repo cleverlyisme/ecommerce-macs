@@ -48,27 +48,27 @@ const ProductList = () => {
     <AdminLayout>
       <div className="p-2">
         <div className="d-flex p-2 justify-content-between">
-          <h5>Product List</h5>
+          <h5>Danh sách sản phẩm</h5>
           <Button
             color="primary"
             size="sm"
             onClick={() => navigate("/admin/products/create")}
           >
-            Create
+            Tạo Product
           </Button>
         </div>
         <Table striped bordered hover responsive size="sm">
           <thead>
             <tr>
               <th>#</th>
-              <th>Image</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Sold</th>
-              <th>Category</th>
-              <th>Action</th>
+              <th>Ảnh</th>
+              <th>Tên sản phẩm</th>
+              <th>Mô tả sản phẩm</th>
+              <th>Giá</th>
+              <th>Số lượng</th>
+              <th>Đã bán</th>
+              <th>Phân loại</th>
+              <th>Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -97,14 +97,14 @@ const ProductList = () => {
                           navigate("/admin/products/" + product._id)
                         }
                       >
-                        Update
+                        Chỉnh sửa
                       </Button>
                       <Button
                         color="danger"
                         size="sm"
                         onClick={() => removeProduct(product._id)}
                       >
-                        Delete
+                        Xóa
                       </Button>
                     </div>
                   </td>

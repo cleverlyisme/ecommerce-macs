@@ -1,7 +1,7 @@
-import { useRef, useId } from 'react';
-import { Button } from 'reactstrap';
+import { useRef, useId } from "react";
+import { Button } from "reactstrap";
 
-import formatFileUrl from '../../../utils/formatFileUrl';
+import formatFileUrl from "../../../utils/formatFileUrl";
 
 const ImageItem = ({ image, onRemove }) => (
   <div
@@ -13,11 +13,11 @@ const ImageItem = ({ image, onRemove }) => (
       <img
         src={image.id ? URL.createObjectURL(image.file) : formatFileUrl(image)}
         alt="product"
-        style={{ width: 100, width: 100, borderRadius: 8, objectFit: 'cover' }}
+        style={{ width: 100, width: 100, borderRadius: 8, objectFit: "cover" }}
       />
     </div>
     <Button color="danger" size="sm" onClick={onRemove}>
-      Delete
+      Xóa
     </Button>
   </div>
 );
@@ -36,7 +36,7 @@ const Images = ({ images, setImages, files, setFiles }) => {
         file,
       })),
     ]);
-    e.target.value = '';
+    e.target.value = "";
   };
 
   const render = () => {
@@ -47,11 +47,11 @@ const Images = ({ images, setImages, files, setFiles }) => {
           size="sm"
           onClick={() => labelRef.current?.click()}
         >
-          Add images
+          Thêm ảnh
         </Button>
         <div
           className="d-flex flex-column"
-          style={{ gap: 8, maxHeight: '80vh', overflowY: 'auto' }}
+          style={{ gap: 8, maxHeight: "80vh", overflowY: "auto" }}
         >
           {images.map((image) => (
             <ImageItem

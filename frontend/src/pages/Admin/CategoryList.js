@@ -88,30 +88,31 @@ const CategoryList = () => {
       <div className="p-2">
         <div className="d-flex flex-column" style={{ gap: "20px" }}>
           <div>
-            <h5>Category List</h5>
+            <h5>Danh sách phân loại</h5>
             {!creatingItem ? (
               <Button
                 size="sm"
                 color="success"
                 onClick={() => setCreatingItem(true)}
               >
-                Add Category
+                Thêm loại sản phẩm
               </Button>
             ) : (
               <div className="d-flex" style={{ gap: "10px" }}>
                 <Input
                   value={creatingValue}
                   onChange={(e) => setCreatingValue(e.target.value)}
-                  placeholder="Enter category name..."
+                  placeholder="Tên Loại sản phẩm"
+                  style={{ width: 300 }}
                 />
                 <Button
                   size="sm"
                   color="success"
                   onClick={() => createData({ name: creatingValue })}
                 >
-                  Confirm
+                  Xác nhận
                 </Button>
-                <Button onClick={() => cancelCreating()}>Cancel</Button>
+                <Button onClick={() => cancelCreating()}>Hủy bỏ</Button>
               </div>
             )}
           </div>
@@ -125,8 +126,8 @@ const CategoryList = () => {
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Name</th>
-                  <th>Action</th>
+                  <th>Tên </th>
+                  <th>Hành động</th>
                 </tr>
               </thead>
               <tbody>
@@ -153,7 +154,6 @@ const CategoryList = () => {
                       style={{
                         padding: "10px 0",
                         display: "flex",
-                        flexDirection: "column",
                         justifyContent: "center",
                         alignItems: "center",
                         gap: "10px",
@@ -173,15 +173,15 @@ const CategoryList = () => {
                             }
                           >
                             {editingItem === category._id.toString()
-                              ? "Confirm"
-                              : "Update"}
+                              ? "Xác nhận"
+                              : "Chỉnh sửa"}
                           </Button>
                           <Button
                             size="sm"
                             color="danger"
                             onClick={() => deleteData(category._id)}
                           >
-                            Delete
+                            Xóa
                           </Button>
                         </>
                       }

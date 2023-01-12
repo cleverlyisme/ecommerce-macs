@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { Row, Col, Input, Label, FormGroup, Button } from 'reactstrap';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { Row, Col, Input, Label, FormGroup, Button } from "reactstrap";
+import { useNavigate } from "react-router-dom";
 
 const Information = ({ cart, onConfirm }) => {
   const navigate = useNavigate();
   const [data, setData] = useState({
-    name: '',
-    phoneNumber: '',
-    address: '',
-    note: '',
+    name: "",
+    phoneNumber: "",
+    address: "",
+    note: "",
   });
 
   const changeData = (field, value) => {
@@ -22,10 +22,10 @@ const Information = ({ cart, onConfirm }) => {
 
   const submit = async () => {
     try {
-      if (!name || !name.trim()) throw new Error('Name is empty');
+      if (!name || !name.trim()) throw new Error("Name is empty");
       if (!phoneNumber || !phoneNumber.trim())
-        throw new Error('Phone number is empty');
-      if (!address || !address.trim()) throw new Error('Address is empty');
+        throw new Error("Phone number is empty");
+      if (!address || !address.trim()) throw new Error("Address is empty");
 
       await onConfirm({
         note,
@@ -50,40 +50,40 @@ const Information = ({ cart, onConfirm }) => {
 
         <Col xs={12} sm={12} md={6}>
           <FormGroup>
-            <Label>Name</Label>
+            <Label>Tên</Label>
             <Input
-              placeholder="Name"
+              placeholder="Tên"
               value={name}
-              onChange={(e) => changeData('name', e.target.value)}
+              onChange={(e) => changeData("name", e.target.value)}
             />
           </FormGroup>
           <FormGroup>
-            <Label>Phone number</Label>
+            <Label>Số điện thoại</Label>
             <Input
-              placeholder="Phone number"
+              placeholder="Số điện thoại"
               type="number"
               value={phoneNumber}
-              onChange={(e) => changeData('phoneNumber', e.target.value)}
+              onChange={(e) => changeData("phoneNumber", e.target.value)}
             />
           </FormGroup>
           <FormGroup>
-            <Label>Address</Label>
+            <Label>Địa chỉ</Label>
             <Input
-              placeholder="Address"
+              placeholder="Địa chỉ"
               value={address}
-              onChange={(e) => changeData('address', e.target.value)}
+              onChange={(e) => changeData("address", e.target.value)}
             />
           </FormGroup>
         </Col>
         <Col xs={12} sm={12} md={6}>
           <FormGroup>
-            <Label>Note</Label>
+            <Label>Ghi chú</Label>
             <Input
               type="textarea"
               rows={5}
-              placeholder="Note"
+              placeholder="Ghi chú"
               value={note}
-              onChange={(e) => changeData('note', e.target.value)}
+              onChange={(e) => changeData("note", e.target.value)}
             />
           </FormGroup>
         </Col>
@@ -94,7 +94,7 @@ const Information = ({ cart, onConfirm }) => {
             disabled={!cart.length}
             onClick={submit}
           >
-            Confirm
+            Xác nhận
           </Button>
         </Col>
       </Row>

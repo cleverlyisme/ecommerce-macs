@@ -1,12 +1,12 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { Table } from 'reactstrap';
-import { NotificationManager } from 'react-notifications';
+import { Link, useNavigate } from "react-router-dom";
+import { Table } from "reactstrap";
+import { NotificationManager } from "react-notifications";
 
-import Layout from '../../components/Layout';
-import Information from './components/Information';
-import useAppContext from '../../hooks/useAppContext';
-import formatCurrency from '../../utils/formatCurrency';
-import { create } from '../../services/order.service';
+import Layout from "../../components/Layout";
+import Information from "./components/Information";
+import useAppContext from "../../hooks/useAppContext";
+import formatCurrency from "../../utils/formatCurrency";
+import { create } from "../../services/order.service";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -29,8 +29,8 @@ const Cart = () => {
     try {
       await create(data);
       cleanCart();
-      NotificationManager.success('Order succesfully');
-      navigate('/order-success');
+      NotificationManager.success("Order succesfully");
+      navigate("/order-success");
     } catch (err) {
       console.error(err);
       NotificationManager.error(
@@ -46,18 +46,18 @@ const Cart = () => {
         <thead>
           <tr>
             <th className="text-center">#</th>
-            <th style={{ width: '20%' }}>Name</th>
-            <th className="text-center" style={{ width: '10%' }}>
-              Quantity
+            <th style={{ width: "20%" }}>Tên sản phẩm</th>
+            <th className="text-center" style={{ width: "10%" }}>
+              Số lượng
             </th>
-            <th className="text-center" style={{ width: '20%' }}>
-              Price
+            <th className="text-center" style={{ width: "20%" }}>
+              Giá tiền
             </th>
-            <th className="text-center" style={{ width: '20%' }}>
-              Total
+            <th className="text-center" style={{ width: "20%" }}>
+              Tổng tiền
             </th>
-            <th className="text-center" style={{ width: '20%' }}>
-              Action
+            <th className="text-center" style={{ width: "20%" }}>
+              Hành động
             </th>
           </tr>
         </thead>
@@ -79,7 +79,7 @@ const Cart = () => {
                   alt="minus"
                   width="20px"
                   height="20px"
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                   onClick={() => reduce(item._id, item.quantity)}
                 />
                 {item.quantity}
@@ -88,7 +88,7 @@ const Cart = () => {
                   alt="add"
                   width="20px"
                   height="20px"
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                   onClick={() => add(item._id)}
                 />
               </td>
@@ -101,11 +101,11 @@ const Cart = () => {
                   src="/remove.png"
                   width="20px"
                   height="20px"
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                   onClick={() => {
                     if (
                       // eslint-disable-next-line
-                      confirm('Do you want to remove this product from cart?')
+                      confirm("Do you want to remove this product from cart?")
                     ) {
                       removeProduct(item._id);
                     }

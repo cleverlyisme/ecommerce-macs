@@ -1,4 +1,4 @@
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Button } from "reactstrap";
 import { useState, useEffect } from "react";
 import Select from "react-select";
 
@@ -11,16 +11,25 @@ import Layout from "../../components/Layout";
 
 const limit = 24;
 
+const listPrice = [
+  { value: [0, 10], name: "Dưới 10 triệu" },
+  { value: [10, 20], name: "10-20 triệu" },
+  { value: [20, 30], name: "20-30 triệu" },
+  { value: [30, 40], name: "30-40 triệu" },
+  { value: [40], name: "hơn 40 triệu" },
+];
+
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [categoryId, setCategoryId] = useState("");
+  const [price, setPrice] = useState([0]);
 
   const getListProducts = async () => {
     try {
-      const res = await getProducts({ page, limit, categoryId });
+      const res = await getProducts({ page, limit, categoryId, price });
       setProducts(res.data.items);
       setTotalPages(res.data.totalPages);
     } catch (err) {
@@ -41,6 +50,12 @@ const Home = () => {
     return { value: category._id, label: category.name };
   });
 
+  const sortPrice = [
+    { value: 1, label: "Bán chạy nhất" },
+    { value: 2, label: "Giá thấp đến cao" },
+    { value: 3, label: "Giá cao đến thấp" },
+  ];
+
   useEffect(() => {
     getListCategory();
   }, []);
@@ -51,7 +66,10 @@ const Home = () => {
 
   useEffect(() => {
     getListProducts();
-  }, [page, categoryId]);
+  }, [page, categoryId, price]);
+
+  console.log(price);
+  console.log(products);
 
   return (
     <Layout>
@@ -67,23 +85,49 @@ const Home = () => {
             }}
           />
         </div>
-        <div className="d-flex align-items-center" style={{ gap: 10 }}>
-          <div>Phân loại</div>
-          <div style={{ width: 200 }}>
-            <Select
-              className="basic-single"
-              classNamePrefix="select"
-              defaultValue={getNameCategory[0]}
-              isClearable={true}
-              placeholder="Phân loại"
-              name="category"
-              options={getNameCategory}
-              onChange={(selectedOption) =>
-                selectedOption !== null
-                  ? setCategoryId(selectedOption.value)
-                  : setCategoryId("")
-              }
-            />
+        <div className="d-flex justify-content-between">
+          <div className="d-flex" style={{ gap: 5 }}>
+            {listPrice.map((item) => {
+              return (
+                <Button
+                  color={item.value == price ? "primary" : "secondary"}
+                  size="sm"
+                  style={{ fontSize: 12 }}
+                  onClick={() => setPrice(item.value)}
+                >
+                  {item.name}
+                </Button>
+              );
+            })}
+          </div>
+          <div className="d-flex align-items-center" style={{ gap: 10 }}>
+            <div style={{ width: 200 }}>
+              <Select
+                className="basic-single"
+                classNamePrefix="select"
+                defaultValue={getNameCategory[0]}
+                isClearable={true}
+                placeholder="Phân loại"
+                name="category"
+                options={getNameCategory}
+                onChange={(selectedOption) =>
+                  selectedOption !== null
+                    ? setCategoryId(selectedOption.value)
+                    : setCategoryId("")
+                }
+              />
+            </div>
+            <div style={{ width: 200 }}>
+              <Select
+                className="basic-single"
+                classNamePrefix="select"
+                defaultValue={sortPrice[0]}
+                placeholder="Sắp xếp theo"
+                isClearable={true}
+                name="sort"
+                options={sortPrice}
+              />
+            </div>
           </div>
         </div>
 

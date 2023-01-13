@@ -1,25 +1,38 @@
-const Product = require('../models/product.model');
-const Category = require('../models/category.model');
-const _ = require('lodash');
+const Product = require("../models/product.model");
+const Category = require("../models/category.model");
+const _ = require("lodash");
 
 const getProducts = async (query) => {
   const categories = await Category.find({}).lean();
-  const { page, limit, categoryId } = query;
+  const { page, limit, categoryId, price } = query;
 
   const products = await Product.find({
-    categoryId: categoryId || { $regex: '' },
+    categoryId: categoryId || { $regex: "" },
   })
     .sort({
-      name: 'asc',
-      createdAt: 'desc',
+      name: "asc",
+      createdAt: "desc",
     })
     .limit(Number(limit))
     .skip(Number(limit) * (Number(page) - 1))
     .lean();
 
   const totalPages =
-    (await Product.find({ categoryId: categoryId || { $regex: '' } }).lean())
+    (await Product.find({ categoryId: categoryId || { $regex: "" } }).lean())
       .length / limit;
+
+  // const items = products.map((item) => {
+  //   if (item.price >= price[0]) {
+  //     return {
+  //       item,
+  //       categoryName: categories.find(
+  //         (cat) => cat._id.toString() === item.categoryId
+  //       )?.name,
+  //     };
+  //   }
+  // });
+
+  // console.log(items);
 
   const data = {
     items: products.map((item) => ({
@@ -44,10 +57,10 @@ const createProduct = async (data) => {
   const { name, description, images, price, quantity, categoryId } = data;
 
   if (!name.trim() || !description.trim())
-    throw new Error('Invalid name or description');
+    throw new Error("Invalid name or description");
 
   const category = await Category.findOne({ _id: categoryId }).lean();
-  if (!category) throw new Error('Invalid category ID');
+  if (!category) throw new Error("Invalid category ID");
 
   const newProduct = new Product({
     name,
@@ -67,10 +80,10 @@ const updateProduct = async (_id, data) => {
   const { name, description, images, price, quantity, sold, categoryId } = data;
 
   const productExist = await Product.findOne({ name }).lean();
-  if (productExist && product.name !== name) throw new Error('Product exists');
+  if (productExist && product.name !== name) throw new Error("Product exists");
 
   const category = await Category.findOne({ _id: categoryId }).lean();
-  if (!category) throw new Error('Invalid category ID');
+  if (!category) throw new Error("Invalid category ID");
 
   product.name = name || product.name;
   product.description = description || product.description;
@@ -86,7 +99,7 @@ const updateProduct = async (_id, data) => {
 const deleteProduct = async (_id) => {
   const product = await Product.findOne({ _id });
 
-  if (!product) throw new Error('Product not found');
+  if (!product) throw new Error("Product not found");
 
   await product.remove();
 };

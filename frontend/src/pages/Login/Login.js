@@ -6,8 +6,19 @@ import { login } from "../../services/auth.service";
 import useAdminContext from "../../hooks/useAdminContext";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleClickLogin = async () => {
+    try {
+      const res = await login({ email, password });
+      localStorage.setItem("accessToken", res.data.token);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   return (
     <div
@@ -28,21 +39,21 @@ const Login = () => {
         </div>
 
         <div>
-          <div style={{ fontSize: 24, fontWeight: 600 }}>Log in</div>
+          <div style={{ fontSize: 24, fontWeight: 600 }}>Đăng nhập</div>
           <div style={{ fontSize: 12 }}>
-            Welcome back! please enter your detail.
+            Xin chào! Hãy nhập thông tin của bạn
           </div>
         </div>
 
         <div className="d-flex flex-column" style={{ gap: 10 }}>
           <div className="d-flex flex-column" style={{ gap: 5 }}>
             <div style={{ fontSize: 12, fontWeight: 550 }}>
-              Email or your phone
+              Email hoặc số điện thoại
             </div>
             <input
               type="text"
               class="form-control"
-              placeholder="Email or your phone"
+              placeholder="Email hoặc số điện thoại"
               aria-label="Username"
               value={email}
               aria-describedby="basic-addon1"
@@ -51,11 +62,11 @@ const Login = () => {
             ></input>
           </div>
           <div className="d-flex flex-column" style={{ gap: 5 }}>
-            <div style={{ fontSize: 12, fontWeight: 550 }}>Password</div>
+            <div style={{ fontSize: 12, fontWeight: 550 }}>Mật khẩu</div>
             <input
               type="password"
               class="form-control"
-              placeholder="Password"
+              placeholder="Mật khẩu"
               aria-label="Username"
               value={password}
               aria-describedby="basic-addon1"
@@ -73,15 +84,19 @@ const Login = () => {
               cursor: "pointer",
               fontSize: 12,
             }}
+            onClick={handleClickLogin}
           >
-            Sign In
+            Đăng nhập
           </Button>
         </div>
 
         <div className="d-flex justify-content-center" style={{ gap: 3 }}>
-          <div style={{ fontSize: 12 }}>Don't have an account?</div>
-          <div style={{ fontSize: 12, cursor: "pointer", color: "#3438cd" }}>
-            Sign up
+          <div style={{ fontSize: 12 }}>Không có tài khoản?</div>
+          <div
+            style={{ fontSize: 12, cursor: "pointer", color: "#3438cd" }}
+            onClick={() => navigate("/signup")}
+          >
+            Đăng kí
           </div>
         </div>
       </div>

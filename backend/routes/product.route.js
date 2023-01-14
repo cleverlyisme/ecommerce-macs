@@ -7,8 +7,20 @@ const productRoute = express.Router();
 
 productRoute.get("/products", productController.getProducts);
 productRoute.get("/products/:id", productController.getById);
-productRoute.post("/products", auth(), productController.createProduct);
-productRoute.put("/products/:id", auth(), productController.updateProduct);
-productRoute.delete("/products/:id", auth(), productController.deleteProduct);
+productRoute.post(
+  "/products",
+  auth(["Admin"]),
+  productController.createProduct
+);
+productRoute.put(
+  "/products/:id",
+  auth(["Admin"]),
+  productController.updateProduct
+);
+productRoute.delete(
+  "/products/:id",
+  auth(["Admin"]),
+  productController.deleteProduct
+);
 
 module.exports = productRoute;

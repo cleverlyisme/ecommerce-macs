@@ -7,12 +7,24 @@ const { UserRoles } = require("../utils/constants");
 const categoryRoute = express.Router();
 
 categoryRoute.get("/categories", categoryController.getCategories);
-categoryRoute.get("/categories/:id", auth(), categoryController.getById);
-categoryRoute.post("/categories", auth(), categoryController.createCategory);
-categoryRoute.put("/categories/:id", auth(), categoryController.updateCategory);
+categoryRoute.get(
+  "/categories/:id",
+  auth(["Admin"]),
+  categoryController.getById
+);
+categoryRoute.post(
+  "/categories",
+  auth(["Admin"]),
+  categoryController.createCategory
+);
+categoryRoute.put(
+  "/categories/:id",
+  auth(["Admin"]),
+  categoryController.updateCategory
+);
 categoryRoute.delete(
   "/categories/:id",
-  auth(),
+  auth(["Admin"]),
   categoryController.deleteCategory
 );
 

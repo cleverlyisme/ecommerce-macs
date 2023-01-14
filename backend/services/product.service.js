@@ -4,35 +4,31 @@ const _ = require("lodash");
 
 const getProducts = async (query) => {
   const categories = await Category.find({}).lean();
-  const { page, limit, categoryId, price } = query;
+  const { page, limit, categoryId, gt, lt } = query;
 
-  const products = await Product.find({
-    categoryId: categoryId || { $regex: "" },
-  })
+  const filters = {};
+  if (categoryId) {
+    filters.categoryId = categoryId;
+  }
+
+  filters.price = {};
+  if (gt) {
+    filters.price = { ...filters.price, $gte: Number(gt) };
+  }
+  if (lt) {
+    filters.price = { ...filters.price, $lt: Number(lt) };
+  }
+
+  const products = await Product.find(filters)
     .sort({
-      name: "asc",
+      sold: "desc",
       createdAt: "desc",
     })
     .limit(Number(limit))
     .skip(Number(limit) * (Number(page) - 1))
     .lean();
 
-  const totalPages =
-    (await Product.find({ categoryId: categoryId || { $regex: "" } }).lean())
-      .length / limit;
-
-  // const items = products.map((item) => {
-  //   if (item.price >= price[0]) {
-  //     return {
-  //       item,
-  //       categoryName: categories.find(
-  //         (cat) => cat._id.toString() === item.categoryId
-  //       )?.name,
-  //     };
-  //   }
-  // });
-
-  // console.log(items);
+  const totalPages = (await Product.find(filters).lean()).length / limit;
 
   const data = {
     items: products.map((item) => ({

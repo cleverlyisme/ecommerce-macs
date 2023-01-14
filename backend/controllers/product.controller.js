@@ -2,8 +2,14 @@ const service = require("../services/product.service");
 
 const getProducts = async (req, res) => {
   try {
-    const { page, limit, categoryId } = req.query;
-    const products = await service.getProducts({ page, limit, categoryId });
+    const { page, limit, categoryId, gt, lt } = req.query;
+    const products = await service.getProducts({
+      page,
+      limit,
+      categoryId,
+      gt,
+      lt,
+    });
 
     res.status(200).send(products);
   } catch (err) {

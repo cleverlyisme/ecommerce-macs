@@ -12,11 +12,11 @@ import Layout from "../../components/Layout";
 const limit = 24;
 
 const listPrice = [
-  { value: [0, 10], name: "Dưới 10 triệu" },
-  { value: [10, 20], name: "10-20 triệu" },
-  { value: [20, 30], name: "20-30 triệu" },
-  { value: [30, 40], name: "30-40 triệu" },
-  { value: [40], name: "hơn 40 triệu" },
+  { greater: 0, less: 10000000, name: "Dưới 10 triệu" },
+  { greater: 10000000, less: 20000000, name: "10-20 triệu" },
+  { greater: 20000000, less: 30000000, name: "20-30 triệu" },
+  { greater: 30000000, less: 40000000, name: "30-40 triệu" },
+  { greater: 40000000, name: "hơn 40 triệu" },
 ];
 
 const Home = () => {
@@ -25,17 +25,19 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [categoryId, setCategoryId] = useState("");
-  const [price, setPrice] = useState([0]);
+  const [gt, setGt] = useState(0);
+  const [lt, setlt] = useState(100000000);
 
   const getListProducts = async () => {
     try {
-      const res = await getProducts({ page, limit, categoryId, price });
+      const res = await getProducts({ page, limit, categoryId, gt, lt });
       setProducts(res.data.items);
       setTotalPages(res.data.totalPages);
     } catch (err) {
       console.log(err.message);
     }
   };
+  console.log(gt, lt);
 
   const getListCategory = async () => {
     try {
@@ -66,9 +68,8 @@ const Home = () => {
 
   useEffect(() => {
     getListProducts();
-  }, [page, categoryId, price]);
+  }, [page, categoryId, gt, lt]);
 
-  console.log(price);
   console.log(products);
 
   return (
@@ -90,10 +91,17 @@ const Home = () => {
             {listPrice.map((item) => {
               return (
                 <Button
-                  color={item.value == price ? "primary" : "secondary"}
+                  color={
+                    item.greater == gt && item.less == lt
+                      ? "success"
+                      : "secondary"
+                  }
                   size="sm"
                   style={{ fontSize: 12 }}
-                  onClick={() => setPrice(item.value)}
+                  onClick={() => {
+                    setGt(item.greater);
+                    setlt(item.less);
+                  }}
                 >
                   {item.name}
                 </Button>

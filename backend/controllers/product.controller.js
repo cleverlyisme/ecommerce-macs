@@ -2,13 +2,14 @@ const service = require("../services/product.service");
 
 const getProducts = async (req, res) => {
   try {
-    const { page, limit, categoryId, gt, lt } = req.query;
+    const { page, limit, categoryId, gt, lt, price } = req.query;
     const products = await service.getProducts({
       page,
       limit,
       categoryId,
       gt,
       lt,
+      price,
     });
 
     res.status(200).send(products);

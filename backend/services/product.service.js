@@ -4,14 +4,14 @@ const _ = require("lodash");
 
 const getProducts = async (query) => {
   const categories = await Category.find({}).lean();
-  const { page, limit, categoryId, gt, lt } = query;
+  const { page, limit, categoryId, gt, lt, price } = query;
 
-  const filters = {};
+  const filters = {},
+    sortBy = {};
   if (categoryId) {
     filters.categoryId = categoryId;
   }
 
-  filters.price = {};
   if (gt) {
     filters.price = { ...filters.price, $gte: Number(gt) };
   }
@@ -19,11 +19,11 @@ const getProducts = async (query) => {
     filters.price = { ...filters.price, $lt: Number(lt) };
   }
 
+  if (price) sortBy.price = price;
+  sortBy.sold = "desc";
+
   const products = await Product.find(filters)
-    .sort({
-      sold: "desc",
-      createdAt: "desc",
-    })
+    .sort(sortBy)
     .limit(Number(limit))
     .skip(Number(limit) * (Number(page) - 1))
     .lean();

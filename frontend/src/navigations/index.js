@@ -6,7 +6,6 @@ import CartRoute from "./CartRoute";
 import AdminRoute from "./AdminRoute";
 import OrderSuccess from "../pages/OrderSuccess";
 import LoginRoute from "./LoginRoute";
-import Login from "../pages/Login/Login";
 
 const Navigation = () => {
   return (
@@ -15,6 +14,7 @@ const Navigation = () => {
       <Route path="/admin/*" element={<AdminRoute />} />
       <Route path="/cart/*" element={<CartRoute />} />
       <Route path="/order-success" element={<OrderSuccess />} />
+      <Route path="/login" element={<LoginRoute />} />
       <Route path="*" element={<HomeRoute />} />
     </Routes>
   );

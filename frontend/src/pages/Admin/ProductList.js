@@ -10,6 +10,7 @@ import Paginations from "../Paginations";
 import { deleteProduct } from "../../services/products.service";
 
 const limit = 10;
+const gt = 0;
 
 const ProductList = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const ProductList = () => {
 
   const getListProducts = async () => {
     try {
-      const res = await getProducts({ page, limit, categoryId });
+      const res = await getProducts({ page, limit, categoryId, gt });
       setProducts(res.data.items);
       setTotalPages(res.data.totalPages);
     } catch (err) {

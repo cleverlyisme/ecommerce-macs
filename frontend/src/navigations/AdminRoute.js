@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import { checkAuth } from "../services/auth.service";
-import LoginRoute from "./LoginRoute";
+
+import LoginAdminRoute from "./LoginAdminRoute";
 
 import ProductList from "../pages/Admin/ProductList";
 import ProductDetail from "../pages/Admin/ProductDetail";
@@ -37,7 +38,7 @@ const AdminRoute = () => {
   if (user !== "OK")
     return (
       <Routes>
-        <Route path="/login" element={<LoginRoute />} />
+        <Route path="/login" element={<LoginAdminRoute />} />
         <Route path="*" element={<Navigate to="/admin/login" replace />} />
       </Routes>
     );

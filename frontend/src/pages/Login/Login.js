@@ -9,67 +9,75 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const { setUser } = useAdminContext();
-
-  const signIn = async () => {
-    try {
-      const res = await login({ username, password });
-      localStorage.setItem("accessToken", res.data.token);
-      setUser("OK");
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
-
   return (
-    <Container
-      className="d-flex flex-column justify-content-center align-items-center"
-      style={{
-        width: "40vw",
-        height: "100vh",
-        borderRadius: 4,
-      }}
+    <div
+      className="d-flex justify-content-center align-items-center"
+      style={{ height: "100vh", backgroundColor: "#e8e8f2" }}
     >
       <div
-        className="d-flex flex-column p-3"
+        className="d-flex flex-column py-4 px-5"
         style={{
-          border: "1px solid gray",
+          width: "40vw",
+          backgroundColor: "white",
           borderRadius: 6,
-          gap: 25,
-          width: "100%",
+          gap: 15,
         }}
       >
-        <div style={{ fontSize: 20, fontWeight: 600 }}>Login</div>
+        <div>
+          <img src="/shopmacs.png" style={{ width: 40, height: 40 }} />
+        </div>
 
-        <div className="d-flex flex-column" style={{ gap: 10 }}>
-          <div className="d-flex flex-column w-100" style={{ gap: 5 }}>
-            <div style={{ fontSize: 14 }}>Username</div>
-            <Input
-              className="w-100"
-              placeholder="Enter your username..."
-              style={{ height: "80%", opacity: 0.7, fontSize: 12 }}
-              onChange={(e) => setUsername(e.target.value)}
-            ></Input>
-          </div>
-
-          <div className="d-flex flex-column w-100" style={{ gap: 5 }}>
-            <div style={{ fontSize: 14 }}>Password</div>
-            <Input
-              placeholder="Enter your password..."
-              type="password"
-              style={{ height: "80%", opacity: 0.7, fontSize: 12 }}
-              onChange={(e) => setPassword(e.target.value)}
-            ></Input>
+        <div>
+          <div style={{ fontSize: 24, fontWeight: 600 }}>Log in</div>
+          <div style={{ fontSize: 12 }}>
+            Welcome back! please enter your detail.
           </div>
         </div>
 
-        <div className="d-flex flex-column" style={{ gap: 5 }}>
-          <Button className="w-100" color="primary" size="sm" onClick={signIn}>
+        <div className="d-flex flex-column" style={{ gap: 10 }}>
+          <div className="d-flex flex-column" style={{ gap: 5 }}>
+            <div style={{ fontSize: 12, fontWeight: 550 }}>
+              Email or your phone
+            </div>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Email or your phone"
+              aria-label="Username"
+              aria-describedby="basic-addon1"
+              style={{ height: 35 }}
+            ></input>
+          </div>
+          <div className="d-flex flex-column" style={{ gap: 5 }}>
+            <div style={{ fontSize: 12, fontWeight: 550 }}>Password</div>
+            <input
+              type="password"
+              class="form-control"
+              placeholder="Password"
+              aria-label="Username"
+              aria-describedby="basic-addon1"
+              style={{ height: 35 }}
+            ></input>
+          </div>
+        </div>
+
+        <div className="d-flex justify-content-end">
+          <Button
+            size="sm"
+            style={{ backgroundColor: "#3438cd", cursor: "pointer" }}
+          >
             Sign In
           </Button>
         </div>
+
+        <div className="d-flex justify-content-center" style={{ gap: 3 }}>
+          <div style={{ fontSize: 12 }}>Don't have an account?</div>
+          <div style={{ fontSize: 12, cursor: "pointer", color: "#3438cd" }}>
+            Sign up
+          </div>
+        </div>
       </div>
-    </Container>
+    </div>
   );
 };
 

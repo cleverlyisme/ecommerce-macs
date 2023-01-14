@@ -26,7 +26,7 @@ const Home = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [categoryId, setCategoryId] = useState("");
   const [gt, setGt] = useState(0);
-  const [lt, setlt] = useState(100000000);
+  const [lt, setlt] = useState();
 
   const getListProducts = async () => {
     try {

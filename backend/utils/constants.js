@@ -4,4 +4,9 @@ const OrderStatus = {
   Canceled: "Canceled",
 };
 
-module.exports = { OrderStatus };
+const UserRoles = {
+  Admin: "Admin",
+  User: "User",
+};
+
+module.exports = { UserRoles, OrderStatus };

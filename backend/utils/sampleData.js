@@ -112,7 +112,14 @@ const sampleProducts = [
   ...macs14inchOld,
 ];
 
-const sampleUsers = [{ username: "admin", password: "admin" }];
+const sampleUsers = [
+  {
+    email: "admin@gmail.com",
+    phone: "0123456789",
+    password: "admin",
+    role: "Admin",
+  },
+];
 
 const sampleCategories = [{ name: "Máy mới" }, { name: "Máy cũ" }];
 

@@ -5,41 +5,37 @@ const User = require("../models/user.model");
 
 const { JWT_SECRET_KEY } = require("../utils/environments");
 
-const login = async (username, password) => {
-  const user = await User.findOne({ username }).lean();
-  if (!user) throw new Error("Unauthorized");
+const login = async (email, phone, password) => {
+  const userEmail = await User.findOne({ email }).lean();
+  const userPhone = await User.findOne({ phone }).lean();
+  if (!userEmail && !userPhone) throw new Error("Unauthorized");
 
-  const isPassed = passwordHash.verify(password, user.password);
+  const isPassed = passwordHash.verify(
+    password,
+    userEmail ? userEmail.password : userPhone.password
+  );
   if (!isPassed) throw new Error("Invalid password");
 
-  const { _id, role } = user;
+  const { _id, role } = userEmail || userPhone;
 
-  return jsonwebtoken.sign({ _id, username, role }, JWT_SECRET_KEY, {
+  return jsonwebtoken.sign({ _id, role }, JWT_SECRET_KEY, {
     expiresIn: "2d",
   });
 };
 
-const register = async (username, password, confirmedPassword) => {
-  const existUser = await User.findOne({ username }).lean();
-  if (existUser) throw new Error("User existed");
-
-  if (!username.trim() || username.includes(" "))
-    throw new Error("Username musn't be empty or blank");
-
+const register = async (email, phone, password) => {
   if (!password.trim() || password.includes(" "))
     throw new Error("Password musn't be empty or blank");
 
-  if (username.length < 8 || password.length < 8)
-    throw new Error("Username and password must have at least 8 characters");
-
-  if (password !== confirmedPassword)
-    throw new Error("Password does not match");
+  if (password.length < 8)
+    throw new Error("Password must have at least 8 characters");
 
   const user = new User({
-    username,
+    email,
+    phone,
     password: passwordHash.generate(password),
     role: "User",
-    cart: [],
+    history: [],
   });
 
   await user.save();

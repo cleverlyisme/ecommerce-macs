@@ -3,7 +3,7 @@ const environments = require("../utils/environments");
 
 const { JWT_SECRET_KEY } = environments;
 
-const auth = () => (req, res, next) => {
+const auth = (roles) => (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
 
@@ -12,6 +12,10 @@ const auth = () => (req, res, next) => {
     jwt.verify(token, JWT_SECRET_KEY);
 
     const user = jwt.decode(token);
+
+    if (roles) {
+      if (!roles.include(user.role)) throw new Error("Bad credential");
+    }
 
     req.userId = user._id;
 

@@ -22,9 +22,9 @@ const connection = mongoose.connection;
 connection.once("open", async () => {
   console.log("MongoDB connected successfully");
   try {
-    await generateCategoryData();
+    // await generateCategoryData();
     await generateUserData();
-    await generateProductData();
+    // await generateProductData();
   } catch (err) {
     console.log(err.message);
   }
@@ -36,8 +36,11 @@ const generateUserData = async () => {
   const User = require("./models/user.model");
   for (const u of sampleUsers) {
     const user = new User({
-      username: u.username,
+      email: u.email,
+      phone: u.phone,
+      role: u.role,
       password: passwordHash.generate(u.password),
+      history: [],
     });
     await user.save();
   }

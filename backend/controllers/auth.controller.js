@@ -2,9 +2,9 @@ const service = require("../services/auth.service");
 
 const login = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { email, phone, password } = req.body;
 
-    const token = await service.login(username, password);
+    const token = await service.login(email, phone, password);
 
     res.status(200).send({ token });
   } catch (err) {
@@ -14,9 +14,9 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
   try {
-    const { username, password, confirmedPassword } = req.body;
+    const { email, phone, password } = req.body;
 
-    await service.register(username, password, confirmedPassword);
+    await service.register(email, phone, password);
 
     res.status(201).send("Registered successfully");
   } catch (err) {

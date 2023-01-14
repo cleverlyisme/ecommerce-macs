@@ -6,7 +6,7 @@ import { login } from "../../services/auth.service";
 import useAdminContext from "../../hooks/useAdminContext";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
@@ -44,8 +44,10 @@ const Login = () => {
               class="form-control"
               placeholder="Email or your phone"
               aria-label="Username"
+              value={email}
               aria-describedby="basic-addon1"
-              style={{ height: 35 }}
+              style={{ height: 35, fontSize: 12 }}
+              onChange={(e) => setEmail(e.target.value)}
             ></input>
           </div>
           <div className="d-flex flex-column" style={{ gap: 5 }}>
@@ -55,8 +57,10 @@ const Login = () => {
               class="form-control"
               placeholder="Password"
               aria-label="Username"
+              value={password}
               aria-describedby="basic-addon1"
-              style={{ height: 35 }}
+              style={{ height: 35, fontSize: 12 }}
+              onChange={(e) => setPassword(e.target.value)}
             ></input>
           </div>
         </div>
@@ -64,7 +68,11 @@ const Login = () => {
         <div className="d-flex justify-content-end">
           <Button
             size="sm"
-            style={{ backgroundColor: "#3438cd", cursor: "pointer" }}
+            style={{
+              backgroundColor: "#3438cd",
+              cursor: "pointer",
+              fontSize: 12,
+            }}
           >
             Sign In
           </Button>

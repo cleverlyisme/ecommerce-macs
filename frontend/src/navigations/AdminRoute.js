@@ -20,6 +20,7 @@ const AdminRoute = () => {
     try {
       const res = await checkAuth();
       setUser(res.data);
+      console.log(res.data);
     } catch (err) {
       console.log(err.message);
       localStorage.removeItem("accessToken");

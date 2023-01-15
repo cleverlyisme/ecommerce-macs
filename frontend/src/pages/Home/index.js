@@ -6,8 +6,8 @@ import ProductDetail from "./components/ProductDetail";
 import Paginations from "../Paginations";
 import { getProducts } from "../../services/products.service";
 import { getCategories } from "../../services/category.service";
-import Header from "../../components/Header";
 import Layout from "../../components/Layout";
+import CategoryBar from "./components/CategoryBar";
 
 const limit = 24;
 
@@ -27,10 +27,11 @@ const Home = () => {
   const [categoryId, setCategoryId] = useState("");
   const [gt, setGt] = useState(0);
   const [lt, setlt] = useState();
+  const [price, setPrice] = useState(null);
 
   const getListProducts = async () => {
     try {
-      const res = await getProducts({ page, limit, categoryId, gt, lt });
+      const res = await getProducts({ page, limit, categoryId, gt, lt, price });
       setProducts(res.data.items);
       setTotalPages(res.data.totalPages);
     } catch (err) {
@@ -64,17 +65,17 @@ const Home = () => {
 
   useEffect(() => {
     setPage(1);
-  }, [categoryId]);
+  }, [categoryId, gt, lt, price]);
 
   useEffect(() => {
     getListProducts();
-  }, [page, categoryId, gt, lt]);
+  }, [page, categoryId, gt, lt, price]);
 
   console.log(products);
 
   return (
     <Layout>
-      <div className="d-flex flex-column" style={{ gap: 10 }}>
+      <div className="d-flex flex-column" style={{ gap: 15 }}>
         <div className="w-100 d-flex align-items-center">
           <img
             src="/banner.png"
@@ -113,42 +114,34 @@ const Home = () => {
               <Select
                 className="basic-single"
                 classNamePrefix="select"
-                defaultValue={getNameCategory[0]}
-                isClearable={true}
-                placeholder="Phân loại"
-                name="category"
-                options={getNameCategory}
-                onChange={(selectedOption) =>
-                  selectedOption !== null
-                    ? setCategoryId(selectedOption.value)
-                    : setCategoryId("")
-                }
-              />
-            </div>
-            <div style={{ width: 200 }}>
-              <Select
-                className="basic-single"
-                classNamePrefix="select"
                 defaultValue={sortPrice[0]}
                 placeholder="Sắp xếp theo"
-                isClearable={true}
                 name="sort"
                 options={sortPrice}
+                onChange={(selectedOption) => {
+                  if (selectedOption.value == 1) setPrice("");
+                  if (selectedOption.value == 2) setPrice("asc");
+                  if (selectedOption.value == 3) setPrice("desc");
+                }}
               />
             </div>
           </div>
         </div>
-
-        <h5 className="mb-0">Danh sách sản phẩm</h5>
-        <Row>
-          {products.map((product) => {
-            return (
-              <Col xs={6} sm={4} md={3} lg={2} xl={2} className="p-2">
-                <ProductDetail product={product} />
-              </Col>
-            );
-          })}
-        </Row>
+        <div className="d-flex" style={{ gap: 10 }}>
+          <CategoryBar categories={categories} setCategoryId={setCategoryId} />
+          <div>
+            <h5 className="mb-0">Danh sách sản phẩm</h5>
+            <Row>
+              {products.map((product) => {
+                return (
+                  <Col xs={6} sm={4} md={3} lg={3} xl={3} className="p-2">
+                    <ProductDetail product={product} />
+                  </Col>
+                );
+              })}
+            </Row>
+          </div>
+        </div>
         <div className="d-flex py-3 align-items-center" style={{ gap: 10 }}>
           <div>Trang</div>
           <div style={{ width: 80 }}>

@@ -6,14 +6,14 @@ import { login } from "../../services/auth.service";
 import useAdminContext from "../../hooks/useAdminContext";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
   const { setUser } = useAdminContext();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const signIn = async () => {
     try {
-      const res = await login({ username, password });
+      const res = await login({ email, password });
       localStorage.setItem("accessToken", res.data.token);
       setUser("OK");
     } catch (err) {
@@ -43,12 +43,12 @@ const Login = () => {
 
         <div className="d-flex flex-column" style={{ gap: 10 }}>
           <div className="d-flex flex-column w-100" style={{ gap: 5 }}>
-            <div style={{ fontSize: 14 }}>Username</div>
+            <div style={{ fontSize: 14 }}>Email</div>
             <Input
               className="w-100"
               placeholder="Enter your username..."
               style={{ height: "80%", opacity: 0.7, fontSize: 12 }}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             ></Input>
           </div>
 

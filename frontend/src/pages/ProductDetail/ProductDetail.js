@@ -6,6 +6,7 @@ import {
   NotificationContainer,
   NotificationManager,
 } from "react-notifications";
+import ReactStars from "react-rating-stars-component";
 
 import Header from "../../components/Header";
 import Layout from "../../components/Layout";
@@ -78,35 +79,39 @@ const ProductDetail = () => {
             <div style={{ fontSize: 10, opacity: 0.7 }}>{description}</div>
           </div>
           <div style={{ fontSize: 18, fontWeight: 600 }}>{Currency(price)}</div>
-          <div className="d-flex" style={{ gap: 30 }}>
-            <div className="d-flex align-items-center" style={{ gap: 20 }}>
-              <img
-                src="/minus.png"
-                style={{ cursor: "pointer", width: 25, height: 25 }}
-                onClick={() =>
-                  count > 1 ? setCount(count - 1) : setCount(count)
-                }
-              />
-              <div>{count}</div>
-              <img
-                src="/add.png "
-                style={{ cursor: "pointer", width: 25, height: 25 }}
-                onClick={() =>
-                  count < quantity ? setCount(count + 1) : setCount(count)
-                }
-              />
-            </div>
-            <div>
-              <div className="d-flex" style={{ gap: 3 }}>
-                <div style={{ fontSize: 12 }}>Chỉ còn </div>
-                <div style={{ color: "#ec9c63", fontSize: 12 }}>
-                  {quantity} sản phẩm
-                </div>
-                <div style={{ fontSize: 12 }}> còn lại</div>
+          <div className="d-flex flex-column" style={{ gap: 5 }}>
+            <div className="d-flex" style={{ gap: 30 }}>
+              <div className="d-flex align-items-center" style={{ gap: 20 }}>
+                <img
+                  src="/minus.png"
+                  style={{ cursor: "pointer", width: 25, height: 25 }}
+                  onClick={() =>
+                    count > 1 ? setCount(count - 1) : setCount(count)
+                  }
+                />
+                <div>{count}</div>
+                <img
+                  src="/add.png "
+                  style={{ cursor: "pointer", width: 25, height: 25 }}
+                  onClick={() =>
+                    count < quantity ? setCount(count + 1) : setCount(count)
+                  }
+                />
               </div>
-              <div style={{ fontSize: 12 }}>Đừng bỏ lỡ!!</div>
+              <div>
+                <div className="d-flex" style={{ gap: 3 }}>
+                  <div style={{ fontSize: 12 }}>Chỉ còn </div>
+                  <div style={{ color: "#ec9c63", fontSize: 12 }}>
+                    {quantity} sản phẩm
+                  </div>
+                  <div style={{ fontSize: 12 }}> còn lại</div>
+                </div>
+                <div style={{ fontSize: 12 }}>Đừng bỏ lỡ!!</div>
+              </div>
             </div>
+            <ReactStars count={5} size={25} activeColor="#ffd700" value={1} />
           </div>
+
           <Button
             color="success"
             style={{ width: "50%" }}

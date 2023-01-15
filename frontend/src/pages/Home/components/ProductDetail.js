@@ -7,6 +7,7 @@ import {
   CardTitle,
   CardText,
 } from "reactstrap";
+import ReactStars from "react-rating-stars-component";
 import { useNavigate } from "react-router-dom";
 import {
   NotificationContainer,
@@ -20,7 +21,7 @@ import formatFileUrl from "../../../utils/formatFileUrl";
 const ProductDetail = ({ product }) => {
   const navigate = useNavigate();
 
-  const { images, price, name, _id } = product;
+  const { images, price, name, _id, sold } = product;
   const {
     cartState: { updateProduct },
   } = useAppContext();
@@ -38,7 +39,6 @@ const ProductDetail = ({ product }) => {
           cursor: "pointer",
         }}
       />
-      ;
       <CardBody className="p-2">
         <CardTitle
           style={{ fontWeight: 600, cursor: "pointer" }}
@@ -46,6 +46,7 @@ const ProductDetail = ({ product }) => {
         >
           {name}
         </CardTitle>
+        <div style={{ fontSize: 12, opacity: 0.7 }}>Đã bán {sold} sản phẩm</div>
         <CardText className="d-flex align-items-center mb-2" style={{ gap: 2 }}>
           <div
             className="text-secondary"
@@ -54,6 +55,14 @@ const ProductDetail = ({ product }) => {
             {Currency(price)}
           </div>
         </CardText>
+        <ReactStars
+          count={5}
+          size={15}
+          activeColor="#ffd700"
+          value={1}
+          edit={false}
+        />
+        ,
         <Button
           color="success"
           size="sm"

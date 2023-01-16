@@ -1,7 +1,17 @@
 import api, { apiUpload } from "./api";
 
-export const getProducts = ({ page, limit, categoryId, gt, lt, price }) =>
-  api.get("/products", { params: { page, limit, categoryId, gt, lt, price } });
+export const getProducts = ({
+  page,
+  limit,
+  categoryId,
+  gt,
+  lt,
+  price,
+  cpuId,
+}) =>
+  api.get("/products", {
+    params: { page, limit, categoryId, gt, lt, price, cpuId },
+  });
 
 export const getProductById = (id) => api.get("/products/" + id);
 

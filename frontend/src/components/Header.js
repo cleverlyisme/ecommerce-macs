@@ -1,11 +1,11 @@
-import { useNavigate } from 'react-router-dom';
-import { Row, Col, Container } from 'reactstrap';
+import { useNavigate } from "react-router-dom";
+import { Row, Col, Container } from "reactstrap";
 
 const Header = () => {
   const navigate = useNavigate();
 
   return (
-    <div style={{ backgroundColor: '#ffd500' }}>
+    <div style={{ backgroundColor: "#ffd500" }}>
       <Container>
         <Row className="d-flex py-2">
           <Col xs={6}>
@@ -13,10 +13,10 @@ const Header = () => {
               style={{
                 fontWeight: 600,
                 fontSize: 32,
-                color: 'white',
-                cursor: 'pointer',
+                color: "white",
+                cursor: "pointer",
               }}
-              onClick={() => navigate('/')}
+              onClick={() => navigate("/")}
             >
               <img
                 src="/shopmacs.png"
@@ -32,11 +32,20 @@ const Header = () => {
           >
             <div className="d-flex align-items-center" style={{ gap: 5 }}>
               <img
+                src="/history.png"
+                width="24px"
+                height="24px"
+                style={{ cursor: "pointer" }}
+                onClick={() => navigate("/history")}
+              />
+            </div>
+            <div className="d-flex align-items-center" style={{ gap: 5 }}>
+              <img
                 src="/cart.png"
                 width="24px"
                 height="24px"
-                style={{ cursor: 'pointer' }}
-                onClick={() => navigate('/cart')}
+                style={{ cursor: "pointer" }}
+                onClick={() => navigate("/cart")}
               />
             </div>
           </Col>

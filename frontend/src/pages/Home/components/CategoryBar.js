@@ -1,55 +1,78 @@
 import { useState } from "react";
-import { Button } from "reactstrap";
+import { FormGroup, Input, Label } from "reactstrap";
+import {
+  Accordion,
+  AccordionBody,
+  AccordionHeader,
+  AccordionItem,
+} from "reactstrap";
+
 const list = [
-  { category: "Loại máy", items: ["Macbook Pro", "Macbook Air"] },
-  { category: "Chíp", items: ["M1", "Inter"] },
+  { id: "1", category: "Macbook Pro", chips: ["M1", "Inter"] },
+  { id: "2", category: "Macbook Air", chips: ["M1", "Inter"] },
 ];
 
 const CategoryBar = (props) => {
-  const { categories, setCategoryId } = props;
-  console.log(categories);
+  const { categories, setCategoryId, setCpuId } = props;
 
+  const [open, setOpen] = useState("0");
   const [category, setCategory] = useState("");
   const [item, setItem] = useState("");
+  const [value, setValue] = useState("");
 
   return (
-    <div className="d-flex flex-column" style={{ gap: 10 }}>
-      {list.map((item) => {
-        return (
-          <div>
-            <div
-              style={{
-                width: 150,
-                backgroundColor: "#e4e4e4",
-                fontSize: 16,
-                borderRadius: 4,
-                padding: 4,
-                fontWeight: 600,
-              }}
-            >
-              {item.category}
-            </div>
-            <div className="d-flex flex-column" style={{ gap: 5 }}>
-              {item.items.map((name) => {
+    <div>
+      <Accordion
+        open={open}
+        toggle={(id) => (open === id ? setOpen() : setOpen(id))}
+      >
+        {categories.map((category) => {
+          return (
+            <AccordionItem>
+              <AccordionHeader
+                targetId={category._id}
+                style={{ fontSize: 12, width: 150 }}
+                onClick={() => {
+                  open !== category._id
+                    ? setCategoryId(category._id)
+                    : setCategoryId("");
+                  setCpuId("");
+                  setValue("");
+                }}
+              >
+                {category.name}
+              </AccordionHeader>
+              {category.cpu.map((item) => {
                 return (
-                  <div
-                    color="success"
-                    size="sm"
-                    style={{
-                      width: "100%",
-                      fontSize: 12,
-                      cursor: "pointer",
-                      paddingLeft: 4,
-                    }}
-                  >
-                    {name}
-                  </div>
+                  <AccordionBody accordionId={category._id}>
+                    <FormGroup check tag="fieldset">
+                      <Input
+                        id={item.name}
+                        type="radio"
+                        name="radio1"
+                        onClick={() => {
+                          setValue(item.text);
+                          setCpuId(item._id);
+                        }}
+                        value={item.text}
+                      />
+                      <Label
+                        check
+                        style={{
+                          color: value == item.text ? "#0d6efd" : "black",
+                          cursor: "pointer",
+                        }}
+                      >
+                        {item.text}
+                      </Label>
+                    </FormGroup>
+                  </AccordionBody>
                 );
               })}
-            </div>
-          </div>
-        );
-      })}
+            </AccordionItem>
+          );
+        })}
+      </Accordion>
     </div>
   );
 };

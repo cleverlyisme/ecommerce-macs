@@ -1,4 +1,4 @@
-import { Container, Row, Col, Button } from "reactstrap";
+import { Container, Row, Col, Button, Input } from "reactstrap";
 import { useState, useEffect } from "react";
 import Select from "react-select";
 
@@ -25,20 +25,28 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [categoryId, setCategoryId] = useState("");
+  const [cpuId, setCpuId] = useState("");
   const [gt, setGt] = useState(0);
   const [lt, setlt] = useState();
   const [price, setPrice] = useState(null);
 
   const getListProducts = async () => {
     try {
-      const res = await getProducts({ page, limit, categoryId, gt, lt, price });
+      const res = await getProducts({
+        page,
+        limit,
+        categoryId,
+        gt,
+        lt,
+        price,
+        cpuId,
+      });
       setProducts(res.data.items);
       setTotalPages(res.data.totalPages);
     } catch (err) {
       console.log(err.message);
     }
   };
-  console.log(gt, lt);
 
   const getListCategory = async () => {
     try {
@@ -65,13 +73,15 @@ const Home = () => {
 
   useEffect(() => {
     setPage(1);
-  }, [categoryId, gt, lt, price]);
+  }, [categoryId, gt, lt, price, gt, lt, cpuId]);
 
   useEffect(() => {
     getListProducts();
-  }, [page, categoryId, gt, lt, price]);
+  }, [page, categoryId, gt, lt, price, cpuId]);
 
   console.log(products);
+  console.log(categories);
+  console.log(cpuId);
 
   return (
     <Layout>
@@ -109,7 +119,7 @@ const Home = () => {
               );
             })}
           </div>
-          <div className="d-flex align-items-center" style={{ gap: 10 }}>
+          <div className="d-flex align-items-center" style={{ gap: 20 }}>
             <div style={{ width: 200 }}>
               <Select
                 className="basic-single"
@@ -125,10 +135,24 @@ const Home = () => {
                 }}
               />
             </div>
+            <div className="d-flex align-items-center" style={{ gap: 5 }}>
+              <Input
+                placeholder="Tìm kiếm sản phẩm..."
+                style={{ height: 37, fontSize: 12 }}
+              ></Input>
+              <Button color="success">
+                {" "}
+                <img src="/search.png" />
+              </Button>
+            </div>
           </div>
         </div>
-        <div className="d-flex" style={{ gap: 10 }}>
-          <CategoryBar categories={categories} setCategoryId={setCategoryId} />
+        <div className="d-flex" style={{ gap: 20 }}>
+          <CategoryBar
+            categories={categories}
+            setCategoryId={setCategoryId}
+            setCpuId={setCpuId}
+          />
           <div>
             <h5 className="mb-0">Danh sách sản phẩm</h5>
             <Row>

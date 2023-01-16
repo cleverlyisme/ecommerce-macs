@@ -5,7 +5,7 @@ const Paginations = ({ page, setPage, totalPages }) => {
   for (let i = 1; i <= totalPages; i++) {
     getPage[i - 1] = { value: i, label: i };
   }
-  console.log(getPage);
+
   return (
     <Select
       className="basic-single "

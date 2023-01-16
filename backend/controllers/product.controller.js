@@ -32,7 +32,8 @@ const getById = async (req, res) => {
 
 const createProduct = async (req, res) => {
   try {
-    const { name, description, images, price, quantity, categoryId } = req.body;
+    const { name, description, images, price, quantity, categoryId, cpuId } =
+      req.body;
 
     await service.createProduct({
       name,
@@ -41,6 +42,7 @@ const createProduct = async (req, res) => {
       price,
       quantity,
       categoryId,
+      cpuId,
     });
 
     res.sendStatus(201);
@@ -52,8 +54,16 @@ const createProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, description, images, price, quantity, sold, categoryId } =
-      req.body;
+    const {
+      name,
+      description,
+      images,
+      price,
+      quantity,
+      sold,
+      categoryId,
+      cpuId,
+    } = req.body;
 
     await service.updateProduct(id, {
       name,
@@ -63,6 +73,7 @@ const updateProduct = async (req, res) => {
       quantity,
       sold,
       categoryId,
+      cpuId,
     });
 
     res.status(200).send("Updated");

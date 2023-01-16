@@ -74,16 +74,20 @@ const macs16inchNew = mac16inchDesNew.map((item, index) => {
     name: "MacBook Pro 2021 16 inch",
     description: item,
     price: mac16inchPriceNew[index],
-    status: "Máy mới",
+    status: "New",
+    categoryName: "MacBook Pro",
+    cpuName: "M1",
   };
 });
 
 const macs16inchOld = mac16inchDesOld.map((item, index) => {
   return {
-    name: "MacBook Pro 2021 16 inch",
+    name: "MacBook Air 2021 16 inch",
     description: item,
     price: mac16inchPriceOld[index],
-    status: "Máy cũ",
+    status: "Old",
+    categoryName: "MacBook Air",
+    cpuName: "M1",
   };
 });
 
@@ -92,16 +96,20 @@ const macs14inchNew = mac14inchDesNew.map((item, index) => {
     name: "MacBook Pro 2021 14 inch",
     description: item,
     price: mac14inchPriceNew[index],
-    status: "Máy mới",
+    status: "New",
+    categoryName: "MacBook Pro",
+    cpuName: "M1",
   };
 });
 
 const macs14inchOld = mac16inchDesOld.map((item, index) => {
   return {
-    name: "MacBook Pro 2021 14 inch",
+    name: "MacBook Air 2021 14 inch",
     description: item,
     price: mac14inchPriceOld[index],
-    status: "Máy cũ",
+    status: "Old",
+    categoryName: "MacBook Air",
+    cpuName: "M1",
   };
 });
 
@@ -121,6 +129,9 @@ const sampleUsers = [
   },
 ];
 
-const sampleCategories = [{ name: "Máy mới" }, { name: "Máy cũ" }];
+const sampleCategories = [
+  { name: "MacBook Pro", cpu: [{ text: "Intel" }, { text: "M1" }] },
+  { name: "MacBook Air", cpu: [{ text: "Intel" }, { text: "M1" }] },
+];
 
 module.exports = { sampleUsers, sampleProducts, sampleCategories };

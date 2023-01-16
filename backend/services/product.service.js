@@ -19,8 +19,7 @@ const getProducts = async (query) => {
     filters.price = { ...filters.price, $lt: Number(lt) };
   }
 
-  if (price) sortBy.price = price;
-  sortBy.sold = "desc";
+  price ? (sortBy.price = price) : (sortBy.sold = "desc");
 
   const products = await Product.find(filters)
     .sort(sortBy)
@@ -50,13 +49,20 @@ const getById = async (_id) => {
 };
 
 const createProduct = async (data) => {
-  const { name, description, images, price, quantity, categoryId } = data;
+  const { name, description, images, price, quantity, categoryId, cpuId } =
+    data;
 
   if (!name.trim() || !description.trim())
     throw new Error("Invalid name or description");
 
   const category = await Category.findOne({ _id: categoryId }).lean();
   if (!category) throw new Error("Invalid category ID");
+
+  const cpus = category.cpu;
+  if (cpuId) {
+    const cpuFound = cpus.find((cpu) => cpu._id.toString() === cpuId);
+    if (!cpuFound) throw new Error("Invalid CPU ID");
+  }
 
   const newProduct = new Product({
     name,
@@ -65,6 +71,7 @@ const createProduct = async (data) => {
     price: Number(price),
     quantity: Number(quantity),
     categoryId,
+    cpuId,
   });
 
   await newProduct.save();
@@ -73,7 +80,16 @@ const createProduct = async (data) => {
 const updateProduct = async (_id, data) => {
   const product = await Product.findOne({ _id });
 
-  const { name, description, images, price, quantity, sold, categoryId } = data;
+  const {
+    name,
+    description,
+    images,
+    price,
+    quantity,
+    sold,
+    categoryId,
+    cpuId,
+  } = data;
 
   const productExist = await Product.findOne({ name }).lean();
   if (productExist && product.name !== name) throw new Error("Product exists");
@@ -88,6 +104,7 @@ const updateProduct = async (_id, data) => {
   product.quantity = Number(quantity) || product.quantity;
   product.sold = Number(sold) || product.sold;
   product.categoryId = categoryId || product.categoryId;
+  product.cpuId = cpuId || product.cpuId;
 
   await product.save();
 };

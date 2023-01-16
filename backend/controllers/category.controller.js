@@ -24,9 +24,9 @@ const getById = async (req, res) => {
 
 const createCategory = async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, cpu } = req.body;
 
-    await service.createCategory({ name });
+    await service.createCategory({ name, cpu });
 
     res.sendStatus(201);
   } catch (err) {
@@ -40,6 +40,38 @@ const updateCategory = async (req, res) => {
     const { name } = req.body;
 
     await service.updateCategory(id, { name });
+
+    res.status(200).send("Updated");
+  } catch (err) {
+    err.message === "Category not found"
+      ? res.status(404).send(err.message)
+      : res.status(400).send(err.message);
+  }
+};
+
+const createCpu = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const { text } = req.body;
+
+    await service.createCpu(id, { text });
+
+    res.sendStatus(201);
+  } catch (err) {
+    err.message === "Category not found"
+      ? res.status(404).send(err.message)
+      : res.status(400).send(err.message);
+  }
+};
+
+const updateCpu = async (req, res) => {
+  try {
+    const { id, cpuId } = req.params;
+
+    const { text } = req.body;
+
+    await service.updateCpu(id, { cpuId, text });
 
     res.status(200).send("Updated");
   } catch (err) {
@@ -65,6 +97,8 @@ module.exports = {
   getCategories,
   getById,
   createCategory,
+  createCpu,
   updateCategory,
+  updateCpu,
   deleteCategory,
 };

@@ -9,4 +9,10 @@ const UserRoles = {
   User: "User",
 };
 
-module.exports = { UserRoles, OrderStatus };
+const ProductStatus = {
+  New: "New",
+  LikeNew: "Like New",
+  Old: "Old",
+};
+
+module.exports = { UserRoles, OrderStatus, ProductStatus };

@@ -1,6 +1,7 @@
 const passwordHash = require("password-hash");
 
 const User = require("../models/user.model");
+const Order = require("../models/order.model");
 
 const getUsers = async () => {
   const users = await User.find({}).select("-password").lean();
@@ -14,6 +15,21 @@ const getById = async (_id) => {
   return user || {};
 };
 
+const getUserHistory = async (_id) => {
+  const user = await User.findOne({ _id }).select("-password").lean();
+
+  const history = user.history;
+  const userHistory = [];
+
+  for (const h of history) {
+    const order = await Order.findOne({ _id: h.orderId }).lean();
+
+    userHistory.push(order);
+  }
+
+  return userHistory;
+};
+
 const deleteUser = async (_id) => {
   const user = await User.findOne({ _id });
 
@@ -25,5 +41,6 @@ const deleteUser = async (_id) => {
 module.exports = {
   getUsers,
   getById,
+  getUserHistory,
   deleteUser,
 };

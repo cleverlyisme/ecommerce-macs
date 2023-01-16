@@ -22,9 +22,9 @@ const connection = mongoose.connection;
 connection.once("open", async () => {
   console.log("MongoDB connected successfully");
   try {
-    // await generateCategoryData();
+    await generateCategoryData();
     await generateUserData();
-    // await generateProductData();
+    await generateProductData();
   } catch (err) {
     console.log(err.message);
   }
@@ -51,6 +51,7 @@ const generateCategoryData = async () => {
   for (const c of sampleCategories) {
     const category = new Category({
       name: c.name,
+      cpu: c.cpu,
     });
     await category.save();
   }
@@ -61,14 +62,18 @@ const generateProductData = async () => {
   const Product = require("./models/product.model");
 
   for (const p of sampleProducts) {
-    const category = await Category.findOne({ name: p.status }).lean();
+    const category = await Category.findOne({ name: p.categoryName }).lean();
+    const cpu = category.cpu.find((c) => c.text === p.cpuName);
+
     const product = new Product({
       name: p.name,
       description: p.description,
       images: ["63be6bd0c2f8b9c129e2b786"],
       price: p.price,
       quantity: Number(_.random(0, 30)),
+      status: p.status,
       categoryId: category._id.toString(),
+      cpuId: cpu._id.toString(),
     });
 
     await product.save();

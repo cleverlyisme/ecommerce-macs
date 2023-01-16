@@ -17,10 +17,20 @@ categoryRoute.post(
   auth(["Admin"]),
   categoryController.createCategory
 );
+categoryRoute.post(
+  "/categories/:id/cpu",
+  auth(["Admin"]),
+  categoryController.createCpu
+);
 categoryRoute.put(
   "/categories/:id",
   auth(["Admin"]),
   categoryController.updateCategory
+);
+categoryRoute.put(
+  "/categories/:id/cpu/:cpuId",
+  auth(["Admin"]),
+  categoryController.updateCpu
 );
 categoryRoute.delete(
   "/categories/:id",

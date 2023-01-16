@@ -21,6 +21,18 @@ const getById = async (req, res) => {
   }
 };
 
+const getUserHistory = async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    const userHistory = await service.getUserHistory(userId);
+
+    res.status(200).send(userHistory);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+};
+
 const deleteUser = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -36,5 +48,6 @@ const deleteUser = async (req, res) => {
 module.exports = {
   getUsers,
   getById,
+  getUserHistory,
   deleteUser,
 };

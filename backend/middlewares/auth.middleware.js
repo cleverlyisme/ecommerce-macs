@@ -14,7 +14,7 @@ const auth = (roles) => (req, res, next) => {
     const user = jwt.decode(token);
 
     if (roles) {
-      if (!roles.include(user.role)) throw new Error("Bad credential");
+      if (!roles.includes(user.role)) throw new Error("Bad credential");
     }
 
     req.userId = user._id;

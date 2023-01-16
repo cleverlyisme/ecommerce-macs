@@ -38,8 +38,6 @@ const createOrder = async (data) => {
 
   let amount = 0;
 
-  console.log(products);
-
   for (const p of products) {
     const product = await Product.findOne({
       _id: p.productId,

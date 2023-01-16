@@ -18,18 +18,6 @@ const schema = new Schema({
     {
       _id: false,
       orderId: { type: String, required: true },
-      products: [
-        {
-          _id: false,
-          productId: { type: String, required: true },
-          price: { type: Number, required: true },
-          quantity: { type: Number, required: true },
-        },
-      ],
-      createdAt: { type: Number, required: true },
-      updatedAt: { type: Number, required: true },
-      status: { type: String, required: true },
-      amount: { type: Number, required: true },
     },
   ],
 });

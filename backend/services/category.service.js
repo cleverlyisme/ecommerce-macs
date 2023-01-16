@@ -97,6 +97,18 @@ const deleteCategory = async (_id) => {
   await category.remove();
 };
 
+const deleteCpu = async (_id, cpuId) => {
+  const category = await Category.findOne({ _id });
+
+  if (!category) throw new Error("Category not found");
+
+  const newCpu = category.cpu.filter((c) => c._id.toString() !== cpuId);
+
+  category.cpu = newCpu;
+
+  await category.save();
+};
+
 module.exports = {
   getCategories,
   getById,
@@ -105,4 +117,5 @@ module.exports = {
   updateCategory,
   updateCpu,
   deleteCategory,
+  deleteCpu,
 };

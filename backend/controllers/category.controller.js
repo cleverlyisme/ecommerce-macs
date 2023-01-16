@@ -93,6 +93,18 @@ const deleteCategory = async (req, res) => {
   }
 };
 
+const deleteCpu = async (req, res) => {
+  try {
+    const { id, cpuId } = req.params;
+
+    await service.deleteCpu(id, cpuId);
+
+    res.status(200).send("Deleted");
+  } catch (err) {
+    res.status(404).send(err.message);
+  }
+};
+
 module.exports = {
   getCategories,
   getById,
@@ -101,4 +113,5 @@ module.exports = {
   updateCategory,
   updateCpu,
   deleteCategory,
+  deleteCpu,
 };

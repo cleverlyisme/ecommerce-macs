@@ -37,5 +37,10 @@ categoryRoute.delete(
   auth(["Admin"]),
   categoryController.deleteCategory
 );
+categoryRoute.delete(
+  "/categories/:id/cpu/:cpuId",
+  auth(["Admin"]),
+  categoryController.deleteCpu
+);
 
 module.exports = categoryRoute;

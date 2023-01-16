@@ -2,7 +2,7 @@ const service = require("../services/product.service");
 
 const getProducts = async (req, res) => {
   try {
-    const { page, limit, categoryId, gt, lt, price } = req.query;
+    const { page, limit, categoryId, gt, lt, price, cpuId } = req.query;
     const products = await service.getProducts({
       page,
       limit,
@@ -10,6 +10,7 @@ const getProducts = async (req, res) => {
       gt,
       lt,
       price,
+      cpuId,
     });
 
     res.status(200).send(products);

@@ -23,7 +23,7 @@ const getById = async (req, res) => {
 
 const getUserHistory = async (req, res) => {
   try {
-    const userId = req.params.id;
+    const { userId } = req;
 
     const userHistory = await service.getUserHistory(userId);
 

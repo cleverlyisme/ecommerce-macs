@@ -1,4 +1,7 @@
+const jwt = require("jsonwebtoken");
+
 const service = require("../services/order.service");
+const { JWT_SECRET_KEY } = require("../utils/environments");
 
 const getOrders = async (req, res) => {
   try {
@@ -24,9 +27,20 @@ const getById = async (req, res) => {
 
 const createOrder = async (req, res) => {
   try {
+    const token = req.headers.authorization.split(" ")[1];
+
+    let userId;
+
+    jwt.verify(token, JWT_SECRET_KEY, (err, decoded) => {
+      userId = decoded._id;
+    });
+
+    console.log(userId);
+
     const { name, address, phoneNumber, products, note } = req.body;
 
     await service.createOrder({
+      userId,
       name,
       address,
       phoneNumber,

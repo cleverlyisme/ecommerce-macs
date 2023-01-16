@@ -1,5 +1,6 @@
 const Order = require("../models/order.model");
 const Product = require("../models/product.model");
+const User = require("../models/user.model");
 
 const { OrderStatus } = require("../utils/constants");
 
@@ -30,7 +31,7 @@ const getById = async (_id) => {
 };
 
 const createOrder = async (data) => {
-  const { name, address, phoneNumber, products, note } = data;
+  const { userId, name, address, phoneNumber, products, note } = data;
 
   if (!address.trim()) throw new Error("Invalid address");
 
@@ -69,6 +70,14 @@ const createOrder = async (data) => {
   });
 
   await newOrder.save();
+
+  if (userId) {
+    const user = await User.findOne({ _id: userId });
+
+    user.history = [...user.history, { orderId: newOrder._id.toString() }];
+
+    await user.save();
+  }
 };
 
 const updateOrder = async (_id, data) => {

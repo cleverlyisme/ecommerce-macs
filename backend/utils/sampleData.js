@@ -76,7 +76,7 @@ const macs16inchNew = mac16inchDesNew.map((item, index) => {
     price: mac16inchPriceNew[index],
     status: "New",
     categoryName: "MacBook Pro",
-    cpuName: "M1",
+    cpuName: "Intel",
   };
 });
 
@@ -109,7 +109,7 @@ const macs14inchOld = mac16inchDesOld.map((item, index) => {
     price: mac14inchPriceOld[index],
     status: "Old",
     categoryName: "MacBook Air",
-    cpuName: "M1",
+    cpuName: "Intel",
   };
 });
 

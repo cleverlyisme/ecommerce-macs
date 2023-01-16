@@ -43,7 +43,14 @@ const getProducts = async (query) => {
 const getById = async (_id) => {
   const product = await Product.findOne({ _id }).lean();
 
-  return product || {};
+  const relatedProducts = await Product.find({
+    categoryId: product.categoryId,
+    cpuId: product.cpuId,
+  })
+    .limit(5)
+    .lean();
+
+  return { item: product || {}, relatedItems: relatedProducts || [] };
 };
 
 const createProduct = async (data) => {

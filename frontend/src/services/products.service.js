@@ -22,3 +22,5 @@ export const uploadPhoto = (formData) => apiUpload.post("/photos", formData);
 export const deleteProduct = (id) => api.delete("/products/" + id);
 
 export const createProduct = (data) => api.post("/products", data);
+
+export const searchProducts = (data) => api.post("/products/search", data);

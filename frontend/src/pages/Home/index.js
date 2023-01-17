@@ -4,7 +4,7 @@ import Select from "react-select";
 
 import ProductDetail from "./components/ProductDetail";
 import Paginations from "../Paginations";
-import { getProducts } from "../../services/products.service";
+import { getProducts, searchProducts } from "../../services/products.service";
 import { getCategories } from "../../services/category.service";
 import Layout from "../../components/Layout";
 import CategoryBar from "./components/CategoryBar";
@@ -29,6 +29,7 @@ const Home = () => {
   const [gt, setGt] = useState(0);
   const [lt, setlt] = useState();
   const [price, setPrice] = useState(null);
+  const [searchValue, setSearchValue] = useState("");
 
   const getListProducts = async () => {
     try {
@@ -57,6 +58,15 @@ const Home = () => {
     }
   };
 
+  const handleSearch = async (data) => {
+    try {
+      const res = await searchProducts(data);
+      setProducts(res.data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   const getNameCategory = categories.map((category) => {
     return { value: category._id, label: category.name };
   });
@@ -78,10 +88,6 @@ const Home = () => {
   useEffect(() => {
     getListProducts();
   }, [page, categoryId, gt, lt, price, cpuId]);
-
-  // console.log(products);
-  // console.log(categories);
-  // console.log(cpuId);
 
   return (
     <Layout>
@@ -139,9 +145,13 @@ const Home = () => {
               <Input
                 placeholder="Tìm kiếm sản phẩm..."
                 style={{ height: 37, fontSize: 12 }}
-              ></Input>
-              <Button color="success">
-                {" "}
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+              />
+              <Button
+                color="success"
+                onClick={() => handleSearch({ name: searchValue })}
+              >
                 <img src="/search.png" />
               </Button>
             </div>

@@ -142,7 +142,9 @@ const ratingProduct = async (_id, rating) => {
 };
 
 const searchProducts = async (pName) => {
-  const products = await Product.find({ name: { $regex: pName } }).lean();
+  const products = await Product.find({
+    name: { $regex: ".*" + pName + ".*" },
+  }).lean();
 
   return products || [];
 };

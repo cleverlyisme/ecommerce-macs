@@ -8,9 +8,10 @@ export const getProducts = ({
   lt,
   price,
   cpuId,
+  productName,
 }) =>
   api.get("/products", {
-    params: { page, limit, categoryId, gt, lt, price, cpuId },
+    params: { page, limit, categoryId, gt, lt, price, cpuId, productName },
   });
 
 export const getProductById = (id) => api.get("/products/" + id);
@@ -22,5 +23,3 @@ export const uploadPhoto = (formData) => apiUpload.post("/photos", formData);
 export const deleteProduct = (id) => api.delete("/products/" + id);
 
 export const createProduct = (data) => api.post("/products", data);
-
-export const searchProducts = (data) => api.post("/products/search", data);

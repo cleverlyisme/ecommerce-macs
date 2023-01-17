@@ -4,10 +4,12 @@ const _ = require("lodash");
 
 const getProducts = async (query) => {
   const categories = await Category.find({}).lean();
-  const { page, limit, categoryId, gt, lt, price, cpuId } = query;
+  const { productName, page, limit, categoryId, gt, lt, price, cpuId } = query;
 
   const filters = {},
     sortBy = {};
+
+  if (productName) filters.name = { $regex: ".*" + productName + ".*" };
 
   if (categoryId) filters.categoryId = categoryId;
 
@@ -141,14 +143,6 @@ const ratingProduct = async (_id, rating) => {
   await product.save();
 };
 
-const searchProducts = async (pName) => {
-  const products = await Product.find({
-    name: { $regex: ".*" + pName + ".*" },
-  }).lean();
-
-  return products || [];
-};
-
 module.exports = {
   getProducts,
   getById,
@@ -156,5 +150,4 @@ module.exports = {
   updateProduct,
   deleteProduct,
   ratingProduct,
-  searchProducts,
 };

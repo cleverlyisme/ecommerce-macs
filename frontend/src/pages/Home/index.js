@@ -58,10 +58,19 @@ const Home = () => {
     }
   };
 
-  const handleSearch = async (data) => {
+  const handleSearch = async () => {
     try {
-      const res = await searchProducts(data);
-      setProducts(res.data);
+      const res = await getProducts({
+        page,
+        limit,
+        categoryId,
+        gt,
+        lt,
+        price,
+        cpuId,
+        productName: searchValue,
+      });
+      setProducts(res.data.items);
     } catch (err) {
       console.log(err.message);
     }
@@ -148,10 +157,7 @@ const Home = () => {
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
               />
-              <Button
-                color="success"
-                onClick={() => handleSearch({ name: searchValue })}
-              >
+              <Button color="success" onClick={() => handleSearch()}>
                 <img src="/search.png" />
               </Button>
             </div>

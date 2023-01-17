@@ -2,8 +2,10 @@ const service = require("../services/product.service");
 
 const getProducts = async (req, res) => {
   try {
-    const { page, limit, categoryId, gt, lt, price, cpuId } = req.query;
+    const { productName, page, limit, categoryId, gt, lt, price, cpuId } =
+      req.query;
     const products = await service.getProducts({
+      productName,
       page,
       limit,
       categoryId,
@@ -112,18 +114,6 @@ const ratingProduct = async (req, res) => {
   }
 };
 
-const searchProducts = async (req, res) => {
-  try {
-    const { name } = req.body;
-
-    const products = await service.searchProducts(name);
-
-    res.status(200).send(products);
-  } catch (err) {
-    res.status(400).send(err.message);
-  }
-};
-
 module.exports = {
   getProducts,
   getById,
@@ -131,5 +121,4 @@ module.exports = {
   updateProduct,
   deleteProduct,
   ratingProduct,
-  searchProducts,
 };

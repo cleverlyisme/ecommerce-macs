@@ -7,6 +7,7 @@ const authRoute = express.Router();
 
 authRoute.post("/login", authController.login);
 authRoute.post("/register", authController.register);
-authRoute.get("/checkAuth", auth(), authController.checkAuth);
+authRoute.get("/checkAuth", auth(["Admin"]), authController.checkAuth);
+authRoute.get("/me", auth(), authController.getInfor);
 
 module.exports = authRoute;

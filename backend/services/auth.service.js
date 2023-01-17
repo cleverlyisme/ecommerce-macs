@@ -18,9 +18,12 @@ const login = async (email, phone, password) => {
 
   const { _id, role } = userEmail || userPhone;
 
-  return jsonwebtoken.sign({ _id, role }, JWT_SECRET_KEY, {
-    expiresIn: "2d",
-  });
+  return {
+    token: jsonwebtoken.sign({ _id, role }, JWT_SECRET_KEY, {
+      expiresIn: "2d",
+    }),
+    user: { _id },
+  };
 };
 
 const register = async (email, phone, password) => {

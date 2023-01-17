@@ -17,8 +17,9 @@ const Login = () => {
   const handleClickLogin = async () => {
     try {
       const res = await login({ email, password });
-      localStorage.setItem("accessToken", res.data.token);
-      setUser(res.data);
+      const { token, user } = res.data;
+      localStorage.setItem("accessToken", token);
+      setUser(user);
     } catch (err) {
       console.log(err.message);
     }

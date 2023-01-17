@@ -4,9 +4,9 @@ const login = async (req, res) => {
   try {
     const { email, phone, password } = req.body;
 
-    const token = await service.login(email, phone, password);
+    const { token, user } = await service.login(email, phone, password);
 
-    res.status(200).send({ token });
+    res.status(200).send({ token, user });
   } catch (err) {
     res.status(401).send(err.message);
   }
@@ -26,8 +26,15 @@ const register = async (req, res) => {
 
 const checkAuth = (req, res) => res.sendStatus(200);
 
+const getInfor = (req, res) => {
+  const { userId, role } = req;
+
+  res.status(200).send({ userId });
+};
+
 module.exports = {
   login,
   register,
   checkAuth,
+  getInfor,
 };

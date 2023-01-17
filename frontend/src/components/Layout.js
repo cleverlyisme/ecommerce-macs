@@ -1,9 +1,28 @@
+import { useEffect } from "react";
 import { Container } from "reactstrap";
 
 import Header from "./Header";
 import Footer from "./Footer";
+import useAppContext from "../hooks/useAppContext";
+import { getInfo } from "../services/auth.service";
 
 const Layout = ({ children }) => {
+  const { setUser } = useAppContext();
+
+  const checkUser = async () => {
+    try {
+      const res = await getInfo();
+      const { userId } = res.data || {};
+      setUser({ userId });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    checkUser();
+  }, []);
+
   return (
     <div className="min-vh-100 d-flex flex-column">
       <Header />

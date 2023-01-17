@@ -112,6 +112,18 @@ const ratingProduct = async (req, res) => {
   }
 };
 
+const searchProducts = async (req, res) => {
+  try {
+    const { name } = req.body;
+
+    const products = await service.searchProducts(name);
+
+    res.status(200).send(products);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+};
+
 module.exports = {
   getProducts,
   getById,
@@ -119,4 +131,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   ratingProduct,
+  searchProducts,
 };

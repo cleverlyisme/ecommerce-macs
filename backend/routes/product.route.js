@@ -7,6 +7,7 @@ const productRoute = express.Router();
 
 productRoute.get("/products", productController.getProducts);
 productRoute.get("/products/:id", productController.getById);
+productRoute.post("/products/search", productController.searchProducts);
 productRoute.post(
   "/products",
   auth(["Admin"]),

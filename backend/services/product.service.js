@@ -141,6 +141,12 @@ const ratingProduct = async (_id, rating) => {
   await product.save();
 };
 
+const searchProducts = async (pName) => {
+  const products = await Product.find({ name: { $regex: pName } }).lean();
+
+  return products || [];
+};
+
 module.exports = {
   getProducts,
   getById,
@@ -148,4 +154,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   ratingProduct,
+  searchProducts,
 };

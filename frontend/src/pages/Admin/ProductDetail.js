@@ -22,6 +22,12 @@ const ProductDetail = () => {
   const [files, setFiles] = useState([]);
   const [check, setCheck] = useState(null);
 
+  const statusOptions = [
+    { value: "Mới", label: "Mới" },
+    { value: "Cũ", label: "Cũ" },
+    { value: "Gần như mới", label: "Gần như mới" },
+  ];
+
   const getAllCategories = async () => {
     try {
       const res = await getCategories();
@@ -36,8 +42,8 @@ const ProductDetail = () => {
   const getData = async () => {
     try {
       const res = await getProductById(id);
-      setData(res.data);
-      setCheck(res.data);
+      setData(res.data.item);
+      setCheck(res.data.item);
     } catch (err) {
       console.error(err);
     }
@@ -81,8 +87,12 @@ const ProductDetail = () => {
 
   const createNewProduct = async () => {
     try {
-      const { name, description, categoryId } = data;
-      if ([name, description, categoryId].some((item) => !item || !item.trim()))
+      const { name, description, categoryId, cpuId, status } = data;
+      if (
+        [name, description, categoryId, cpuId, status].some(
+          (item) => !item || !item.trim()
+        )
+      )
         throw new Error("Please fill in all field");
 
       if (files.length) {
@@ -144,6 +154,44 @@ const ProductDetail = () => {
                 />
               </div>
               <div>
+                <Select
+                  className="basic-single"
+                  classNamePrefix="select"
+                  value={categories
+                    .find((item) => item?._id === data?.categoryId)
+                    ?.cpu.map((item) => {
+                      return { label: item.text, value: item._id };
+                    })
+                    .find((item) => item.value === data?.cpuId)}
+                  placeholder="Loại CPU"
+                  name="CPU"
+                  options={categories
+                    .find((item) => item?._id === data?.categoryId)
+                    ?.cpu.map((item) => {
+                      return { label: item.text, value: item._id };
+                    })}
+                  onChange={(selectedOption) =>
+                    changeData("cpuId")(selectedOption.value)
+                  }
+                />
+              </div>
+              <div>
+                <Select
+                  className="basic-single"
+                  classNamePrefix="select"
+                  placeholder="Tình trạng máy"
+                  value={statusOptions.find((item) => {
+                    if (item.value === data?.status)
+                      return { label: item?.status, value: item?.status };
+                  })}
+                  name="status"
+                  options={statusOptions}
+                  onChange={(selectedOption) =>
+                    changeData("status")(selectedOption.value)
+                  }
+                />
+              </div>
+              <div>
                 <Label>Mô tả sản phẩm</Label>
                 <Input
                   value={data?.description}
@@ -173,6 +221,7 @@ const ProductDetail = () => {
                   placeholder="Số lượng"
                 />
               </div>
+
               <div>
                 <Label>Đã bán</Label>
                 <Input

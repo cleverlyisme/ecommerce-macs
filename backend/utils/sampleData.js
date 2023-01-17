@@ -74,7 +74,7 @@ const macs16inchNew = mac16inchDesNew.map((item, index) => {
     name: "MacBook Pro 2021 16 inch",
     description: item,
     price: mac16inchPriceNew[index],
-    status: "New",
+    status: "Mới",
     categoryName: "MacBook Pro",
     cpuName: "Intel",
   };
@@ -85,7 +85,7 @@ const macs16inchOld = mac16inchDesOld.map((item, index) => {
     name: "MacBook Air 2021 16 inch",
     description: item,
     price: mac16inchPriceOld[index],
-    status: "Old",
+    status: "Cũ",
     categoryName: "MacBook Air",
     cpuName: "M1",
   };
@@ -96,7 +96,7 @@ const macs14inchNew = mac14inchDesNew.map((item, index) => {
     name: "MacBook Pro 2021 14 inch",
     description: item,
     price: mac14inchPriceNew[index],
-    status: "New",
+    status: "Mới",
     categoryName: "MacBook Pro",
     cpuName: "M1",
   };
@@ -107,7 +107,7 @@ const macs14inchOld = mac16inchDesOld.map((item, index) => {
     name: "MacBook Air 2021 14 inch",
     description: item,
     price: mac14inchPriceOld[index],
-    status: "Old",
+    status: "Cũ",
     categoryName: "MacBook Air",
     cpuName: "Intel",
   };

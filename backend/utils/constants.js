@@ -10,9 +10,9 @@ const UserRoles = {
 };
 
 const ProductStatus = {
-  New: "New",
-  LikeNew: "Like New",
-  Old: "Old",
+  New: "Mới",
+  LikeNew: "Gần như mới",
+  Old: "Cũ",
 };
 
 module.exports = { UserRoles, OrderStatus, ProductStatus };

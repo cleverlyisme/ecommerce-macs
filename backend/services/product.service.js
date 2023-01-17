@@ -2,6 +2,8 @@ const Product = require("../models/product.model");
 const Category = require("../models/category.model");
 const _ = require("lodash");
 
+const { ProductStatus } = require("../utils/constants");
+
 const getProducts = async (query) => {
   const categories = await Category.find({}).lean();
   const { productName, page, limit, categoryId, gt, lt, price, cpuId } = query;
@@ -50,15 +52,24 @@ const getById = async (id) => {
     categoryId: product.categoryId,
     cpuId: product.cpuId,
   })
-    .limit(5)
+    .limit(6)
     .lean();
 
   return { item: product || {}, relatedItems: relatedProducts || [] };
 };
 
 const createProduct = async (data) => {
-  const { name, description, images, price, quantity, categoryId, cpuId } =
-    data;
+  const {
+    name,
+    description,
+    images,
+    price,
+    quantity,
+    categoryId,
+    cpuId,
+    status,
+    sold,
+  } = data;
 
   if (!name.trim() || !description.trim())
     throw new Error("Invalid name or description");
@@ -72,14 +83,19 @@ const createProduct = async (data) => {
     if (!cpuFound) throw new Error("Invalid CPU ID");
   }
 
+  if (!Object.values(ProductStatus).includes(status))
+    throw new Error("Invalid status");
+
   const newProduct = new Product({
     name,
     description,
     images: images || [],
     price: Number(price),
     quantity: Number(quantity),
+    status,
     categoryId,
     cpuId,
+    sold,
   });
 
   await newProduct.save();

@@ -27,7 +27,7 @@ const ProductDetail = ({ product }) => {
   } = useAppContext();
 
   return (
-    <Card className="p-0" style={{ overflow: "hidden" }}>
+    <Card className="p-0" style={{ overflow: "hidden", minWidth: 150 }}>
       <img
         alt="Sample"
         src={formatFileUrl(images[0])}

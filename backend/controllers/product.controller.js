@@ -35,8 +35,17 @@ const getById = async (req, res) => {
 
 const createProduct = async (req, res) => {
   try {
-    const { name, description, images, price, quantity, categoryId, cpuId } =
-      req.body;
+    const {
+      name,
+      description,
+      images,
+      price,
+      quantity,
+      status,
+      categoryId,
+      cpuId,
+      sold,
+    } = req.body;
 
     await service.createProduct({
       name,
@@ -44,8 +53,10 @@ const createProduct = async (req, res) => {
       images,
       price,
       quantity,
+      status,
       categoryId,
       cpuId,
+      sold,
     });
 
     res.sendStatus(201);

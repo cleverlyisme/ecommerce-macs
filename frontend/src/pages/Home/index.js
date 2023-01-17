@@ -79,9 +79,9 @@ const Home = () => {
     getListProducts();
   }, [page, categoryId, gt, lt, price, cpuId]);
 
-  console.log(products);
-  console.log(categories);
-  console.log(cpuId);
+  // console.log(products);
+  // console.log(categories);
+  // console.log(cpuId);
 
   return (
     <Layout>

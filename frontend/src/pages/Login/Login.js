@@ -3,10 +3,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { login } from "../../services/auth.service";
-import useAdminContext from "../../hooks/useAdminContext";
+import useAppContext from "../../hooks/useAppContext";
+import { getUserHistory } from "../../services/user.service";
 
 const Login = () => {
   const navigate = useNavigate();
+
+  const { setUser } = useAppContext();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,6 +18,7 @@ const Login = () => {
     try {
       const res = await login({ email, password });
       localStorage.setItem("accessToken", res.data.token);
+      setUser(res.data);
     } catch (err) {
       console.log(err.message);
     }

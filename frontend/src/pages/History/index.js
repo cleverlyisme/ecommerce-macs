@@ -2,7 +2,25 @@ import Layout from "../../components/Layout";
 import { useState, useEffect } from "react";
 import { Table } from "reactstrap";
 
+import { getUserHistory } from "../../services/user.service";
+
 const History = () => {
+  const [history, setHistory] = useState(null);
+
+  const getHistory = async () => {
+    try {
+      const res = await getUserHistory();
+      console.log(res.data);
+      setHistory(res.data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  useEffect(() => {
+    getHistory();
+  }, []);
+
   return (
     <Layout>
       <div>

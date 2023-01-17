@@ -14,6 +14,7 @@ import { getProductById } from "../../services/products.service";
 import Currency from "../../utils/formatCurrency";
 import useAppContext from "../../hooks/useAppContext";
 import formatFileUrl from "../../utils/formatFileUrl";
+import RelatedProducts from "./Components/RelatedProducts";
 
 const ProductDetail = () => {
   const navigate = useNavigate();
@@ -23,16 +24,15 @@ const ProductDetail = () => {
   } = useAppContext();
 
   const [product, setProduct] = useState(null);
+  const [relatedProducts, setRelatedProducts] = useState([]);
   const [count, setCount] = useState(1);
   const [index, setIndex] = useState(0);
 
   const getProduct = async () => {
     try {
       const res = await getProductById(id);
-
-      const { item, relatedItems } = res.data;
-
-      setProduct(item);
+      setProduct(res.data.item);
+      setRelatedProducts(res.data.relatedItems);
     } catch (err) {
       console.log(err.message);
     }
@@ -42,8 +42,12 @@ const ProductDetail = () => {
     getProduct();
   }, [id]);
   // console.log(product);
-  const { _id, name, images, description, price, quantity } = product || {};
+  console.log(relatedProducts);
+  const { _id, name, images, description, price, quantity, rating } =
+    product || {};
   if (!product) return null;
+
+  console.log(_id, name, images, description, price, quantity, rating);
 
   return (
     <Layout className="d-flex flex-column" style={{ gap: 20 }}>
@@ -112,7 +116,12 @@ const ProductDetail = () => {
                 <div style={{ fontSize: 12 }}>Đừng bỏ lỡ!!</div>
               </div>
             </div>
-            <ReactStars count={5} size={25} activeColor="#ffd700" value={1} />
+            <ReactStars
+              count={5}
+              size={25}
+              activeColor="#ffd700"
+              value={rating}
+            />
           </div>
 
           <Button
@@ -126,6 +135,22 @@ const ProductDetail = () => {
             Thêm vào giỏ hàng
           </Button>
         </Col>
+      </Row>
+      <div
+        className="d-flex justify-content-center"
+        style={{ fontSize: 20, fontWeight: 600 }}
+      >
+        Các sản phẩm tương tự
+      </div>
+      <Row className="d-flex">
+        {relatedProducts.map((product) => {
+          return (
+            <Col className="p-2" xs={6} sm={4} md={3} lg={2} xl={2}>
+              {" "}
+              <RelatedProducts product={product} />{" "}
+            </Col>
+          );
+        })}
       </Row>
     </Layout>
   );

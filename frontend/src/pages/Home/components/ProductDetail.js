@@ -21,7 +21,7 @@ import formatFileUrl from "../../../utils/formatFileUrl";
 const ProductDetail = ({ product }) => {
   const navigate = useNavigate();
 
-  const { images, price, name, _id, sold } = product;
+  const { images, price, name, _id, sold, rating } = product;
   const {
     cartState: { updateProduct },
   } = useAppContext();
@@ -59,7 +59,7 @@ const ProductDetail = ({ product }) => {
           count={5}
           size={15}
           activeColor="#ffd700"
-          value={1}
+          value={rating}
           edit={false}
         />
         ,

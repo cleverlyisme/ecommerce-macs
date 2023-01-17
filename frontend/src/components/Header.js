@@ -1,8 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Container } from "reactstrap";
+import useAppContext from "../hooks/useAppContext";
 
 const Header = () => {
   const navigate = useNavigate();
+
+  const { user } = useAppContext();
 
   return (
     <div style={{ backgroundColor: "#ffd500" }}>
@@ -32,11 +35,13 @@ const Header = () => {
           >
             <div className="d-flex align-items-center" style={{ gap: 5 }}>
               <img
-                src="/history.png"
+                src={!user ? "/account.png" : "/history.png"}
                 width="24px"
                 height="24px"
                 style={{ cursor: "pointer" }}
-                onClick={() => navigate("/history")}
+                onClick={() =>
+                  !user ? navigate("/login") : navigate("/history")
+                }
               />
             </div>
             <div className="d-flex align-items-center" style={{ gap: 5 }}>

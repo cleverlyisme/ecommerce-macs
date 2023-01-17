@@ -40,10 +40,11 @@ const getProducts = async (query) => {
   return data;
 };
 
-const getById = async (_id) => {
-  const product = await Product.findOne({ _id }).lean();
+const getById = async (id) => {
+  const product = await Product.findOne({ _id: id }).lean();
 
   const relatedProducts = await Product.find({
+    _id: { $ne: id },
     categoryId: product.categoryId,
     cpuId: product.cpuId,
   })
@@ -122,10 +123,29 @@ const deleteProduct = async (_id) => {
   await product.remove();
 };
 
+const ratingProduct = async (_id, rating) => {
+  const product = await Product.findOne({ _id });
+
+  if (!product) throw new Error("Product not found");
+
+  if (Number(rating) < 1 || Number(rating) > 5)
+    throw new Error("Invalid rating number");
+
+  if (product.ratingTotal === 0) product.ratingTotal = product.rating;
+
+  product.ratingCount += 1;
+  product.ratingTotal += Number(rating);
+
+  product.rating = product.ratingTotal / product.ratingCount;
+
+  await product.save();
+};
+
 module.exports = {
   getProducts,
   getById,
   createProduct,
   updateProduct,
   deleteProduct,
+  ratingProduct,
 };

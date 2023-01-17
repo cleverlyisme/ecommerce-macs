@@ -20,6 +20,8 @@ const schema = new Schema({
     max: 5,
     default: () => _.random(3, 5),
   },
+  ratingCount: { type: Number, required: true, default: 1 },
+  ratingTotal: { type: Number, required: true, default: 0 },
   categoryId: { type: String, required: true },
   cpuId: { type: String, required: true },
 });

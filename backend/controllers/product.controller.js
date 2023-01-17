@@ -97,10 +97,26 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+const ratingProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { rating } = req.body;
+
+    await service.ratingProduct(id, rating);
+
+    res.status(200).send("Rated " + rating + "*");
+  } catch (err) {
+    err.message === "Product not found"
+      ? res.status(404).send(err.message)
+      : res.status(400).send(err.message);
+  }
+};
+
 module.exports = {
   getProducts,
   getById,
   createProduct,
   updateProduct,
   deleteProduct,
+  ratingProduct,
 };

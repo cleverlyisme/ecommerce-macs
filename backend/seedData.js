@@ -22,8 +22,8 @@ const connection = mongoose.connection;
 connection.once("open", async () => {
   console.log("MongoDB connected successfully");
   try {
-    await generateCategoryData();
-    await generateUserData();
+    // await generateCategoryData();
+    // await generateUserData();
     await generateProductData();
   } catch (err) {
     console.log(err.message);

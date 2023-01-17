@@ -22,5 +22,6 @@ productRoute.delete(
   auth(["Admin"]),
   productController.deleteProduct
 );
+productRoute.post("/products/rating/:id", productController.ratingProduct);
 
 module.exports = productRoute;

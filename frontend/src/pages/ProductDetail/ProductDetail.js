@@ -29,7 +29,10 @@ const ProductDetail = () => {
   const getProduct = async () => {
     try {
       const res = await getProductById(id);
-      setProduct(res.data);
+
+      const { item, relatedItems } = res.data;
+
+      setProduct(item);
     } catch (err) {
       console.log(err.message);
     }

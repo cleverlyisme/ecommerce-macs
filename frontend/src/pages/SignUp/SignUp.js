@@ -59,7 +59,7 @@ const SignUp = () => {
           <div className="d-flex flex-column" style={{ gap: 5 }}>
             <div style={{ fontSize: 12, fontWeight: 550 }}>Email</div>
             <input
-              type="number"
+              type="text"
               class="form-control"
               placeholder="Email"
               aria-label="Username"

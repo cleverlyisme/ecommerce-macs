@@ -12,11 +12,16 @@ const Login = () => {
   const { setUser } = useAppContext();
 
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
 
   const handleClickLogin = async () => {
     try {
-      const res = await login({ email, password });
+      const res =
+        isNaN(emailOrPhone) == true
+          ? await login({ email: emailOrPhone, password })
+          : await login({ phone: emailOrPhone, password });
       const { token, user } = res.data;
       localStorage.setItem("accessToken", token);
       setUser(user);
@@ -60,10 +65,10 @@ const Login = () => {
               class="form-control"
               placeholder="Email hoặc số điện thoại"
               aria-label="Username"
-              value={email}
+              value={emailOrPhone}
               aria-describedby="basic-addon1"
               style={{ height: 35, fontSize: 12 }}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmailOrPhone(e.target.value)}
             ></input>
           </div>
           <div className="d-flex flex-column" style={{ gap: 5 }}>

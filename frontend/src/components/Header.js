@@ -5,7 +5,7 @@ import useAppContext from "../hooks/useAppContext";
 const Header = () => {
   const navigate = useNavigate();
 
-  const { user } = useAppContext();
+  const { user, setUser } = useAppContext();
 
   return (
     <div style={{ backgroundColor: "#ffd500" }}>
@@ -53,6 +53,24 @@ const Header = () => {
                 onClick={() => navigate("/cart")}
               />
             </div>
+            {user ? (
+              <div className="d-flex align-items-center" style={{ gap: 5 }}>
+                <img
+                  src="/logout.png"
+                  width="24px"
+                  height="24px"
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    setUser(null);
+                    localStorage.removeItem("accessToken");
+                  }}
+                />
+              </div>
+            ) : (
+              ""
+            )}
           </Col>
         </Row>
       </Container>

@@ -1,11 +1,13 @@
 import Layout from "../../components/Layout";
 import { useState, useEffect } from "react";
 import { Table } from "reactstrap";
+import moment from "moment";
 
 import { getUserHistory } from "../../services/user.service";
+import Currency from "../../utils/formatCurrency";
 
 const History = () => {
-  const [history, setHistory] = useState(null);
+  const [history, setHistory] = useState([]);
 
   const getHistory = async () => {
     try {
@@ -21,11 +23,13 @@ const History = () => {
     getHistory();
   }, []);
 
+  console.log(history);
+
   return (
     <Layout>
       <div>
         <div style={{ fontSize: 18, fontWeight: 600 }}>Lịch sử đặt hàng</div>
-        <Table>
+        <Table striped bordered hover responsive size="sm">
           <thead>
             <tr>
               <th>Thời gian</th>
@@ -38,12 +42,23 @@ const History = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
+            {history.map((item) => {
+              return (
+                <tr key={item._id}>
+                  <td>
+                    {moment(new Date(item.createdAt)).format(
+                      "DD/MM/YYYY HH:mm:ss"
+                    )}
+                  </td>
+                  <td>{item.name}</td>
+                  <td>{item.address}</td>
+                  <td>{item.phoneNumber}</td>
+                  <td style={{ overflowY: "auto", maxWidth: 100 }}></td>
+                  <td>{Currency(item.amount)}</td>
+                  <td>{item.status}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </Table>
       </div>

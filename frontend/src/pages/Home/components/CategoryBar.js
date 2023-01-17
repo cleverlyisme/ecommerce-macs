@@ -50,6 +50,7 @@ const CategoryBar = (props) => {
                         id={item.name}
                         type="radio"
                         name="radio1"
+                        defaultChecked={false}
                         onClick={() => {
                           setValue(item.text);
                           setCpuId(item._id);

@@ -27,15 +27,15 @@ const getById = async (req, res) => {
 
 const createOrder = async (req, res) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.headers.authorization;
 
     let userId;
 
-    jwt.verify(token, JWT_SECRET_KEY, (err, decoded) => {
-      userId = decoded._id;
-    });
-
-    console.log(userId);
+    if (token) {
+      jwt.verify(token.split(" ")[1], JWT_SECRET_KEY, (err, decoded) => {
+        userId = decoded._id;
+      });
+    }
 
     const { name, address, phoneNumber, products, note } = req.body;
 

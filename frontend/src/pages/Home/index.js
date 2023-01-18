@@ -12,6 +12,7 @@ import CategoryBar from "./components/CategoryBar";
 const limit = 24;
 
 const listPrice = [
+  { greater: 0, name: "Tất cả" },
   { greater: 0, less: 10000000, name: "Dưới 10 triệu" },
   { greater: 10000000, less: 20000000, name: "10-20 triệu" },
   { greater: 20000000, less: 30000000, name: "20-30 triệu" },

@@ -12,10 +12,22 @@ const Footer = () => {
           0988113999
         </p>
         <div className="d-flex align-items-center" style={{ gap: 5 }}>
-          <img src="/map.png" />
-          <p className="text-center mb-0" style={{ fontSize: 13 }}>
-            49 Văn Hội, Bắc Từ Liêm, Hà Nội
-          </p>
+          <img
+            src="/map.png"
+            style={{ width: 450, cursor: "pointer", borderRadius: 8 }}
+            onClick={() =>
+              window.open(
+                "https://www.google.com/maps/place/49+P.+V%C4%83n+H%E1%BB%99i,+%C4%90%C3%B4ng+Ng%E1%BA%A1c,+T%E1%BB%AB+Li%C3%AAm,+H%C3%A0+N%E1%BB%99i,+Vietnam/@21.0787715,105.7735528,18.36z/data=!4m5!3m4!1s0x31345536cd0ea337:0xd9bcd386380979fd!8m2!3d21.0785615!4d105.7740164"
+              )
+            }
+          />
+        </div>
+        <div
+          className="text-center mb-0"
+          style={{ fontSize: 13, cursor: "pointer", fontWeight: 600 }}
+          onClick={() => window.open("https://checkcoverage.apple.com/")}
+        >
+          Kiểm tra bảo hành
         </div>
         <div className="d-flex align-items-center" style={{ gap: 5 }}>
           <img
@@ -26,9 +38,6 @@ const Footer = () => {
             style={{ cursor: "pointer" }}
             onClick={() => window.open(fbLink)}
           />
-          <div className="text-center mb-0" style={{ fontSize: 13 }}>
-            QnA{" "}
-          </div>
         </div>
       </div>
     </div>

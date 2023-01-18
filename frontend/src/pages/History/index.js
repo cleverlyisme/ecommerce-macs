@@ -65,7 +65,7 @@ const History = () => {
                         >
                           <span className="fw-bold">{product.name}</span>
                           <span style={{ fontStyle: "italic" }}>
-                            Quantity: {product.quantity}
+                            Số lượng: {product.quantity}
                           </span>
                           <span style={{ fontStyle: "italic" }}>
                             {Currency(product.price)}

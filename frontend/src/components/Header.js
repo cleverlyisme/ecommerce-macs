@@ -1,11 +1,28 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Row, Col, Container } from "reactstrap";
+
 import useAppContext from "../hooks/useAppContext";
+import { getInfo } from "../services/auth.service";
 
 const Header = () => {
   const navigate = useNavigate();
 
   const { user, setUser } = useAppContext();
+
+  const checkUser = async () => {
+    try {
+      const res = await getInfo();
+      const { userId } = res.data || {};
+      setUser({ userId });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    checkUser();
+  }, []);
 
   return (
     <div style={{ backgroundColor: "#ffd500" }}>

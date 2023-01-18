@@ -72,7 +72,7 @@ const OrderList = () => {
                   <th>Địa chỉ</th>
                   <th>Số điện thoại</th>
                   <th>Sản phẩm</th>
-                  <th>Giá tiền</th>
+                  <th>Tổng tiền</th>
                   <th>Trạng thái</th>
                   <th>Hành động</th>
                 </tr>
@@ -113,7 +113,7 @@ const OrderList = () => {
                           >
                             <span className="fw-bold">{product.name}</span>
                             <span style={{ fontStyle: "italic" }}>
-                              Quantity: {product.quantity}
+                              Số lượng: {product.quantity}
                             </span>
                             <span style={{ fontStyle: "italic" }}>
                               {formatCurrency(product.price)}
@@ -148,18 +148,18 @@ const OrderList = () => {
                         gap: "10px",
                       }}
                     >
-                      {order.status === "Pending" && (
+                      {order.status === "Đang chờ" && (
                         <>
                           <Button
                             size="sm"
                             color="success"
                             onClick={() =>
                               updateData(order._id, order.status, {
-                                status: "Completed",
+                                status: "Đã hoàn thành",
                               })
                             }
                           >
-                            Confirm
+                            Xác nhận
                           </Button>
 
                           <Button
@@ -167,18 +167,18 @@ const OrderList = () => {
                             color="warning"
                             onClick={() =>
                               updateData(order._id, order.status, {
-                                status: "Canceled",
+                                status: "Đã hủy",
                               })
                             }
                           >
-                            Cancel
+                            Hủy
                           </Button>
                           <Button
                             size="sm"
                             color="danger"
                             onClick={() => deleteData(order._id)}
                           >
-                            Delete
+                            Xóa
                           </Button>
                         </>
                       )}

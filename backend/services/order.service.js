@@ -92,7 +92,7 @@ const updateOrder = async (_id, data) => {
 
   order.status = status;
 
-  if (status === "Canceled") {
+  if (status === OrderStatus.Canceled) {
     for (const p of order.products) {
       const product = await Product.findOne({ _id: p.productId });
 
@@ -109,6 +109,14 @@ const deleteOrder = async (_id) => {
   const order = await Order.findOne({ _id });
 
   if (!order) throw new Error("Order not found");
+
+  const users = await User.find({});
+
+  for (const user of users) {
+    user.history = user.history.filter((o) => o.orderId !== _id);
+
+    await user.save();
+  }
 
   await order.remove();
 };

@@ -1,7 +1,7 @@
 const OrderStatus = {
-  Pending: "Pending",
-  Completed: "Completed",
-  Canceled: "Canceled",
+  Pending: "Đang chờ",
+  Completed: "Đã hoàn thành",
+  Canceled: "Đã hủy",
 };
 
 const UserRoles = {

@@ -55,7 +55,7 @@ const ProductList = () => {
             size="sm"
             onClick={() => navigate("/admin/products/create")}
           >
-            Tạo Product
+            Tạo sản phẩm
           </Button>
         </div>
         <Table striped bordered hover responsive size="sm">

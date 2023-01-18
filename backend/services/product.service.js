@@ -111,6 +111,7 @@ const updateProduct = async (_id, data) => {
     price,
     quantity,
     sold,
+    status,
     categoryId,
     cpuId,
   } = data;
@@ -127,6 +128,7 @@ const updateProduct = async (_id, data) => {
   product.price = Number(price) || product.price;
   product.quantity = Number(quantity) || product.quantity;
   product.sold = Number(sold) || product.sold;
+  product.status = status || product.status;
   product.categoryId = categoryId || product.categoryId;
   product.cpuId = cpuId || product.cpuId;
 

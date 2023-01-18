@@ -62,8 +62,12 @@ const ProductDetail = () => {
 
   const submit = async () => {
     try {
-      const { name, description, categoryId } = data;
-      if ([name, description, categoryId].some((item) => !item || !item.trim()))
+      const { name, description, categoryId, cpuId, status } = data;
+      if (
+        [name, description, categoryId, cpuId, status].some(
+          (item) => !item || !item.trim()
+        )
+      )
         throw new Error("Please fill in all field");
 
       if (files.length) {
@@ -148,21 +152,24 @@ const ProductDetail = () => {
                   placeholder="Phân loại"
                   name="category"
                   options={categories}
-                  onChange={(selectedOption) =>
-                    changeData("categoryId")(selectedOption.value)
-                  }
+                  onChange={(selectedOption) => {
+                    delete data.cpuId;
+                    changeData("categoryId")(selectedOption.value);
+                  }}
                 />
               </div>
               <div>
                 <Select
                   className="basic-single"
                   classNamePrefix="select"
-                  value={categories
-                    .find((item) => item?._id === data?.categoryId)
-                    ?.cpu.map((item) => {
-                      return { label: item.text, value: item._id };
-                    })
-                    .find((item) => item.value === data?.cpuId)}
+                  value={
+                    categories
+                      .find((item) => item?._id === data?.categoryId)
+                      ?.cpu.map((item) => {
+                        return { label: item.text, value: item._id };
+                      })
+                      .find((item) => item.value === data?.cpuId) || null
+                  }
                   placeholder="Loại CPU"
                   name="CPU"
                   options={categories

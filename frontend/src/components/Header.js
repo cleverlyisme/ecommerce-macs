@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Row, Col, Container } from "reactstrap";
 
 import useAppContext from "../hooks/useAppContext";
@@ -7,6 +7,7 @@ import { getInfo } from "../services/auth.service";
 
 const Header = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const { user, setUser } = useAppContext();
 
@@ -80,6 +81,7 @@ const Header = () => {
                     cursor: "pointer",
                   }}
                   onClick={() => {
+                    navigate("/");
                     setUser(null);
                     localStorage.removeItem("accessToken");
                   }}

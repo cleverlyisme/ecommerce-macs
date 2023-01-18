@@ -26,6 +26,29 @@ const login = async (email, phone, password) => {
   };
 };
 
+const adminLogin = async (email, phone, password) => {
+  const userEmail = await User.findOne({ email }).lean();
+  const userPhone = await User.findOne({ phone }).lean();
+  if (!userEmail && !userPhone) throw new Error("Unauthorized");
+
+  const isPassed = passwordHash.verify(
+    password,
+    userEmail ? userEmail.password : userPhone.password
+  );
+  if (!isPassed) throw new Error("Invalid password");
+
+  const { _id, role } = userEmail || userPhone;
+
+  if (role !== "Admin") throw new Error("User has no permissions");
+
+  return {
+    token: jsonwebtoken.sign({ _id, role }, JWT_SECRET_KEY, {
+      expiresIn: "2d",
+    }),
+    user: { _id },
+  };
+};
+
 const register = async (email, phone, password) => {
   if (!password.trim() || password.includes(" "))
     throw new Error("Password musn't be empty or blank");
@@ -46,5 +69,6 @@ const register = async (email, phone, password) => {
 
 module.exports = {
   login,
+  adminLogin,
   register,
 };

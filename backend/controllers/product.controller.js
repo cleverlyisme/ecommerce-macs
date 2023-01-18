@@ -75,6 +75,7 @@ const updateProduct = async (req, res) => {
       price,
       quantity,
       sold,
+      status,
       categoryId,
       cpuId,
     } = req.body;
@@ -86,6 +87,7 @@ const updateProduct = async (req, res) => {
       price,
       quantity,
       sold,
+      status,
       categoryId,
       cpuId,
     });

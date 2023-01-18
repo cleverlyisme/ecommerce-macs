@@ -2,7 +2,7 @@ import { Container, Row, Col, Input, Button } from "reactstrap";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { login } from "../../services/auth.service";
+import { adminLogin } from "../../services/auth.service";
 import useAdminContext from "../../hooks/useAdminContext";
 
 const Login = () => {
@@ -13,7 +13,7 @@ const Login = () => {
 
   const signIn = async () => {
     try {
-      const res = await login({ email, password });
+      const res = await adminLogin({ email, password });
       localStorage.setItem("accessToken", res.data.token);
       setUser("OK");
     } catch (err) {

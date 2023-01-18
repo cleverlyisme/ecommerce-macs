@@ -7,11 +7,6 @@ import {
   AccordionItem,
 } from "reactstrap";
 
-const list = [
-  { id: "1", category: "Macbook Pro", chips: ["M1", "Inter"] },
-  { id: "2", category: "Macbook Air", chips: ["M1", "Inter"] },
-];
-
 const CategoryBar = (props) => {
   const { categories, setCategoryId, setCpuId } = props;
 
@@ -19,6 +14,7 @@ const CategoryBar = (props) => {
   const [category, setCategory] = useState("");
   const [item, setItem] = useState("");
   const [value, setValue] = useState("");
+  const [check, setCheck] = useState(false);
 
   return (
     <div>
@@ -30,8 +26,9 @@ const CategoryBar = (props) => {
           return (
             <AccordionItem>
               <AccordionHeader
+                className="fs-6 "
                 targetId={category._id}
-                style={{ fontSize: 12, width: 150 }}
+                style={{ width: 200, fontSize: 12 }}
                 onClick={() => {
                   open !== category._id
                     ? setCategoryId(category._id)
@@ -48,9 +45,9 @@ const CategoryBar = (props) => {
                     <FormGroup check tag="fieldset">
                       <Input
                         id={item.name}
-                        type="radio"
+                        type="checkbox"
                         name="radio1"
-                        defaultChecked={false}
+                        checked={item.text == value ? true : false}
                         onClick={() => {
                           setValue(item.text);
                           setCpuId(item._id);

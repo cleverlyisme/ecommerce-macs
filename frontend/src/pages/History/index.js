@@ -37,7 +37,7 @@ const History = () => {
               <th>Địa chỉ</th>
               <th>Số điện thoại</th>
               <th>Sản phẩm</th>
-              <th>Giá tiền</th>
+              <th>Tổng tiền</th>
               <th>Trạng thái</th>
             </tr>
           </thead>
@@ -53,7 +53,27 @@ const History = () => {
                   <td>{item.name}</td>
                   <td>{item.address}</td>
                   <td>{item.phoneNumber}</td>
-                  <td style={{ overflowY: "auto", maxWidth: 100 }}></td>
+                  <td
+                    scope="row"
+                    style={{ maxWidth: "150px", overflow: "scroll" }}
+                  >
+                    <div className="d-flex flex-column" style={{ gap: 16 }}>
+                      {item.products.map((product) => (
+                        <div
+                          key={product.productId}
+                          className="d-flex flex-column"
+                        >
+                          <span className="fw-bold">{product.name}</span>
+                          <span style={{ fontStyle: "italic" }}>
+                            Quantity: {product.quantity}
+                          </span>
+                          <span style={{ fontStyle: "italic" }}>
+                            {Currency(product.price)}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </td>
                   <td>{Currency(item.amount)}</td>
                   <td>{item.status}</td>
                 </tr>

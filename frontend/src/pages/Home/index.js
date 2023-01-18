@@ -41,6 +41,7 @@ const Home = () => {
         lt,
         price,
         cpuId,
+        productName: searchValue,
       });
       setProducts(res.data.items);
       setTotalPages(res.data.totalPages);
@@ -71,6 +72,8 @@ const Home = () => {
         productName: searchValue,
       });
       setProducts(res.data.items);
+      setTotalPages(res.data.totalPages);
+      setPage(1);
     } catch (err) {
       console.log(err.message);
     }

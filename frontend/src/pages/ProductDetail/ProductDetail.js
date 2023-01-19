@@ -15,6 +15,7 @@ import Currency from "../../utils/formatCurrency";
 import useAppContext from "../../hooks/useAppContext";
 import formatFileUrl from "../../utils/formatFileUrl";
 import RelatedProducts from "./Components/RelatedProducts";
+import { ratingStar } from "../../services/products.service";
 
 const ProductDetail = () => {
   const navigate = useNavigate();
@@ -121,6 +122,7 @@ const ProductDetail = () => {
               size={25}
               activeColor="#ffd700"
               value={rating}
+              onChange={(e) => ratingStar(e, id)}
             />
           </div>
 

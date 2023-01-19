@@ -1,23 +1,23 @@
-import { Container, Row, Col, Button, Input } from "reactstrap";
-import { useState, useEffect } from "react";
-import Select from "react-select";
+import { Container, Row, Col, Button, Input } from 'reactstrap';
+import { useState, useEffect } from 'react';
+import Select from 'react-select';
 
-import ProductDetail from "./components/ProductDetail";
-import Paginations from "../Paginations";
-import { getProducts, searchProducts } from "../../services/products.service";
-import { getCategories } from "../../services/category.service";
-import Layout from "../../components/Layout";
-import CategoryBar from "./components/CategoryBar";
+import ProductDetail from './components/ProductDetail';
+import Paginations from '../Paginations';
+import { getProducts, searchProducts } from '../../services/products.service';
+import { getCategories } from '../../services/category.service';
+import Layout from '../../components/Layout';
+import CategoryBar from './components/CategoryBar';
 
 const limit = 24;
 
 const listPrice = [
-  { greater: 0, name: "Tất cả" },
-  { greater: 0, less: 10000000, name: "Dưới 10 triệu" },
-  { greater: 10000000, less: 20000000, name: "10-20 triệu" },
-  { greater: 20000000, less: 30000000, name: "20-30 triệu" },
-  { greater: 30000000, less: 40000000, name: "30-40 triệu" },
-  { greater: 40000000, name: "hơn 40 triệu" },
+  { greater: 0, name: 'Tất cả' },
+  { greater: 0, less: 10000000, name: '< 10 triệu' },
+  { greater: 10000000, less: 20000000, name: '10-20 triệu' },
+  { greater: 20000000, less: 30000000, name: '20-30 triệu' },
+  { greater: 30000000, less: 40000000, name: '30-40 triệu' },
+  { greater: 40000000, name: '> 40 triệu' },
 ];
 
 const Home = () => {
@@ -25,12 +25,12 @@ const Home = () => {
   const [categories, setCategories] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [categoryId, setCategoryId] = useState("");
-  const [cpuId, setCpuId] = useState("");
+  const [categoryId, setCategoryId] = useState('');
+  const [cpuId, setCpuId] = useState('');
   const [gt, setGt] = useState(0);
   const [lt, setlt] = useState();
   const [price, setPrice] = useState(null);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
 
   const getListProducts = async () => {
     try {
@@ -85,9 +85,9 @@ const Home = () => {
   });
 
   const sortPrice = [
-    { value: 1, label: "Bán chạy nhất" },
-    { value: 2, label: "Giá thấp đến cao" },
-    { value: 3, label: "Giá cao đến thấp" },
+    { value: 1, label: 'Bán chạy nhất' },
+    { value: 2, label: 'Giá thấp đến cao' },
+    { value: 3, label: 'Giá cao đến thấp' },
   ];
 
   useEffect(() => {
@@ -109,22 +109,22 @@ const Home = () => {
           <img
             src="/banner.png"
             style={{
-              width: "100%",
+              width: '100%',
               height: 200,
-              objectFit: "cover",
+              objectFit: 'cover',
               borderRadius: 8,
             }}
           />
         </div>
-        <div className="d-flex justify-content-between">
-          <div className="d-flex" style={{ gap: 5 }}>
+        <Row>
+          <Col xs={12} sm={12} md={6} className="d-flex" style={{ gap: 5 }}>
             {listPrice.map((item) => {
               return (
                 <Button
                   color={
                     item.greater == gt && item.less == lt
-                      ? "success"
-                      : "secondary"
+                      ? 'success'
+                      : 'secondary'
                   }
                   size="sm"
                   style={{ fontSize: 12 }}
@@ -137,8 +137,14 @@ const Home = () => {
                 </Button>
               );
             })}
-          </div>
-          <div className="d-flex align-items-center" style={{ gap: 20 }}>
+          </Col>
+          <Col
+            xs={12}
+            sm={12}
+            md={3}
+            className="my-2 d-flex align-items-center"
+            style={{ gap: 20 }}
+          >
             <div style={{ width: 200 }}>
               <Select
                 className="basic-single"
@@ -148,13 +154,15 @@ const Home = () => {
                 name="sort"
                 options={sortPrice}
                 onChange={(selectedOption) => {
-                  if (selectedOption.value == 1) setPrice("");
-                  if (selectedOption.value == 2) setPrice("asc");
-                  if (selectedOption.value == 3) setPrice("desc");
+                  if (selectedOption.value == 1) setPrice('');
+                  if (selectedOption.value == 2) setPrice('asc');
+                  if (selectedOption.value == 3) setPrice('desc');
                 }}
               />
             </div>
-            <div className="d-flex align-items-center" style={{ gap: 5 }}>
+          </Col>
+          <Col xs={12} sm={12} md={3}>
+            <div className="h-100 d-flex align-items-center" style={{ gap: 5 }}>
               <Input
                 placeholder="Tìm kiếm sản phẩm..."
                 style={{ height: 37, fontSize: 12 }}
@@ -165,15 +173,17 @@ const Home = () => {
                 <img src="/search.png" />
               </Button>
             </div>
-          </div>
-        </div>
-        <div className="d-flex" style={{ gap: 20 }}>
-          <CategoryBar
-            categories={categories}
-            setCategoryId={setCategoryId}
-            setCpuId={setCpuId}
-          />
-          <div>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} sm={12} md={3}>
+            <CategoryBar
+              categories={categories}
+              setCategoryId={setCategoryId}
+              setCpuId={setCpuId}
+            />
+          </Col>
+          <Col xs={12} sm={12} md={9}>
             <h5 className="mb-0">Danh sách sản phẩm</h5>
             <Row>
               {products.map((product) => {
@@ -184,9 +194,12 @@ const Home = () => {
                 );
               })}
             </Row>
-          </div>
-        </div>
-        <div className="d-flex py-3 align-items-center" style={{ gap: 10 }}>
+          </Col>
+        </Row>
+        <div
+          className="d-flex py-3 align-items-center justify-content-end"
+          style={{ gap: 10 }}
+        >
           <div>Trang</div>
           <div style={{ width: 80 }}>
             <Paginations

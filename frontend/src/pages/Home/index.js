@@ -116,7 +116,12 @@ const Home = () => {
       <div className="d-flex flex-column" style={{ gap: 15 }}>
         <div>
           <div className="slide-container">
-            <Fade autoplay prevArrow={<div></div>} nextArrow={<div></div>}>
+            <Fade
+              autoplay
+              prevArrow={<div></div>}
+              nextArrow={<div></div>}
+              duration={1000}
+            >
               {banners.map((banner) => (
                 <div key={banner} className="each-fade">
                   <img

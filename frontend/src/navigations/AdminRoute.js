@@ -9,6 +9,7 @@ import ProductList from "../pages/Admin/ProductList";
 import ProductDetail from "../pages/Admin/ProductDetail";
 import OrderList from "../pages/Admin/OrderList";
 import CategoryList from "../pages/Admin/CategoryList";
+import UsersList from "../pages/Admin/UsersList";
 
 import { AdminContextProvider } from "../contexts/admin.context";
 import useAdminContext from "../hooks/useAdminContext";
@@ -51,6 +52,7 @@ const AdminRoute = () => {
       <Route path="/products/:id" element={<ProductDetail />} />
       <Route path="/categories" element={<CategoryList />} />
       <Route path="/orders" element={<OrderList />} />
+      <Route path="/users" element={<UsersList />} />
       <Route path="*" element={<Navigate to="/admin/products" replace />} />
     </Routes>
   );

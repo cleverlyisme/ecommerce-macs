@@ -4,8 +4,29 @@ const User = require("../models/user.model");
 const Product = require("../models/product.model");
 const Order = require("../models/order.model");
 
-const getUsers = async () => {
-  const users = await User.find({}).select("-password").lean();
+const getUsers = async (query) => {
+  // const users = await User.find({}).select("-password").lean();
+  const { page, limit } = query;
+
+  const filters = {},
+    sortBy = {};
+
+  const users = await User.find(filters)
+    .sort(sortBy)
+    .limit(Number(limit))
+    .skip(Number(limit) * (Number(page) - 1))
+    .lean();
+
+  const totalPages = (await User.find(filters).lean()).length / limit;
+
+  const data = {
+    items: users.map((item) => ({
+      ...item,
+    })),
+    totalPages: Math.ceil(totalPages) || 1,
+  };
+
+  return data || {};
 
   return users || [];
 };

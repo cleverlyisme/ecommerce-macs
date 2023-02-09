@@ -4,6 +4,7 @@ const navs = [
   { name: "Danh sách sản phẩm", url: "/admin/products" },
   { name: "Danh sách phân loại", url: "/admin/categories" },
   { name: "Danh sách đặt hàng", url: "/admin/orders" },
+  { name: "Danh sách người dùng", url: "/admin/users" },
 ];
 
 const Navs = () => {

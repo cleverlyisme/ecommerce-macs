@@ -57,6 +57,9 @@ const register = async (email, phone, password) => {
   const existedEmail = await User.findOne({ email });
   if (existedEmail) throw new Error('Email đã tồn tại');
 
+  const existedPhone = await User.findOne({ phone });
+  if (existedPhone) throw new Error('Số điện thoại đã tồn tại');
+
   const user = new User({
     email,
     phone,

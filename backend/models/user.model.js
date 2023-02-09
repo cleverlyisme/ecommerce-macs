@@ -11,7 +11,7 @@ const schema = new Schema({
     match: [/.+\@.+\..+/, 'Invalid email address'],
     unique: true,
   },
-  phone: { type: String, required: true, minLength: 10 },
+  phone: { type: String, required: true, minLength: 10, unique: true },
   password: { type: String, required: true },
   role: { type: String, required: true, enum: Object.values(UserRoles) },
   history: [

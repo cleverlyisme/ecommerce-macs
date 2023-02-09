@@ -1,7 +1,7 @@
 import { Container, Row, Col, Button, Input } from 'reactstrap';
 import { useState, useEffect } from 'react';
 import Select from 'react-select';
-import { Fade } from 'react-slideshow-image';
+import { Fade, Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
 
 import ProductDetail from './components/ProductDetail';
@@ -109,6 +109,9 @@ const Home = () => {
     '/banner1.jpeg',
     '/banner2.jpeg',
     '/banner3.jpeg',
+    '/banner4.jpeg',
+    '/banner5.jpeg',
+    '/banner6.jpg',
   ];
 
   return (
@@ -120,7 +123,7 @@ const Home = () => {
               autoplay
               prevArrow={<div></div>}
               nextArrow={<div></div>}
-              duration={1000}
+              duration={700}
             >
               {banners.map((banner) => (
                 <div key={banner} className="each-fade">

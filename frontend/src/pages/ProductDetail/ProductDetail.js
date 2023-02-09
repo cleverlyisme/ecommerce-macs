@@ -59,7 +59,7 @@ const ProductDetail = () => {
             style={{ maxWidth: "100%" }}
           />
           <div
-            className="d-flex align-items-center"
+            className="mt-2 d-flex align-items-center"
             style={{ overflowY: "auto", gap: 15, maxWidth: "100%" }}
           >
             {images.map((img, i) => {
@@ -81,7 +81,7 @@ const ProductDetail = () => {
             })}
           </div>
         </Col>
-        <Col xs={6} className="d-flex flex-column" style={{ gap: 30 }}>
+        <Col xs={12} md={6} className="d-flex flex-column" style={{ gap: 30 }}>
           <div className="d-flex flex-column" style={{ gap: 5 }}>
             <div style={{ fontSize: 20, fontWeight: 600 }}>{name}</div>
             <div style={{ fontSize: 10, opacity: 0.7 }}>{description}</div>

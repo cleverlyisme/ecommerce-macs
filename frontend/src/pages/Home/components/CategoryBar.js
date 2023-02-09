@@ -1,19 +1,19 @@
-import { useState } from "react";
-import { FormGroup, Input, Label } from "reactstrap";
+import { useState } from 'react';
+import { FormGroup, Input, Label } from 'reactstrap';
 import {
   Accordion,
   AccordionBody,
   AccordionHeader,
   AccordionItem,
-} from "reactstrap";
+} from 'reactstrap';
 
 const CategoryBar = (props) => {
   const { categories, setCategoryId, setCpuId } = props;
 
-  const [open, setOpen] = useState("0");
-  const [category, setCategory] = useState("");
-  const [item, setItem] = useState("");
-  const [value, setValue] = useState("");
+  const [open, setOpen] = useState('0');
+  const [category, setCategory] = useState('');
+  const [item, setItem] = useState('');
+  const [value, setValue] = useState('');
   const [check, setCheck] = useState(false);
 
   return (
@@ -26,15 +26,15 @@ const CategoryBar = (props) => {
           return (
             <AccordionItem>
               <AccordionHeader
-                className="fs-6 "
+                className="w-100"
                 targetId={category._id}
                 style={{ width: 200, fontSize: 12 }}
                 onClick={() => {
                   open !== category._id
                     ? setCategoryId(category._id)
-                    : setCategoryId("");
-                  setCpuId("");
-                  setValue("");
+                    : setCategoryId('');
+                  setCpuId('');
+                  setValue('');
                 }}
               >
                 {category.name}
@@ -57,8 +57,8 @@ const CategoryBar = (props) => {
                       <Label
                         check
                         style={{
-                          color: value == item.text ? "#0d6efd" : "black",
-                          cursor: "pointer",
+                          color: value == item.text ? '#0d6efd' : 'black',
+                          cursor: 'pointer',
                         }}
                       >
                         {item.text}

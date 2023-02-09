@@ -1,8 +1,8 @@
-const Product = require("../models/product.model");
-const Category = require("../models/category.model");
-const _ = require("lodash");
+const Product = require('../models/product.model');
+const Category = require('../models/category.model');
+const _ = require('lodash');
 
-const { ProductStatus } = require("../utils/constants");
+const { ProductStatus } = require('../utils/constants');
 
 const getProducts = async (query) => {
   const categories = await Category.find({}).lean();
@@ -11,7 +11,7 @@ const getProducts = async (query) => {
   const filters = {},
     sortBy = {};
 
-  if (productName) filters.name = { $regex: ".*" + productName + ".*" };
+  if (productName) filters.name = { $regex: productName, $options: 'i' };
 
   if (categoryId) filters.categoryId = categoryId;
 
@@ -21,7 +21,7 @@ const getProducts = async (query) => {
 
   if (lt) filters.price = { ...filters.price, $lt: Number(lt) };
 
-  price ? (sortBy.price = price) : (sortBy.sold = "desc");
+  price ? (sortBy.price = price) : (sortBy.sold = 'desc');
 
   const products = await Product.find(filters)
     .sort(sortBy)
@@ -72,19 +72,19 @@ const createProduct = async (data) => {
   } = data;
 
   if (!name.trim() || !description.trim())
-    throw new Error("Invalid name or description");
+    throw new Error('Invalid name or description');
 
   const category = await Category.findOne({ _id: categoryId }).lean();
-  if (!category) throw new Error("Invalid category ID");
+  if (!category) throw new Error('Invalid category ID');
 
   const cpus = category.cpu;
   if (cpuId) {
     const cpuFound = cpus.find((cpu) => cpu._id.toString() === cpuId);
-    if (!cpuFound) throw new Error("Invalid CPU ID");
+    if (!cpuFound) throw new Error('Invalid CPU ID');
   }
 
   if (!Object.values(ProductStatus).includes(status))
-    throw new Error("Invalid status");
+    throw new Error('Invalid status');
 
   const newProduct = new Product({
     name,
@@ -117,10 +117,10 @@ const updateProduct = async (_id, data) => {
   } = data;
 
   const productExist = await Product.findOne({ name }).lean();
-  if (productExist && product.name !== name) throw new Error("Product exists");
+  if (productExist && product.name !== name) throw new Error('Product exists');
 
   const category = await Category.findOne({ _id: categoryId }).lean();
-  if (!category) throw new Error("Invalid category ID");
+  if (!category) throw new Error('Invalid category ID');
 
   product.name = name || product.name;
   product.description = description || product.description;
@@ -138,7 +138,7 @@ const updateProduct = async (_id, data) => {
 const deleteProduct = async (_id) => {
   const product = await Product.findOne({ _id });
 
-  if (!product) throw new Error("Product not found");
+  if (!product) throw new Error('Product not found');
 
   await product.remove();
 };
@@ -146,10 +146,10 @@ const deleteProduct = async (_id) => {
 const ratingProduct = async (_id, rating) => {
   const product = await Product.findOne({ _id });
 
-  if (!product) throw new Error("Product not found");
+  if (!product) throw new Error('Product not found');
 
   if (Number(rating) < 1 || Number(rating) > 5)
-    throw new Error("Invalid rating number");
+    throw new Error('Invalid rating number');
 
   if (product.ratingTotal === 0) product.ratingTotal = product.rating;
 

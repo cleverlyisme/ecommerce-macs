@@ -84,7 +84,7 @@ const ProductDetail = () => {
         <Col xs={12} md={6} className="d-flex flex-column" style={{ gap: 30 }}>
           <div className="d-flex flex-column" style={{ gap: 5 }}>
             <div style={{ fontSize: 20, fontWeight: 600 }}>{name}</div>
-            <div style={{ fontSize: 10, opacity: 0.7 }}>{description}</div>
+            <div style={{ fontSize: 18, opacity: 0.7 }}>{description}</div>
           </div>
           <div style={{ fontSize: 18, fontWeight: 600 }}>{Currency(price)}</div>
           <div className="d-flex flex-column" style={{ gap: 5 }}>

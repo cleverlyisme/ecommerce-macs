@@ -217,7 +217,7 @@ const ProductDetail = () => {
                 />
               </div>
               <div>
-                <Label>Số lượng</Label>
+                <Label>Hàng còn trong kho</Label>
                 <Input
                   type="number"
                   min={0}
@@ -225,7 +225,7 @@ const ProductDetail = () => {
                   onChange={(e) =>
                     changeData("quantity")(Number(e.target.value))
                   }
-                  placeholder="Số lượng"
+                  placeholder="Hàng còn trong kho"
                 />
               </div>
 

@@ -91,6 +91,7 @@ const updateOrder = async (_id, data) => {
     throw new Error("Invalid order status");
 
   order.status = status;
+  order.updatedAt = Date.now();
 
   if (status === OrderStatus.Canceled) {
     for (const p of order.products) {

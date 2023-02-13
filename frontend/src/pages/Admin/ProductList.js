@@ -66,7 +66,7 @@ const ProductList = () => {
               <th>Tên sản phẩm</th>
               <th>Mô tả sản phẩm</th>
               <th>Giá</th>
-              <th>Số lượng</th>
+              <th>Tồn kho</th>
               <th>Đã bán</th>
               <th>Phân loại</th>
               <th>Hành động</th>

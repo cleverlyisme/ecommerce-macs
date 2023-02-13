@@ -8,9 +8,13 @@ const getStatistic = async (query) => {
 
   const filter = {};
 
-  if (from) filter.updatedAt = { $gte: Number(from) };
+  if (from)
+    filter.updatedAt = {
+      ...filter.updatedAt,
+      $gte: Number(from),
+    };
 
-  if (to) filter.updatedAt = { $lt: Number(to) };
+  if (to) filter.updatedAt = { ...filter.updatedAt, $lt: Number(to) };
 
   filter.status = OrderStatus.Completed;
 

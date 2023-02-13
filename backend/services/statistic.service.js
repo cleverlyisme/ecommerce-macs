@@ -27,37 +27,24 @@ const getStatistic = async (query) => {
 
   const amount = orders.reduce((iniValue, order) => iniValue + order.amount, 0);
 
-  const productStatistic = {};
+  let newOrders = [];
 
   for (const order of orders) {
+    const newProducts = [];
+
     for (const product of order.products) {
       const p = await Product.findOne({ _id: product.productId })
         .select("name")
         .lean();
 
-      Object.assign(productStatistic, {
-        [product.productId]: {
-          name: p.name,
-          quantity:
-            product.quantity +
-            (productStatistic[product.productId]?.quantity ?? 0),
-          price: product.price,
-        },
-      });
+      if (p) newProducts.push({ ...product, name: p.name });
     }
+
+    newOrders.push({ ...order, products: newProducts });
   }
 
-  const products = Object.keys(productStatistic).map((productId) => ({
-    productId,
-    name: productStatistic[productId].name,
-    quantity: productStatistic[productId].quantity,
-    price: productStatistic[productId].price,
-    amount:
-      productStatistic[productId].quantity * productStatistic[productId].price,
-  }));
-
   return {
-    items: { orders, products, amount },
+    items: { orders: newOrders, amount },
     totalPages: Math.ceil(totalPages) || 1,
   };
 };

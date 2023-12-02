@@ -26,7 +26,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div style={{ backgroundColor: "#ffd500" }}>
+    <div className="sticky-top" style={{ backgroundColor: "#ffd500" }}>
       <Container>
         <Row className="d-flex py-2">
           <Col xs={6}>

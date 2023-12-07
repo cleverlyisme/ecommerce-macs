@@ -31,20 +31,26 @@ const Login = () => {
   };
 
   return (
-    <div
+    <Container
       className="d-flex justify-content-center align-items-center"
-      style={{ height: "100vh", backgroundColor: "#e8e8f2" }}
+      style={{
+        minWidth: "100vw",
+        minHeight: "100vh",
+        backgroundColor: "#e8e8f2",
+      }}
     >
-      <div
-        className="d-flex flex-column py-4 px-5"
+      <Col
+        className={`d-flex flex-column py-4 px-5`}
+        xs={9}
+        sm={7}
+        lg={4}
         style={{
-          width: "40vw",
           backgroundColor: "white",
           borderRadius: 6,
           gap: 15,
         }}
       >
-        <div>
+        <div className="d-flex justify-content-center">
           <img src="/shopmacs.png" style={{ width: 40, height: 40 }} />
         </div>
 
@@ -109,8 +115,8 @@ const Login = () => {
             Đăng kí
           </div>
         </div>
-      </div>
-    </div>
+      </Col>
+    </Container>
   );
 };
 

@@ -1,16 +1,16 @@
-import { Container, Row, Col, Input, Button } from 'reactstrap';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { NotificationManager } from 'react-notifications';
+import { Container, Row, Col, Input, Button } from "reactstrap";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { NotificationManager } from "react-notifications";
 
-import { register } from '../../services/auth.service';
+import { register } from "../../services/auth.service";
 
 const SignUp = () => {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
 
   const handleClickRegister = async () => {
     try {
@@ -19,11 +19,11 @@ const SignUp = () => {
         password,
         phone,
       });
-      if (res.data == 'Registered successfully') {
-        NotificationManager.success('Create an account successfully');
-        navigate('/login');
+      if (res.data == "Registered successfully") {
+        NotificationManager.success("Create an account successfully");
+        navigate("/login");
       } else {
-        NotificationManager.warning('Failed to create an account');
+        NotificationManager.warning("Failed to create an account");
       }
     } catch (err) {
       console.log(err.message);
@@ -34,20 +34,26 @@ const SignUp = () => {
   };
 
   return (
-    <div
+    <Container
       className="d-flex justify-content-center align-items-center"
-      style={{ height: '100vh', backgroundColor: '#e8e8f2' }}
+      style={{
+        minWidth: "100vw",
+        minHeight: "100vh",
+        backgroundColor: "#e8e8f2",
+      }}
     >
-      <div
+      <Col
         className="d-flex flex-column py-4 px-5"
+        xs={9}
+        sm={7}
+        lg={4}
         style={{
-          width: '40vw',
-          backgroundColor: 'white',
+          backgroundColor: "white",
           borderRadius: 6,
           gap: 15,
         }}
       >
-        <div>
+        <div className="d-flex justify-content-center">
           <img src="/shopmacs.png" style={{ width: 40, height: 40 }} />
         </div>
 
@@ -104,8 +110,8 @@ const SignUp = () => {
           <Button
             size="sm"
             style={{
-              backgroundColor: '#3438cd',
-              cursor: 'pointer',
+              backgroundColor: "#3438cd",
+              cursor: "pointer",
               fontSize: 12,
             }}
             onClick={handleClickRegister}
@@ -113,8 +119,18 @@ const SignUp = () => {
             Đăng kí
           </Button>
         </div>
-      </div>
-    </div>
+
+        <div className="d-flex justify-content-center" style={{ gap: 3 }}>
+          <div style={{ fontSize: 12 }}>Đã có tài khoản?</div>
+          <div
+            style={{ fontSize: 12, cursor: "pointer", color: "#3438cd" }}
+            onClick={() => navigate("/login")}
+          >
+            Đăng nhập
+          </div>
+        </div>
+      </Col>
+    </Container>
   );
 };
 
